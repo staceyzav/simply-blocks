@@ -1,0 +1,31 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "simply-blocks/news",
+	"title": "Simply News",
+	"category": "simply-blocks",
+	"description": "Post feed — 3-column grid with photo, category, title, date, and read more. Queries live posts, filters by category.",
+	"keywords": [ "simply", "news", "posts", "feed", "blog", "grid" ],
+	"textdomain": "simply-blocks",
+	"supports": {
+		"html": false,
+		"color": false,
+		"spacing": false
+	},
+	"attributes": {
+		"limit":        { "type": "number",  "default": 3 },
+		"columns":      { "type": "number",  "default": 3 },
+		"category":     { "type": "string",  "default": "" },
+		"readMore":     { "type": "string",  "default": "Read More" },
+		"heading":      { "type": "string",  "default": "" },
+		"showDate":     { "type": "boolean", "default": true },
+		"showCategory": { "type": "boolean", "default": true },
+		"showReadMore": { "type": "boolean", "default": true },
+		"showFilters":  { "type": "boolean", "default": true },
+		"orderBy":      { "type": "string",  "default": "date" }
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        "file:./style-index.css",
+	"viewScript":   "file:./view.js"
+}

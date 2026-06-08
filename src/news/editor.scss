@@ -1,0 +1,11 @@
+// Simply News — editor styles
+// ServerSideRender handles the preview so minimal overrides needed.
+
+.wp-block-simply-blocks-news {
+	min-height: 100px;
+
+	// Loading state placeholder
+	.components-placeholder {
+		min-height: 200px;
+	}
+}

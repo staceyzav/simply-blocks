@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "simply-blocks/logo-slider",
+	"title": "Simply Logo Slider",
+	"category": "simply-blocks",
+	"description": "Auto-scrolling logo strip. Grayscale by default, color on hover. Only animates when logos exceed container width. Upload logos directly — no CPT needed.",
+	"keywords": [ "simply", "logo", "slider", "carousel", "strip", "partners", "sponsors" ],
+	"textdomain": "simply-blocks",
+	"supports": {
+		"html": false,
+		"color": false,
+		"spacing": false
+	},
+	"attributes": {
+		"source":    { "type": "string",  "default": "custom" },
+		"logos": {
+			"type": "array",
+			"default": [],
+			"items": { "type": "object" }
+		},
+		"limit":     { "type": "number",  "default": -1 },
+		"height":    { "type": "number",  "default": 60 },
+		"speed":     { "type": "number",  "default": 30 },
+		"gap":       { "type": "number",  "default": 80 },
+		"grayscale": { "type": "boolean", "default": true }
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        "file:./style-index.css",
+	"viewScript":   "file:./view.js"
+}

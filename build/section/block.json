@@ -1,0 +1,143 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "simply-blocks/section",
+  "title": "Simply Section",
+  "category": "simply-blocks",
+  "description": "Full-featured section block. Background color, image, or video with overlay controls, min-height, vertical alignment, and section color schemes.",
+  "keywords": [
+    "simply",
+    "section",
+    "hero",
+    "background",
+    "video",
+    "image"
+  ],
+  "textdomain": "simply-blocks",
+  "supports": {
+    "html": false,
+    "color": false,
+    "spacing": false
+  },
+  "attributes": {
+    "sectionColor": {
+      "type": "string",
+      "default": ""
+    },
+    "innerWidth": {
+      "type": "number",
+      "default": 1200
+    },
+    "paddingTop": {
+      "type": "number",
+      "default": 80
+    },
+    "paddingBottom": {
+      "type": "number",
+      "default": 80
+    },
+    "paddingLeft": {
+      "type": "number",
+      "default": 5
+    },
+    "paddingRight": {
+      "type": "number",
+      "default": 5
+    },
+    "paddingUnit": {
+      "type": "string",
+      "default": "px"
+    },
+    "marginTop": {
+      "type": "number",
+      "default": 0
+    },
+    "marginBottom": {
+      "type": "number",
+      "default": 0
+    },
+    "innerWidthUnit": {
+      "type": "string",
+      "default": "px"
+    },
+    "minHeight": {
+      "type": "number",
+      "default": 0
+    },
+    "minHeightUnit": {
+      "type": "string",
+      "default": "px"
+    },
+    "verticalAlign": {
+      "type": "string",
+      "default": "center"
+    },
+    "bgType": {
+      "type": "string",
+      "default": "none"
+    },
+    "bgColor": {
+      "type": "string",
+      "default": "#ffffff"
+    },
+    "bgColorOpacity": {
+      "type": "number",
+      "default": 100
+    },
+    "bgImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "bgImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "bgImagePosition": {
+      "type": "string",
+      "default": "center center"
+    },
+    "bgImageSize": {
+      "type": "string",
+      "default": "cover"
+    },
+    "bgImageFixed": {
+      "type": "boolean",
+      "default": false
+    },
+    "bgVideoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "bgVideoId": {
+      "type": "number",
+      "default": 0
+    },
+    "bgVideoWebmUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "bgVideoWebmId": {
+      "type": "number",
+      "default": 0
+    },
+    "bgVideoPosterUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "overlayColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "overlayOpacity": {
+      "type": "number",
+      "default": 0
+    },
+    "overlayBlendMode": {
+      "type": "string",
+      "default": "normal"
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

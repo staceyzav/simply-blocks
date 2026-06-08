@@ -1,0 +1,66 @@
+// Simply Logo Slider — editor styles
+
+.sls-editor-wrap {
+	padding: 16px;
+	border: 2px dashed rgba( 0, 0, 0, 0.15 );
+	border-radius: 4px;
+}
+
+.sls-editor-logos {
+	margin-bottom: 12px;
+}
+
+.sls-editor-logo-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 8px;
+	margin-bottom: 6px;
+	background: #f6f6f6;
+	border-radius: 4px;
+
+	img {
+		width: auto;
+		flex-shrink: 0;
+		object-fit: contain;
+	}
+
+	.components-base-control {
+		flex: 1;
+		margin-bottom: 0;
+	}
+
+	.components-text-control__input {
+		margin-bottom: 0;
+	}
+}
+
+.sls-editor-preview {
+	margin-top: 16px;
+}
+
+.sls-editor-global-notice {
+	padding: 16px;
+	background: #f0f6fc;
+	border: 1px solid #c8d8e8;
+	border-radius: 4px;
+	font-size: 13px;
+
+	span {
+		display: block;
+		font-weight: 600;
+		margin-bottom: 6px;
+	}
+
+	a {
+		color: #0073aa;
+		text-decoration: underline;
+	}
+}
+
+.sls-editor-hint {
+	font-size: 11px;
+	color: #757575;
+	margin: 0 0 8px;
+	font-style: italic;
+}

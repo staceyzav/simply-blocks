@@ -1,0 +1,122 @@
+// Simply Section — front-end + editor styles
+
+.simply-section {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+
+	// Background image layer
+	&__bg-image {
+		position: absolute;
+		inset: 0;
+		background-size: cover;
+		background-position: center center;
+		background-repeat: no-repeat;
+	}
+
+	// Video background wrapper (both YouTube iframe and self-hosted video)
+	&__bg-video-wrap {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		pointer-events: none;
+
+		// On mobile: hide the video, show the bg-image fallback instead
+		@media ( max-width: 768px ) {
+			&:not( .simply-section__bg-video-wrap--youtube ) {
+				display: none;
+			}
+
+			// YouTube wrap: hide the iframe, show the thumbnail bg
+			&--youtube iframe {
+				display: none;
+			}
+		}
+	}
+
+	// Self-hosted <video> element
+	&__bg-video {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		min-width: 100%;
+		min-height: 100%;
+		width: auto;
+		height: auto;
+		transform: translate( -50%, -50% );
+		object-fit: cover;
+		pointer-events: none;
+	}
+
+	// YouTube iframe — oversized and centered to fill without black bars (16:9)
+	&__bg-video-wrap--youtube iframe {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 100vw;
+		height: 56.25vw;    // 16:9 ratio
+		min-height: 100%;
+		min-width: 177.78vh; // 16:9 inverse ratio
+		transform: translate( -50%, -50% );
+		border: 0;
+		pointer-events: none;
+	}
+
+	// Overlay layer
+	&__overlay {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	// Inner content container
+	&__inner {
+		position: relative;
+		z-index: 1;
+		margin-left: auto;
+		margin-right: auto;
+		box-sizing: border-box;
+		width: 100%;
+	}
+
+	// ── Section color schemes ──────────────────────────────────────
+	// Section color is set on the container and inherited by all children.
+	// No !important on p/li/span — plugin components and editor block colors
+	// set their own explicit colors and override inherited values naturally.
+
+	&.is-dark {
+		background-color: var( --client-section-dark-bg, #1a1a1a );
+		color: var( --client-section-dark-text, #f5f5f5 );
+
+		h1, h2, h3, h4, h5, h6 {
+			color: var( --client-section-dark-heading, #ffffff );
+		}
+	}
+
+	&.is-light {
+		background-color: var( --client-section-light-bg, #f2f2f2 );
+		color: var( --client-section-light-text, #1a1a1a );
+
+		h1, h2, h3, h4, h5, h6 {
+			color: var( --client-section-light-heading, #333333 );
+		}
+	}
+
+	&.is-brand-1 {
+		background-color: var( --client-section-brand1-bg, #cc2229 );
+		color: var( --client-section-brand1-text, #ffffff );
+
+		h1, h2, h3, h4, h5, h6 {
+			color: var( --client-section-brand1-heading, #ffffff );
+		}
+	}
+
+	&.is-brand-2 {
+		background-color: var( --client-section-brand2-bg, #162d55 );
+		color: var( --client-section-brand2-text, #ffffff );
+
+		h1, h2, h3, h4, h5, h6 {
+			color: var( --client-section-brand2-heading, #ffffff );
+		}
+	}
+}

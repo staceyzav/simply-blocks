@@ -1,0 +1,17 @@
+// Simply Container — editor-only styles
+// Keeps the section preview readable in the block editor canvas.
+
+.wp-block-simply-blocks-container {
+	min-height: 80px;
+
+	.simply-section__inner {
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	// Show a subtle outline when no color scheme is set
+	&:not( .is-dark ):not( .is-light ):not( .is-brand-1 ):not( .is-brand-2 ) {
+		outline: 2px dashed rgba( 0, 0, 0, 0.15 );
+		outline-offset: -2px;
+	}
+}

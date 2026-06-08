@@ -1,0 +1,35 @@
+// Simply Section — editor-only styles
+
+.wp-block-simply-blocks-section {
+	min-height: 80px;
+
+	// Dashed outline when no bg set — shows the block boundary
+	&:not( .is-dark ):not( .is-light ):not( .is-brand-1 ):not( .is-brand-2 ) {
+		&:not( [style*="background"] ) {
+			outline: 2px dashed rgba( 0, 0, 0, 0.15 );
+			outline-offset: -2px;
+		}
+	}
+
+	// Video bg label shown in editor in place of actual video
+	.simply-section__bg-image {
+		.simply-section__video-label {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate( -50%, -50% );
+			background: rgba( 0, 0, 0, 0.6 );
+			color: #fff;
+			padding: 6px 14px;
+			border-radius: 4px;
+			font-size: 13px;
+			pointer-events: none;
+			white-space: nowrap;
+		}
+	}
+
+	.simply-section__inner {
+		margin: 0 auto;
+		width: 100%;
+	}
+}

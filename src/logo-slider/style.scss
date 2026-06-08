@@ -1,0 +1,76 @@
+// Simply Logo Slider — front-end styles
+
+.sls-slider {
+	overflow-x: auto;
+	width: 100%;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	cursor: grab;
+	-webkit-overflow-scrolling: touch;
+
+	&::-webkit-scrollbar { display: none; }
+	&.is-dragging { cursor: grabbing; }
+}
+
+.sls-track {
+	display: flex;
+	align-items: center;
+	width: max-content;
+}
+
+// Not enough logos to scroll — center them instead
+.sls-slider:not( .sls-slider--active ) .sls-track {
+	width: 100%;
+	justify-content: center;
+}
+
+.sls-logo {
+	display: inline-flex;
+	align-items: center;
+	flex-shrink: 0;
+	margin-right: var( --sls-gap, 80px );
+	text-decoration: none;
+
+	img {
+		height: var( --sls-height, 60px );
+		width: auto;
+		display: block;
+		transition: filter 0.35s ease, opacity 0.35s ease;
+	}
+}
+
+// Grayscale mode (default)
+.sls-slider:not( .sls-slider--no-grayscale ) .sls-logo img {
+	filter: grayscale( 1 );
+	opacity: 0.65;
+}
+
+.sls-slider:not( .sls-slider--no-grayscale ) .sls-logo:hover img {
+	filter: grayscale( 0 );
+	opacity: 1;
+}
+
+// Full color mode
+.sls-slider--no-grayscale .sls-logo img {
+	filter: none;
+	opacity: 1;
+}
+
+// Boost — makes this logo ~30% taller than its neighbors
+.sls-logo--boost img {
+	height: calc( var( --sls-height, 60px ) * 1.3 );
+}
+
+// Animation — only active when JS clones logos and adds the class
+.sls-slider--active .sls-track {
+	animation: sls-scroll var( --sls-speed, 30s ) linear infinite;
+}
+
+.sls-slider--paused .sls-track {
+	animation-play-state: paused;
+}
+
+@keyframes sls-scroll {
+	from { transform: translateX( 0 ); }
+	to   { transform: translateX( -50% ); }
+}

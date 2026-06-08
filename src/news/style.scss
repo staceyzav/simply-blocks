@@ -1,0 +1,160 @@
+// Simply News — front-end + editor styles
+
+// Radius token — default 0 (square). Override in client config for rounded.
+:root {
+	--sn-radius: 0;
+}
+
+// ── Category filter bar ───────────────────────────────────────────────────────
+
+.sn-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 32px;
+}
+
+.sn-filter-btn {
+	padding: 8px 20px;
+	border: none;
+	box-shadow: inset 0 0 0 2px var( --client-accent, #333 );
+	border-radius: 0;
+	background: transparent;
+	font-family: var( --client-font-primary, sans-serif );
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease;
+	color: var( --client-accent, #333 );
+
+	&:hover,
+	&.is-active {
+		background: var( --client-accent, #333 );
+		color: var( --client-accent-text, #fff );
+		box-shadow: inset 0 0 0 2px var( --client-accent, #333 );
+	}
+}
+
+// Grid loading fade
+.sn-grid {
+	transition: opacity 0.2s ease;
+
+	&--loading {
+		opacity: 0.4;
+		pointer-events: none;
+	}
+}
+
+// No posts message
+.sn-no-posts {
+	opacity: 0.6;
+	font-style: italic;
+	padding: 40px 0;
+	text-align: center;
+}
+
+// ── Grid ──────────────────────────────────────────────────────────────────────
+
+.sn-feed {
+	display: grid;
+	grid-template-columns: repeat( var( --sn-columns, 3 ), 1fr );
+	column-gap: 32px;
+}
+
+.sn-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 60px;
+}
+
+// Stretched link covers the entire card
+.sn-card__link {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+}
+
+// Photo
+.sn-card__photo {
+	border-radius: var( --sn-radius, 0 );
+	overflow: hidden;
+	aspect-ratio: 16 / 9;
+	margin-bottom: 20px;
+	outline: 2px solid rgba( 255, 255, 255, 0.3 );
+	outline-offset: -2px;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center top;
+		display: block;
+		transition: transform 0.4s ease;
+	}
+}
+
+.sn-card:hover .sn-card__photo img {
+	transform: scale( 1.03 );
+}
+
+// Body
+.sn-card__body {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+// Category badge
+.sn-card .sn-card__category {
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	margin: 8px 0 0;
+	opacity: 0.7;
+}
+
+// Title
+.sn-card__title {
+	font-family: var( --client-font-primary, sans-serif );
+	font-size: 26px;
+	font-weight: 700;
+	line-height: 1.2;
+	margin: 0 0 5px;
+}
+
+// Date
+.sn-card .sn-card__date {
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	text-transform: capitalize;
+	opacity: 0.6;
+	margin: 0 0 16px;
+}
+
+// Read more
+.sn-card__read-more {
+	font-size: 14px;
+	font-weight: 700;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	margin-top: auto;
+	display: inline-block;
+}
+
+.sn-card:hover .sn-card__read-more {
+	text-decoration-thickness: 2px;
+}
+
+// Responsive
+@media ( max-width: 900px ) {
+	.sn-feed { grid-template-columns: repeat( 2, 1fr ); }
+}
+
+@media ( max-width: 560px ) {
+	.sn-feed { grid-template-columns: 1fr; }
+}
