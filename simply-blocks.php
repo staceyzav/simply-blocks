@@ -12,6 +12,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-github-updater.php';
+new Simply_GitHub_Updater( 'plugin', 'simply-blocks/simply-blocks.php', 'staceyzav/simply-blocks', '1.0.0' );
+
 add_action( 'enqueue_block_editor_assets', 'simply_blocks_enqueue_editor_brand' );
 function simply_blocks_enqueue_editor_brand() {
 	wp_enqueue_script(
