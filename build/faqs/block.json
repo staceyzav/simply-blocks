@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "simply-blocks/faqs",
+  "title": "Simply FAQs",
+  "category": "simply-blocks",
+  "description": "Accordion FAQ block. Filters by category, auto-shows category filter buttons when results span multiple categories.",
+  "keywords": [
+    "simply",
+    "faq",
+    "accordion",
+    "questions"
+  ],
+  "textdomain": "simply-blocks",
+  "supports": {
+    "html": false,
+    "color": false,
+    "spacing": false
+  },
+  "attributes": {
+    "source": {
+      "type": "string",
+      "default": "custom"
+    },
+    "category": {
+      "type": "string",
+      "default": ""
+    },
+    "limit": {
+      "type": "number",
+      "default": -1
+    },
+    "items": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

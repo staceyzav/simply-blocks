@@ -1,4 +1,8 @@
 .wp-block-simply-blocks-column {
   outline: 1px dashed rgba(0, 0, 0, 0.15);
   outline-offset: -2px;
-  min-height: 48px; }
+  min-height: 48px;
+  align-self: var(--sc-col-v-align, stretch);
+  display: flex;
+  flex-direction: column;
+  align-items: var(--sc-col-h-align, stretch); }

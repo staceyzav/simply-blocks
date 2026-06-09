@@ -1,1 +1,1 @@
-.simply-column{min-width:0}
+.simply-column{align-items:var(--sc-col-h-align,stretch);align-self:var(--sc-col-v-align,stretch);display:flex;flex-direction:column;min-width:0}

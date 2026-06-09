@@ -5,7 +5,7 @@
  * Description: Simply Design Gutenberg block library. Type "simply" in the editor to see all blocks.
  * Author:      Simply Design
  * Author URI:  https://simplydesign.com
- * Version:     1.0.16
+ * Version:     1.0.18
  * License:     GPL-2.0-or-later
  * Text Domain: simply-blocks
  */
@@ -13,7 +13,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-github-updater.php';
-new Simply_GitHub_Updater( 'plugin', plugin_basename( __FILE__ ), 'staceyzav/simply-blocks', '1.0.16' );
+new Simply_GitHub_Updater( 'plugin', plugin_basename( __FILE__ ), 'staceyzav/simply-blocks', '1.0.18' );
 
 add_action( 'enqueue_block_editor_assets', 'simply_blocks_enqueue_editor_brand' );
 function simply_blocks_enqueue_editor_brand() {
@@ -28,9 +28,11 @@ function simply_blocks_enqueue_editor_brand() {
 
 add_action( 'init', 'simply_blocks_register' );
 function simply_blocks_register() {
-	register_block_type( __DIR__ . '/build/container' );
 	register_block_type( __DIR__ . '/build/columns' );
 	register_block_type( __DIR__ . '/build/column' );
+	register_block_type( __DIR__ . '/build/faqs', [
+		'render_callback' => 'simply_blocks_render_faqs',
+	] );
 	register_block_type( __DIR__ . '/build/news', [
 		'render_callback' => 'simply_blocks_render_news',
 	] );
@@ -39,6 +41,9 @@ function simply_blocks_register() {
 	] );
 	register_block_type( __DIR__ . '/build/section', [
 		'render_callback' => 'simply_blocks_render_section',
+	] );
+	register_block_type( __DIR__ . '/build/events', [
+		'render_callback' => 'simply_blocks_render_events',
 	] );
 }
 
@@ -502,6 +507,235 @@ function simply_blocks_get_youtube_id( $url ) {
 		return $matches[1];
 	}
 	return false;
+}
+
+/**
+ * Render callback for Simply FAQs block.
+ * Delegates to sf_shortcode() so there's no logic duplication.
+ */
+function simply_blocks_render_faqs( $attrs ) {
+	$source = $attrs['source'] ?? 'cpt';
+
+	// ── Custom one-offs ─────────────────────────────────────────────────────
+	if ( $source === 'custom' ) {
+		$items = $attrs['items'] ?? [];
+		if ( empty( $items ) ) return '';
+
+		ob_start();
+		?>
+		<div class="sf-faqs-block">
+			<div class="sf-faqs">
+				<?php foreach ( $items as $item ) :
+					$question = wp_kses_post( $item['question'] ?? '' );
+					$answer   = wp_kses_post( $item['answer']   ?? '' );
+					if ( ! $question ) continue;
+				?>
+				<div class="sf-faq" data-category="">
+					<button class="sf-faq__question" aria-expanded="false">
+						<span class="sf-faq__question-text"><?php echo $question; ?></span>
+						<span class="sf-faq__icon" aria-hidden="true"></span>
+					</button>
+					<div class="sf-faq__answer">
+						<div class="sf-faq__answer-inner">
+							<?php echo wpautop( $answer ); ?>
+						</div>
+					</div>
+				</div>
+				<?php endforeach; ?>
+			</div>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
+
+	// ── CPT feed ────────────────────────────────────────────────────────────
+	if ( ! function_exists( 'sf_shortcode' ) ) {
+		return '<p style="font-style:italic;opacity:0.6">' . esc_html__( 'Simply FAQs plugin required.', 'simply-blocks' ) . '</p>';
+	}
+	return sf_shortcode( array(
+		'category' => sanitize_text_field( $attrs['category'] ?? '' ),
+		'limit'    => intval( $attrs['limit'] ?? -1 ),
+	) );
+}
+
+/**
+ * Render callback for Simply Events.
+ * Replicates the [simply_events] shortcode query so the block supports
+ * multi-category filtering (comma-separated slugs) and all sidebar options.
+ * Requires Simply Events plugin to be active.
+ */
+function simply_blocks_render_events( $attrs ) {
+	if ( ! post_type_exists( 'simply_event' ) ) {
+		return '<p style="font-style:italic;opacity:0.6">' . esc_html__( 'Simply Events plugin required.', 'simply-blocks' ) . '</p>';
+	}
+
+	$a = wp_parse_args( $attrs, [
+		'limit'       => 5,
+		'category'    => '',
+		'showFuture'  => true,
+		'showPast'    => false,
+		'order'       => 'ASC',
+		'view'        => 'grid',
+		'title'       => __( 'Upcoming Events', 'simply-blocks' ),
+		'showFilter'  => true,
+		'ctaText'     => '',
+		'ctaUrl'      => '',
+	] );
+
+	$limit       = absint( $a['limit'] );
+	$show_filter = (bool) $a['showFilter'];
+	$show_future = (bool) $a['showFuture'];
+	$show_past   = (bool) $a['showPast'];
+	$order       = strtoupper( $a['order'] ) === 'DESC' ? 'DESC' : 'ASC';
+	$view        = $a['view'] === 'list' ? 'list' : 'grid';
+	$title       = esc_html( $a['title'] );
+	$cta_text    = esc_html( $a['ctaText'] );
+	$cta_url     = esc_url( $a['ctaUrl'] );
+
+	$meta_query = [];
+	if ( $show_future && ! $show_past ) {
+		$meta_query[] = [
+			'key'     => '_event_start_date',
+			'value'   => current_time( 'Y-m-d' ),
+			'compare' => '>=',
+			'type'    => 'DATE',
+		];
+	} elseif ( $show_past && ! $show_future ) {
+		$meta_query[] = [
+			'key'     => '_event_start_date',
+			'value'   => current_time( 'Y-m-d' ),
+			'compare' => '<',
+			'type'    => 'DATE',
+		];
+	}
+	// Both or neither → no date restriction
+
+	$query_args = [
+		'post_type'      => 'simply_event',
+		'posts_per_page' => $limit,
+		'post_status'    => 'publish',
+		'meta_key'       => '_event_start_date',
+		'orderby'        => 'meta_value',
+		'order'          => $order,
+	];
+
+	if ( ! empty( $meta_query ) ) {
+		$query_args['meta_query'] = $meta_query;
+	}
+
+	if ( ! empty( $a['category'] ) ) {
+		$slugs = array_filter( array_map( 'trim', explode( ',', sanitize_text_field( $a['category'] ) ) ) );
+		if ( ! empty( $slugs ) ) {
+			$query_args['tax_query'] = [ [
+				'taxonomy' => 'simply_event_cat',
+				'field'    => 'slug',
+				'terms'    => $slugs,
+				'operator' => 'IN',
+			] ];
+		}
+	}
+
+	$events = new WP_Query( $query_args );
+
+	$categories = get_terms( [
+		'taxonomy'   => 'simply_event_cat',
+		'hide_empty' => true,
+		'orderby'    => 'name',
+	] );
+
+	ob_start();
+	?>
+	<div class="se-events-block">
+
+		<div class="se-events-header">
+
+			<h2 class="se-events-title"><?php echo $title; ?></h2>
+
+			<?php if ( $show_filter && ! is_wp_error( $categories ) && ! empty( $categories ) ) : ?>
+			<nav class="se-events-filter" aria-label="<?php esc_attr_e( 'Filter events by category', 'simply-blocks' ); ?>">
+				<button class="se-filter-btn is-active" data-cat="all">
+					<?php esc_html_e( 'All', 'simply-blocks' ); ?>
+				</button>
+				<?php foreach ( $categories as $cat ) : ?>
+				<button class="se-filter-btn" data-cat="<?php echo esc_attr( $cat->slug ); ?>">
+					<?php echo esc_html( $cat->name ); ?>
+				</button>
+				<?php endforeach; ?>
+			</nav>
+			<?php endif; ?>
+
+			<?php if ( $cta_url && $cta_text ) : ?>
+			<a href="<?php echo $cta_url; ?>" class="se-events-cta">
+				<?php echo $cta_text; ?>
+			</a>
+			<?php endif; ?>
+
+		</div>
+
+		<?php if ( $events->have_posts() ) : ?>
+		<div class="se-events-<?php echo esc_attr( $view ); ?>"><?php // phpcs:ignore ?>
+			<?php while ( $events->have_posts() ) : $events->the_post();
+				$post_id   = get_the_ID();
+				$start     = get_post_meta( $post_id, '_event_start_date', true );
+				$end       = get_post_meta( $post_id, '_event_end_date',   true );
+				$location  = get_post_meta( $post_id, '_event_location',   true );
+
+				$terms     = get_the_terms( $post_id, 'simply_event_cat' );
+				$cat_slugs = ( $terms && ! is_wp_error( $terms ) ) ? implode( ' ', wp_list_pluck( $terms, 'slug' ) ) : '';
+				$cat_label = ( $terms && ! is_wp_error( $terms ) ) ? $terms[0]->name : '';
+
+				$start_ts    = $start ? strtotime( $start ) : false;
+				$end_ts      = ( $end && $end !== $start ) ? strtotime( $end ) : false;
+				$start_day   = $start_ts ? date( 'd', $start_ts ) : '';
+				$start_month = $start_ts ? date( 'M', $start_ts ) : '';
+				$start_year  = $start_ts ? date( 'Y', $start_ts ) : '';
+				$end_day     = $end_ts   ? date( 'd', $end_ts )   : '';
+				$end_month   = $end_ts   ? date( 'M', $end_ts )   : '';
+			?>
+				<article class="se-event-card ss-card" data-cats="<?php echo esc_attr( $cat_slugs ); ?>">
+
+					<div class="se-event-card__date">
+						<div class="se-event-card__date-start">
+							<span class="se-event-card__day"><?php echo esc_html( $start_day ); ?></span>
+							<span class="se-event-card__month"><?php echo esc_html( strtoupper( $start_month ) ); ?></span>
+						</div>
+						<?php if ( $end_ts ) : ?>
+						<div class="se-event-card__date-end">
+							<span class="se-event-card__sep">-</span>
+							<div class="se-event-card__date-end-col">
+								<span class="se-event-card__day se-event-card__day--small"><?php echo esc_html( $end_day ); ?></span>
+								<span class="se-event-card__month"><?php echo esc_html( strtoupper( $end_month ) ); ?></span>
+							</div>
+						</div>
+						<?php endif; ?>
+						<?php if ( $start_year ) : ?>
+						<span class="se-event-card__year"><?php echo esc_html( $start_year ); ?></span>
+						<?php endif; ?>
+					</div>
+
+					<div class="se-event-card__body ss-card-body">
+						<h3 class="se-event-card__title">
+							<a href="<?php echo esc_url( get_permalink() ); ?>" class="se-event-card__title-link"><?php the_title(); ?></a>
+						</h3>
+						<?php if ( $location ) : ?>
+						<p class="se-event-card__location"><?php echo esc_html( $location ); ?></p>
+						<?php endif; ?>
+						<?php if ( $cat_label ) : ?>
+						<p class="se-event-card__category"><?php echo esc_html( $cat_label ); ?></p>
+						<?php endif; ?>
+					</div>
+
+				</article>
+			<?php endwhile; wp_reset_postdata(); ?>
+		</div>
+
+		<?php else : ?>
+		<p class="se-events-empty"><?php esc_html_e( 'No upcoming events scheduled.', 'simply-blocks' ); ?></p>
+		<?php endif; ?>
+
+	</div>
+	<?php
+	return ob_get_clean();
 }
 
 function simply_blocks_styles( $props ) {

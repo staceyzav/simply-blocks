@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "simply-blocks/events",
+  "title": "Simply Events",
+  "category": "simply-blocks",
+  "description": "Upcoming events feed from the Simply Events CPT. Category filters, CTA link, and limit control.",
+  "keywords": [
+    "simply",
+    "events",
+    "calendar",
+    "upcoming",
+    "schedule"
+  ],
+  "textdomain": "simply-blocks",
+  "supports": {
+    "html": false,
+    "color": false,
+    "spacing": false
+  },
+  "attributes": {
+    "limit": {
+      "type": "number",
+      "default": 5
+    },
+    "category": {
+      "type": "string",
+      "default": ""
+    },
+    "showFuture": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPast": {
+      "type": "boolean",
+      "default": false
+    },
+    "order": {
+      "type": "string",
+      "default": "ASC"
+    },
+    "view": {
+      "type": "string",
+      "default": "grid"
+    },
+    "title": {
+      "type": "string",
+      "default": "Upcoming Events"
+    },
+    "showFilter": {
+      "type": "boolean",
+      "default": true
+    },
+    "ctaText": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

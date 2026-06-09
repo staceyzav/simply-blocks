@@ -1,0 +1,23 @@
+.sf-editor-wrap {
+  min-height: 60px; }
+
+.sf-editor-empty {
+  font-style: italic;
+  opacity: 0.5;
+  padding: 16px 0 8px;
+  margin: 0; }
+
+.sf-editor-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 12px; }
+
+.sf-editor-item {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 16px 0 8px; }
+  .sf-editor-item .components-base-control {
+    margin-bottom: 8px; }
+
+.sf-editor-add {
+  margin-top: 4px; }
