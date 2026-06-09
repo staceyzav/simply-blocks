@@ -1,8 +1,26 @@
 // Simply Columns — editor-only styles
-// Each simply-column block is a direct child and a real grid item,
-// so no CSS trickery needed — the grid works naturally.
+//
+// The grid container (.simply-columns) has .block-editor-inner-blocks as its
+// only direct child in the editor, so we push the grid down to
+// .block-editor-block-list__layout where the actual column blocks live.
+// Explicit per-count rules (no media query) so the preview is always visible.
 
 .wp-block-simply-blocks-columns {
 	outline: 2px dashed rgba( 0, 0, 0, 0.12 );
 	outline-offset: -2px;
+
+	.block-editor-inner-blocks {
+		width: 100%;
+	}
+
+	.block-editor-block-list__layout {
+		display: grid !important;
+		gap: var( --sc-gap, 24px ) !important;
+	}
+
+	&.simply-columns--1 .block-editor-block-list__layout { grid-template-columns: 1fr !important; }
+	&.simply-columns--2 .block-editor-block-list__layout { grid-template-columns: repeat( 2, 1fr ) !important; }
+	&.simply-columns--3 .block-editor-block-list__layout { grid-template-columns: repeat( 3, 1fr ) !important; }
+	&.simply-columns--4 .block-editor-block-list__layout { grid-template-columns: repeat( 4, 1fr ) !important; }
+	&.simply-columns--5 .block-editor-block-list__layout { grid-template-columns: repeat( 5, 1fr ) !important; }
 }
