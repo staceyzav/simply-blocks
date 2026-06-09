@@ -6,7 +6,7 @@ export default function Edit() {
 
 	return (
 		<div { ...blockProps }>
-			<InnerBlocks />
+			<InnerBlocks renderAppender={ InnerBlocks.ButtonBlockAppender } />
 		</div>
 	);
 }
