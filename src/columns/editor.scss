@@ -19,6 +19,13 @@
 	.block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) {
 		display: grid !important;
 		gap: var( --sc-gap, 24px ) !important;
+
+		// Gutenberg adds its own margins to each block wrapper on top of the
+		// CSS gap, making the editor gap look huge. Zero them out so the
+		// spacing matches the frontend.
+		> .block-editor-block-list__block {
+			margin: 0 !important;
+		}
 	}
 
 	&.simply-columns--1 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: 1fr !important; }
