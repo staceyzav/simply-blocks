@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "simply-blocks/columns",
+	"title": "Simply Columns",
+	"category": "simply-blocks",
+	"description": "Responsive column layout — 1 to 5 equal columns.",
+	"keywords": [ "simply", "columns", "grid", "layout" ],
+	"textdomain": "simply-blocks",
+	"supports": {
+		"html": false,
+		"color": false,
+		"spacing": false
+	},
+	"attributes": {
+		"columns": {
+			"type": "number",
+			"default": 3
+		},
+		"gap": {
+			"type": "number",
+			"default": 24
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}
