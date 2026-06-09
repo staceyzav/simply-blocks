@@ -1,9 +1,8 @@
 // Simply Columns — editor-only styles
 //
-// The grid container (.simply-columns) has .block-editor-inner-blocks as its
-// only direct child in the editor, so we push the grid down to
-// .block-editor-block-list__layout where the actual column blocks live.
-// Explicit per-count rules (no media query) so the preview is always visible.
+// :has() targets ONLY the outer block list layout (the one containing
+// the simply-column blocks), leaving each column's inner layout
+// completely untouched so Gutenberg's appender and selection work normally.
 
 .wp-block-simply-blocks-columns {
 	outline: 2px dashed rgba( 0, 0, 0, 0.12 );
@@ -13,22 +12,14 @@
 		width: 100%;
 	}
 
-	.block-editor-block-list__layout {
+	.block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) {
 		display: grid !important;
 		gap: var( --sc-gap, 24px ) !important;
 	}
 
-	&.simply-columns--1 .block-editor-block-list__layout { grid-template-columns: 1fr !important; }
-	&.simply-columns--2 .block-editor-block-list__layout { grid-template-columns: repeat( 2, 1fr ) !important; }
-	&.simply-columns--3 .block-editor-block-list__layout { grid-template-columns: repeat( 3, 1fr ) !important; }
-	&.simply-columns--4 .block-editor-block-list__layout { grid-template-columns: repeat( 4, 1fr ) !important; }
-	&.simply-columns--5 .block-editor-block-list__layout { grid-template-columns: repeat( 5, 1fr ) !important; }
-
-	// Reset inner column layouts — they inherit the grid template via the
-	// descendant selector above. Don't touch display (breaks Gutenberg's
-	// appender UI); just unset the column template so they stack normally.
-	.wp-block-simply-blocks-column .block-editor-block-list__layout {
-		grid-template-columns: unset !important;
-		gap: unset !important;
-	}
+	&.simply-columns--1 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: 1fr !important; }
+	&.simply-columns--2 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: repeat( 2, 1fr ) !important; }
+	&.simply-columns--3 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: repeat( 3, 1fr ) !important; }
+	&.simply-columns--4 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: repeat( 4, 1fr ) !important; }
+	&.simply-columns--5 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: repeat( 5, 1fr ) !important; }
 }
