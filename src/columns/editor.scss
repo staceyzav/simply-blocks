@@ -5,8 +5,16 @@
 	outline: 2px dashed rgba( 0, 0, 0, 0.15 );
 	outline-offset: -2px;
 
-	// Show grid in the editor so you can see the column layout
-	> .block-editor-inner-blocks > .block-editor-block-list__layout {
+	// The inner-blocks wrapper sits between the block and the layout div.
+	// Make it fill the full width so the nested grid has room.
+	.block-editor-inner-blocks {
+		width: 100%;
+	}
+
+	// Apply the grid to the block list layout regardless of nesting depth.
+	// Gutenberg adds an extra wrapper div between inner-blocks and the layout
+	// div in some WP versions, so we use a descendant selector here.
+	.block-editor-block-list__layout {
 		display: grid;
 		gap: var( --sc-gap, 24px );
 		grid-template-columns: var( --sc-editor-cols, 1fr );
