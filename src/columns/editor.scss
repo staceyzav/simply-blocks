@@ -24,11 +24,11 @@
 	&.simply-columns--4 .block-editor-block-list__layout { grid-template-columns: repeat( 4, 1fr ) !important; }
 	&.simply-columns--5 .block-editor-block-list__layout { grid-template-columns: repeat( 5, 1fr ) !important; }
 
-	// Reset inner column layouts — they inherit the grid via the descendant
-	// selector above, causing all columns to squish inside the first cell.
+	// Reset inner column layouts — they inherit the grid template via the
+	// descendant selector above. Don't touch display (breaks Gutenberg's
+	// appender UI); just unset the column template so they stack normally.
 	.wp-block-simply-blocks-column .block-editor-block-list__layout {
-		display: block !important;
-		grid-template-columns: none !important;
-		gap: 0 !important;
+		grid-template-columns: unset !important;
+		gap: unset !important;
 	}
 }
