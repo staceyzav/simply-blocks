@@ -1,0 +1,7 @@
+// Simply Column — front-end styles
+// Direct grid item inside .simply-columns.
+// min-width: 0 prevents content overflow from blowing out the column.
+
+.simply-column {
+	min-width: 0;
+}
