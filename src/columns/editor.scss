@@ -8,7 +8,11 @@
 	outline: 2px dashed rgba( 0, 0, 0, 0.12 );
 	outline-offset: -2px;
 
-	.block-editor-inner-blocks {
+	// The frontend CSS grid on .simply-columns--N makes .block-editor-inner-blocks
+	// (the only direct child) occupy just 1/N of the width. Span all columns
+	// so the inner-blocks wrapper always takes full width in the editor.
+	> .block-editor-inner-blocks {
+		grid-column: 1 / -1;
 		width: 100%;
 	}
 
