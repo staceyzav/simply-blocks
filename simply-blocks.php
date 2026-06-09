@@ -482,7 +482,7 @@ function simply_blocks_render_logo_slider( $attrs ) {
 
 	$logos_html = '';
 	foreach ( $items as $item ) {
-		$img   = '<img src="' . esc_url( $item['url'] ) . '" alt="' . esc_attr( $item['alt'] ) . '" loading="lazy">';
+		$img   = '<img src="' . esc_url( $item['url'] ) . '" alt="' . esc_attr( $item['alt'] ) . '" loading="eager">';
 		$link  = $item['link'] ?? '';
 		$class = 'sls-logo' . ( ! empty( $item['boost'] ) ? ' sls-logo--boost' : '' );
 		$logos_html .= $link
