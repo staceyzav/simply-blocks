@@ -92,9 +92,13 @@
       "type": "number",
       "default": 0
     },
-    "bgImagePosition": {
+    "bgPositionX": {
       "type": "string",
-      "default": "center center"
+      "default": "center"
+    },
+    "bgPositionY": {
+      "type": "string",
+      "default": "center"
     },
     "bgImageSize": {
       "type": "string",

@@ -20,8 +20,20 @@ const BG_TYPES = [
 
 const VALIGN_OPTIONS = [
 	{ label: __( 'Top',    'simply-blocks' ), value: 'flex-start' },
-	{ label: __( 'Center', 'simply-blocks' ), value: 'center' },
+	{ label: __( 'Middle', 'simply-blocks' ), value: 'center' },
 	{ label: __( 'Bottom', 'simply-blocks' ), value: 'flex-end' },
+];
+
+const BG_POS_X = [
+	{ label: __( 'Left',   'simply-blocks' ), value: 'left' },
+	{ label: __( 'Center', 'simply-blocks' ), value: 'center' },
+	{ label: __( 'Right',  'simply-blocks' ), value: 'right' },
+];
+
+const BG_POS_Y = [
+	{ label: __( 'Top',    'simply-blocks' ), value: 'top' },
+	{ label: __( 'Center', 'simply-blocks' ), value: 'center' },
+	{ label: __( 'Bottom', 'simply-blocks' ), value: 'bottom' },
 ];
 
 const BG_POSITIONS = [
@@ -60,7 +72,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	const {
 		sectionColor, innerWidth, innerWidthUnit, paddingTop, paddingBottom, paddingLeft, paddingRight, paddingUnit,
 		marginTop, marginBottom, minHeight, minHeightUnit, verticalAlign,
-		bgType, bgColor, bgColorOpacity, bgImageUrl, bgImageId, bgImagePosition, bgImageSize, bgImageFixed,
+		bgType, bgColor, bgColorOpacity, bgImageUrl, bgImageId, bgPositionX, bgPositionY, bgImageSize, bgImageFixed,
 		bgVideoUrl, bgVideoId, bgVideoWebmUrl, bgVideoWebmId, bgVideoPosterUrl,
 		overlayColor, overlayOpacity, overlayBlendMode,
 	} = attributes;
@@ -79,7 +91,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	// Bg image inline styles
 	const bgImageStyle = bgType === 'image' && bgImageUrl ? {
 		backgroundImage:      `url(${ bgImageUrl })`,
-		backgroundPosition:   bgImagePosition,
+		backgroundPosition:   `${ bgPositionX } ${ bgPositionY }`,
 		backgroundSize:       bgImageSize,
 		backgroundAttachment: bgImageFixed ? 'fixed' : 'scroll',
 	} : null;
@@ -147,7 +159,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					/>
 					{ minHeight > 0 && (
 						<SelectControl
-							label={ __( 'Vertical align', 'simply-blocks' ) }
+							label={ __( 'Content vertical align', 'simply-blocks' ) }
 							value={ verticalAlign }
 							options={ VALIGN_OPTIONS }
 							onChange={ ( value ) => setAttributes( { verticalAlign: value } ) }
@@ -267,10 +279,16 @@ export default function Edit( { attributes, setAttributes } ) {
 								/>
 							</MediaUploadCheck>
 							<SelectControl
-								label={ __( 'Position', 'simply-blocks' ) }
-								value={ bgImagePosition }
-								options={ BG_POSITIONS }
-								onChange={ ( value ) => setAttributes( { bgImagePosition: value } ) }
+								label={ __( 'Image horizontal focus', 'simply-blocks' ) }
+								value={ bgPositionX }
+								options={ BG_POS_X }
+								onChange={ ( value ) => setAttributes( { bgPositionX: value } ) }
+							/>
+							<SelectControl
+								label={ __( 'Image vertical focus', 'simply-blocks' ) }
+								value={ bgPositionY }
+								options={ BG_POS_Y }
+								onChange={ ( value ) => setAttributes( { bgPositionY: value } ) }
 							/>
 							<SelectControl
 								label={ __( 'Size', 'simply-blocks' ) }

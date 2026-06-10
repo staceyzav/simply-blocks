@@ -5,7 +5,7 @@
  * Description: Simply Design Gutenberg block library. Type "simply" in the editor to see all blocks.
  * Author:      Simply Design
  * Author URI:  https://simplydesign.com
- * Version:     1.0.22
+ * Version:     1.0.23
  * License:     GPL-2.0-or-later
  * Text Domain: simply-blocks
  */
@@ -13,7 +13,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-github-updater.php';
-new Simply_GitHub_Updater( 'plugin', plugin_basename( __FILE__ ), 'staceyzav/simply-blocks', '1.0.22' );
+new Simply_GitHub_Updater( 'plugin', plugin_basename( __FILE__ ), 'staceyzav/simply-blocks', '1.0.23' );
 
 add_action( 'enqueue_block_editor_assets', 'simply_blocks_enqueue_editor_brand' );
 function simply_blocks_enqueue_editor_brand() {
@@ -77,11 +77,13 @@ function simply_blocks_render_section( $attrs, $content ) {
 		'minHeight'        => 0,
 		'minHeightUnit'    => 'px',
 		'verticalAlign'    => 'center',
+		'bgPositionX'      => 'center',
+		'bgPositionY'      => 'center',
 		'bgType'           => 'none',
 		'bgColor'          => '#ffffff',
 		'bgColorOpacity'   => 100,
 		'bgImageUrl'       => '',
-		'bgImagePosition'  => 'center center',
+		'bgImagePosition'  => 'center center', // legacy — use bgPositionX/bgPositionY
 		'bgImageSize'      => 'cover',
 		'bgImageFixed'     => false,
 		'bgVideoUrl'       => '',
@@ -139,7 +141,7 @@ function simply_blocks_render_section( $attrs, $content ) {
 	if ( $a['bgType'] === 'image' && ! empty( $a['bgImageUrl'] ) ) {
 		$bg_styles = simply_blocks_styles( [
 			'background-image'      => 'url(' . esc_url( $a['bgImageUrl'] ) . ')',
-			'background-position'   => sanitize_text_field( $a['bgImagePosition'] ),
+			'background-position'   => sanitize_text_field( $a['bgPositionX'] ) . ' ' . sanitize_text_field( $a['bgPositionY'] ),
 			'background-size'       => sanitize_text_field( $a['bgImageSize'] ),
 			'background-attachment' => $a['bgImageFixed'] ? 'fixed' : 'scroll',
 		] );
