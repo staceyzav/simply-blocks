@@ -132,6 +132,15 @@
 			color: var( --client-section-light-heading, #333333 );
 		}
 
+		// Each heading bumped +0.2rem above its Simply Starter default, hierarchy preserved.
+		// Override any of these with --ss-hero-h* tokens in your branded plugin.
+		h1 { font-size: var( --ss-hero-h1, calc( clamp( 2.25rem, 5vw,    3.5rem ) + 0.2rem ) ); }
+		h2 { font-size: var( --ss-hero-h2, calc( clamp( 1.75rem, 3.5vw,  2.6rem ) + 0.2rem ) ); }
+		h3 { font-size: var( --ss-hero-h3, calc( clamp( 1.4rem,  2.75vw, 2rem   ) + 0.2rem ) ); }
+		h4 { font-size: var( --ss-hero-h4, 1.8rem ); }
+		h5 { font-size: var( --ss-hero-h5, 1.4rem ); }
+		h6 { font-size: var( --ss-hero-h6, 1.2rem ); }
+
 		p, li {
 			font-size: var( --ss-hero-font-size, 1.125em );
 		}
