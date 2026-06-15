@@ -5,7 +5,7 @@
  * Description: Simply Design Gutenberg block library. Type "simply" in the editor to see all blocks.
  * Author:      Simply Design
  * Author URI:  https://simplydesign.com
- * Version:     1.0.23
+ * Version:     1.0.24
  * License:     GPL-2.0-or-later
  * Text Domain: simply-blocks
  */
@@ -129,7 +129,11 @@ function simply_blocks_render_section( $attrs, $content ) {
 	$outer_style_str = simply_blocks_styles( $outer_styles );
 
 	// ── Wrapper attributes ──────────────────────────────────────────
-	$classes = array_filter( [ 'simply-section', sanitize_html_class( $a['sectionColor'] ) ] );
+	$hero_types = [ 'is-home-hero', 'is-page-hero' ];
+	$classes    = array_filter( [ 'simply-section', sanitize_html_class( $a['sectionColor'] ) ] );
+	if ( in_array( $a['sectionColor'], $hero_types, true ) ) {
+		$classes[] = 'hero';
+	}
 
 	$wrapper_attrs = get_block_wrapper_attributes( [
 		'class' => implode( ' ', $classes ),

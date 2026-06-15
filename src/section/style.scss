@@ -118,4 +118,26 @@
 			color: var( --client-section-brand2-heading, #ffffff );
 		}
 	}
+
+	// ── Hero variants ──────────────────────────────────────────────
+	// Both hero types default to the light color scheme.
+	// The .hero class is always present alongside .is-home-hero / .is-page-hero —
+	// use .simply-section.hero in branded CSS to target both at once.
+
+	&.hero {
+		background-color: var( --client-section-light-bg, #f2f2f2 );
+		color: var( --client-section-light-text, #1a1a1a );
+
+		h1, h2, h3, h4, h5, h6 {
+			color: var( --client-section-light-heading, #333333 );
+		}
+
+		p, li {
+			font-size: var( --ss-hero-font-size, 1.125em );
+		}
+	}
+
+	// Individual hooks for per-type branded overrides
+	&.is-home-hero {}
+	&.is-page-hero {}
 }

@@ -4,12 +4,16 @@ import { useBlockProps, InnerBlocks, InspectorControls, MediaUpload, MediaUpload
 import { PanelBody, SelectControl, RangeControl, ColorPicker, TextControl, ToggleControl, Button, BaseControl } from '@wordpress/components';
 
 const SECTION_COLORS = [
-	{ label: __( 'None',    'simply-blocks' ), value: '' },
-	{ label: __( 'Dark',    'simply-blocks' ), value: 'is-dark' },
-	{ label: __( 'Light',   'simply-blocks' ), value: 'is-light' },
-	{ label: __( 'Brand 1', 'simply-blocks' ), value: 'is-brand-1' },
-	{ label: __( 'Brand 2', 'simply-blocks' ), value: 'is-brand-2' },
+	{ label: __( 'None',      'simply-blocks' ), value: '' },
+	{ label: __( 'Dark',      'simply-blocks' ), value: 'is-dark' },
+	{ label: __( 'Light',     'simply-blocks' ), value: 'is-light' },
+	{ label: __( 'Brand 1',   'simply-blocks' ), value: 'is-brand-1' },
+	{ label: __( 'Brand 2',   'simply-blocks' ), value: 'is-brand-2' },
+	{ label: __( 'Home Hero', 'simply-blocks' ), value: 'is-home-hero' },
+	{ label: __( 'Page Hero', 'simply-blocks' ), value: 'is-page-hero' },
 ];
+
+const HERO_TYPES = [ 'is-home-hero', 'is-page-hero' ];
 
 const BG_TYPES = [
 	{ label: __( 'None',  'simply-blocks' ), value: 'none' },
@@ -96,8 +100,10 @@ export default function Edit( { attributes, setAttributes } ) {
 		backgroundAttachment: bgImageFixed ? 'fixed' : 'scroll',
 	} : null;
 
+	const isHero = HERO_TYPES.includes( sectionColor );
+
 	const blockProps = useBlockProps( {
-		className: [ 'simply-section', sectionColor ].filter( Boolean ).join( ' ' ),
+		className: [ 'simply-section', sectionColor, isHero ? 'hero' : '' ].filter( Boolean ).join( ' ' ),
 		style: outerStyle,
 	} );
 
