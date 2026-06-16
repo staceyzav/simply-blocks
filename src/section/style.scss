@@ -149,4 +149,16 @@
 	// Individual hooks for per-type branded overrides
 	&.is-home-hero {}
 	&.is-page-hero {}
+
+	// ss-card always shows dark text — breaks out of section heading color cascade.
+	// Specificity (0,3,1) beats the (0,2,1) section heading rules above.
+	&.is-dark .ss-card,
+	&.is-light .ss-card,
+	&.is-brand-1 .ss-card,
+	&.is-brand-2 .ss-card,
+	&.hero .ss-card {
+		h1, h2, h3, h4, h5, h6 {
+			color: var( --client-dark-neutral, #1a1a1a );
+		}
+	}
 }
