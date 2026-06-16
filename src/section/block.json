@@ -40,9 +40,12 @@
 		"bgVideoWebmUrl":    { "type": "string",  "default": "" },
 		"bgVideoWebmId":     { "type": "number",  "default": 0 },
 		"bgVideoPosterUrl":  { "type": "string",  "default": "" },
-		"overlayColor":      { "type": "string",  "default": "#000000" },
-		"overlayOpacity":    { "type": "number",  "default": 0 },
-		"overlayBlendMode":  { "type": "string",  "default": "normal" }
+		"overlayColor":           { "type": "string",  "default": "#000000" },
+		"overlayOpacity":         { "type": "number",  "default": 0 },
+		"overlayBlendMode":       { "type": "string",  "default": "normal" },
+		"mobilePaddingEnabled":   { "type": "boolean", "default": false },
+		"mobilePaddingTop":       { "type": "number",  "default": 40 },
+		"mobilePaddingBottom":    { "type": "number",  "default": 40 }
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle":  "file:./index.css",

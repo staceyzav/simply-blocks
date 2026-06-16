@@ -64,34 +64,37 @@ function simply_blocks_category( $categories ) {
  */
 function simply_blocks_render_section( $attrs, $content ) {
 	$a = wp_parse_args( $attrs, [
-		'sectionColor'     => '',
-		'innerWidth'       => 1200,
-		'paddingTop'       => 80,
-		'paddingBottom'    => 80,
-		'paddingLeft'      => 5,
-		'paddingRight'     => 5,
-		'paddingUnit'      => 'px',
-		'marginTop'        => 0,
-		'marginBottom'     => 0,
-		'innerWidthUnit'   => 'px',
-		'minHeight'        => 0,
-		'minHeightUnit'    => 'px',
-		'verticalAlign'    => 'center',
-		'bgPositionX'      => 'center',
-		'bgPositionY'      => 'center',
-		'bgType'           => 'none',
-		'bgColor'          => '#ffffff',
-		'bgColorOpacity'   => 100,
-		'bgImageUrl'       => '',
-		'bgImagePosition'  => 'center center', // legacy — use bgPositionX/bgPositionY
-		'bgImageSize'      => 'cover',
-		'bgImageFixed'     => false,
-		'bgVideoUrl'       => '',
-		'bgVideoWebmUrl'   => '',
-		'bgVideoPosterUrl' => '',
-		'overlayColor'     => '#000000',
-		'overlayOpacity'   => 0,
-		'overlayBlendMode' => 'normal',
+		'sectionColor'          => '',
+		'innerWidth'            => 1200,
+		'paddingTop'            => 80,
+		'paddingBottom'         => 80,
+		'paddingLeft'           => 5,
+		'paddingRight'          => 5,
+		'paddingUnit'           => 'px',
+		'marginTop'             => 0,
+		'marginBottom'          => 0,
+		'innerWidthUnit'        => 'px',
+		'minHeight'             => 0,
+		'minHeightUnit'         => 'px',
+		'verticalAlign'         => 'center',
+		'bgPositionX'           => 'center',
+		'bgPositionY'           => 'center',
+		'bgType'                => 'none',
+		'bgColor'               => '#ffffff',
+		'bgColorOpacity'        => 100,
+		'bgImageUrl'            => '',
+		'bgImagePosition'       => 'center center',
+		'bgImageSize'           => 'cover',
+		'bgImageFixed'          => false,
+		'bgVideoUrl'            => '',
+		'bgVideoWebmUrl'        => '',
+		'bgVideoPosterUrl'      => '',
+		'overlayColor'          => '#000000',
+		'overlayOpacity'        => 0,
+		'overlayBlendMode'      => 'normal',
+		'mobilePaddingEnabled'  => false,
+		'mobilePaddingTop'      => 40,
+		'mobilePaddingBottom'   => 40,
 	] );
 
 	// ── Outer section styles ────────────────────────────────────────
@@ -221,8 +224,27 @@ function simply_blocks_render_section( $attrs, $content ) {
 		'padding-right' => absint( $a['paddingRight'] ) . $padding_unit,
 	] );
 
+	// ── Mobile padding override ─────────────────────────────────────
+	$mobile_style_html = '';
+	if ( ! empty( $a['mobilePaddingEnabled'] ) ) {
+		$uid = wp_unique_id( 'sb-sec-' );
+		$classes[] = $uid;
+		$mobile_style_html = sprintf(
+			'<style>@media(max-width:767px){.%s{padding-top:%dpx!important;padding-bottom:%dpx!important;}}</style>',
+			esc_attr( $uid ),
+			absint( $a['mobilePaddingTop'] ),
+			absint( $a['mobilePaddingBottom'] )
+		);
+		// Rebuild wrapper_attrs with updated classes
+		$wrapper_attrs = get_block_wrapper_attributes( [
+			'class' => implode( ' ', $classes ),
+			'style' => $outer_style_str,
+		] );
+	}
+
 	return sprintf(
-		'<div %s>%s%s%s<div class="simply-section__inner" style="%s">%s</div></div>',
+		'%s<div %s>%s%s%s<div class="simply-section__inner" style="%s">%s</div></div>',
+		$mobile_style_html,
 		$wrapper_attrs,
 		$bg_image_html,
 		$bg_video_html,

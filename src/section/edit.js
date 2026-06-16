@@ -79,6 +79,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		bgType, bgColor, bgColorOpacity, bgImageUrl, bgImageId, bgPositionX, bgPositionY, bgImageSize, bgImageFixed,
 		bgVideoUrl, bgVideoId, bgVideoWebmUrl, bgVideoWebmId, bgVideoPosterUrl,
 		overlayColor, overlayOpacity, overlayBlendMode,
+		mobilePaddingEnabled, mobilePaddingTop, mobilePaddingBottom,
 	} = attributes;
 
 	// Outer section styles
@@ -222,6 +223,27 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ ( value ) => setAttributes( { marginBottom: value } ) }
 						min={ 0 } max={ 200 } step={ 4 }
 					/>
+					<ToggleControl
+						label={ __( 'Override padding on mobile', 'simply-blocks' ) }
+						checked={ mobilePaddingEnabled }
+						onChange={ ( value ) => setAttributes( { mobilePaddingEnabled: value } ) }
+					/>
+					{ mobilePaddingEnabled && (
+						<>
+							<RangeControl
+								label={ __( 'Mobile padding top (px)', 'simply-blocks' ) }
+								value={ mobilePaddingTop }
+								onChange={ ( value ) => setAttributes( { mobilePaddingTop: value } ) }
+								min={ 0 } max={ 300 } step={ 4 }
+							/>
+							<RangeControl
+								label={ __( 'Mobile padding bottom (px)', 'simply-blocks' ) }
+								value={ mobilePaddingBottom }
+								onChange={ ( value ) => setAttributes( { mobilePaddingBottom: value } ) }
+								min={ 0 } max={ 300 } step={ 4 }
+							/>
+						</>
+					) }
 				</PanelBody>
 
 				{ /* ── BACKGROUND ── */ }

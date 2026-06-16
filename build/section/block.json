@@ -139,6 +139,18 @@
     "overlayBlendMode": {
       "type": "string",
       "default": "normal"
+    },
+    "mobilePaddingEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "mobilePaddingTop": {
+      "type": "number",
+      "default": 40
+    },
+    "mobilePaddingBottom": {
+      "type": "number",
+      "default": 40
     }
   },
   "editorScript": "file:./index.js",
