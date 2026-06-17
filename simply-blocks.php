@@ -5,7 +5,7 @@
  * Description: Simply Design Gutenberg block library. Type "simply" in the editor to see all blocks.
  * Author:      Simply Design
  * Author URI:  https://simplydesign.com
- * Version:     1.0.27
+ * Version:     1.0.28
  * License:     GPL-2.0-or-later
  * Text Domain: simply-blocks
  */
@@ -122,11 +122,19 @@ function simply_blocks_render_section( $attrs, $content ) {
 	}
 
 	if ( $a['bgType'] === 'color' && ! empty( $a['bgColor'] ) ) {
-		$opacity                           = max( 0, min( 100, absint( $a['bgColorOpacity'] ) ) ) / 100;
-		$outer_styles['background-color'] = simply_blocks_hex_to_rgba(
-			sanitize_hex_color( $a['bgColor'] ),
-			$opacity
-		);
+		$opacity  = max( 0, min( 100, absint( $a['bgColorOpacity'] ) ) ) / 100;
+		$raw      = sanitize_text_field( $a['bgColor'] );
+		$hex_body = ltrim( $raw, '#' );
+		if ( strlen( $hex_body ) === 8 ) {
+			// 8-digit hex (#rrggbbaa) from Gutenberg ColorPicker — strip alpha channel
+			$raw = '#' . substr( $hex_body, 0, 6 );
+		}
+		if ( preg_match( '/^#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$/', $raw ) ) {
+			$outer_styles['background-color'] = simply_blocks_hex_to_rgba( $raw, $opacity );
+		} else {
+			// rgba(), rgb(), hsl(), named color — pass through directly
+			$outer_styles['background-color'] = $raw;
+		}
 	}
 
 	$outer_style_str = simply_blocks_styles( $outer_styles );
