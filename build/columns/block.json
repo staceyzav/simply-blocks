@@ -25,6 +25,14 @@
     "gap": {
       "type": "number",
       "default": 24
+    },
+    "gapUnit": {
+      "type": "string",
+      "default": "px"
+    },
+    "gridTemplate": {
+      "type": "string",
+      "default": ""
     }
   },
   "editorScript": "file:./index.js",

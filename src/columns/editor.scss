@@ -3,6 +3,10 @@
 // :has() targets ONLY the outer block list layout (the one containing
 // the simply-column blocks), leaving each column's inner layout
 // completely untouched so Gutenberg's appender and selection work normally.
+//
+// --sc-template: custom grid-template-columns set inline on the outer block
+// element and inherited by the block-list layout — var() picks it up or falls
+// back to the equal-column default.
 
 .wp-block-simply-blocks-columns {
 	outline: 2px dashed rgba( 0, 0, 0, 0.12 );
@@ -28,9 +32,9 @@
 		}
 	}
 
-	&.simply-columns--1 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: 1fr !important; }
-	&.simply-columns--2 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: repeat( 2, 1fr ) !important; }
-	&.simply-columns--3 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: repeat( 3, 1fr ) !important; }
-	&.simply-columns--4 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: repeat( 4, 1fr ) !important; }
-	&.simply-columns--5 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: repeat( 5, 1fr ) !important; }
+	&.simply-columns--1 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, 1fr ) !important; }
+	&.simply-columns--2 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ) !important; }
+	&.simply-columns--3 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ) !important; }
+	&.simply-columns--4 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ) !important; }
+	&.simply-columns--5 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ) !important; }
 }

@@ -1,9 +1,12 @@
 // Simply Columns — front-end styles
 //
 // Responsive breakpoints:
-//   < 640px   → 1 column (all layouts stack)
+//   < 640px   → 1 column (all layouts stack; custom template ignored)
 //   640–1023px → tablet: 3-5 col layouts compress to 2-3
 //   ≥ 1024px  → full columns as configured
+//
+// --sc-template: custom grid-template-columns value set inline when the
+//   "Custom column widths" field is filled in. Falls back to equal 1fr columns.
 
 .simply-columns {
 	display: grid;
@@ -11,16 +14,17 @@
 	grid-template-columns: 1fr;
 
 	@media ( min-width: 640px ) {
-		&--2 { grid-template-columns: repeat( 2, 1fr ); }
-		&--3 { grid-template-columns: repeat( 3, 1fr ); }
-		&--4 { grid-template-columns: repeat( 2, 1fr ); }
-		&--5 { grid-template-columns: repeat( 3, 1fr ); }
+		&--2 { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ); }
+		&--3 { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ); }
+		&--4 { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ); }
+		&--5 { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ); }
 	}
 
 	@media ( min-width: 1024px ) {
-		&--2 { grid-template-columns: repeat( 2, 1fr ); }
-		&--3 { grid-template-columns: repeat( 3, 1fr ); }
-		&--4 { grid-template-columns: repeat( 4, 1fr ); }
-		&--5 { grid-template-columns: repeat( 5, 1fr ); }
+		&--1 { grid-template-columns: var( --sc-template, 1fr ); }
+		&--2 { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ); }
+		&--3 { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ); }
+		&--4 { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ); }
+		&--5 { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ); }
 	}
 }

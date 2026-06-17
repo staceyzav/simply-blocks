@@ -1,13 +1,13 @@
 import './editor.scss';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, RangeControl } from '@wordpress/components';
+import { PanelBody, RangeControl, SelectControl, TextControl } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 import { useEffect, useRef } from '@wordpress/element';
 
 export default function Edit( { attributes, setAttributes, clientId } ) {
-	const { columns, gap } = attributes;
+	const { columns, gap, gapUnit, gridTemplate } = attributes;
 	const isFirstRender = useRef( true );
 
 	const { insertBlock, removeBlock } = useDispatch( 'core/block-editor' );
@@ -38,12 +38,16 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		}
 	}, [ columns ] );
 
+	const style = { '--sc-gap': `${ gap }${ gapUnit }` };
+	if ( gridTemplate ) style[ '--sc-template' ] = gridTemplate;
+
 	const blockProps = useBlockProps( {
 		className: `simply-columns simply-columns--${ columns }`,
-		style: { '--sc-gap': `${ gap }px` },
+		style,
 	} );
 
 	const template = Array.from( { length: columns }, () => [ 'simply-blocks/column', {} ] );
+	const equalPlaceholder = Array.from( { length: columns }, () => '1fr' ).join( ' ' );
 
 	return (
 		<>
@@ -57,13 +61,32 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 						max={ 5 }
 						step={ 1 }
 					/>
+					<SelectControl
+						label={ __( 'Gap unit', 'simply-blocks' ) }
+						value={ gapUnit }
+						options={ [
+							{ label: 'px', value: 'px' },
+							{ label: '%',  value: '%'  },
+						] }
+						onChange={ ( unit ) => setAttributes( {
+							gapUnit: unit,
+							gap: unit === '%' ? 2 : 24,
+						} ) }
+					/>
 					<RangeControl
-						label={ __( 'Gap (px)', 'simply-blocks' ) }
+						label={ __( `Gap (${ gapUnit })`, 'simply-blocks' ) }
 						value={ gap }
 						onChange={ ( value ) => setAttributes( { gap: value } ) }
 						min={ 0 }
-						max={ 80 }
-						step={ 4 }
+						max={ gapUnit === '%' ? 10 : 80 }
+						step={ gapUnit === '%' ? 0.5 : 4 }
+					/>
+					<TextControl
+						label={ __( 'Custom column widths', 'simply-blocks' ) }
+						value={ gridTemplate }
+						placeholder={ equalPlaceholder }
+						help={ __( 'CSS grid-template-columns value, e.g. 30% 70% or 200px 1fr. Leave blank for equal columns.', 'simply-blocks' ) }
+						onChange={ ( value ) => setAttributes( { gridTemplate: value } ) }
 					/>
 				</PanelBody>
 			</InspectorControls>
