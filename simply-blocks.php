@@ -5,7 +5,7 @@
  * Description: Simply Design Gutenberg block library. Type "simply" in the editor to see all blocks.
  * Author:      Simply Design
  * Author URI:  https://simplydesign.com
- * Version:     1.0.26
+ * Version:     1.0.27
  * License:     GPL-2.0-or-later
  * Text Domain: simply-blocks
  */

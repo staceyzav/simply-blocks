@@ -204,9 +204,17 @@ export default function Edit( { attributes, setAttributes } ) {
 						step={ paddingUnit === '%' ? 1 : 4 }
 					/>
 					<RangeControl
-						label={ __( `Side padding (${ paddingUnit })`, 'simply-blocks' ) }
+						label={ __( `Padding left (${ paddingUnit })`, 'simply-blocks' ) }
 						value={ paddingLeft }
-						onChange={ ( value ) => setAttributes( { paddingLeft: value, paddingRight: value } ) }
+						onChange={ ( value ) => setAttributes( { paddingLeft: value } ) }
+						min={ 0 }
+						max={ paddingUnit === '%' ? 20 : 100 }
+						step={ 1 }
+					/>
+					<RangeControl
+						label={ __( `Padding right (${ paddingUnit })`, 'simply-blocks' ) }
+						value={ paddingRight }
+						onChange={ ( value ) => setAttributes( { paddingRight: value } ) }
 						min={ 0 }
 						max={ paddingUnit === '%' ? 20 : 100 }
 						step={ 1 }
