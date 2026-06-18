@@ -5,7 +5,7 @@
  * Description: Simply Design Gutenberg block library. Type "simply" in the editor to see all blocks.
  * Author:      Simply Design
  * Author URI:  https://simplydesign.com
- * Version:     1.0.28
+ * Version:     1.0.29
  * License:     GPL-2.0-or-later
  * Text Domain: simply-blocks
  */
@@ -139,17 +139,34 @@ function simply_blocks_render_section( $attrs, $content ) {
 
 	$outer_style_str = simply_blocks_styles( $outer_styles );
 
-	// ── Wrapper attributes ──────────────────────────────────────────
+	// ── Wrapper class list ──────────────────────────────────────────
 	$hero_types = [ 'is-home-hero', 'is-page-hero' ];
 	$classes    = array_filter( [ 'simply-section', sanitize_html_class( $a['sectionColor'] ) ] );
 	if ( in_array( $a['sectionColor'], $hero_types, true ) ) {
 		$classes[] = 'hero';
 	}
 
+	// ── Mobile padding (scoped <style>, UID added before wrapper build) ─
+	$mobile_style_html = '';
+	if ( ! empty( $a['mobilePaddingEnabled'] ) ) {
+		$uid       = wp_unique_id( 'sb-sec-' );
+		$classes[] = $uid;
+		$mobile_style_html = sprintf(
+			'<style>@media(max-width:767px){.%s{padding-top:%dpx!important;padding-bottom:%dpx!important;}}</style>',
+			esc_attr( $uid ),
+			absint( $a['mobilePaddingTop'] ),
+			absint( $a['mobilePaddingBottom'] )
+		);
+	}
+
+	// ── Wrapper attributes ──────────────────────────────────────────
+	// Style is appended directly — avoids WP filtering that can strip rgba() values.
 	$wrapper_attrs = get_block_wrapper_attributes( [
 		'class' => implode( ' ', $classes ),
-		'style' => $outer_style_str,
 	] );
+	if ( $outer_style_str ) {
+		$wrapper_attrs .= ' style="' . esc_attr( $outer_style_str ) . '"';
+	}
 
 	// ── Background image ────────────────────────────────────────────
 	$bg_image_html = '';
@@ -231,24 +248,6 @@ function simply_blocks_render_section( $attrs, $content ) {
 		'padding-left'  => absint( $a['paddingLeft'] ) . $padding_unit,
 		'padding-right' => absint( $a['paddingRight'] ) . $padding_unit,
 	] );
-
-	// ── Mobile padding override ─────────────────────────────────────
-	$mobile_style_html = '';
-	if ( ! empty( $a['mobilePaddingEnabled'] ) ) {
-		$uid = wp_unique_id( 'sb-sec-' );
-		$classes[] = $uid;
-		$mobile_style_html = sprintf(
-			'<style>@media(max-width:767px){.%s{padding-top:%dpx!important;padding-bottom:%dpx!important;}}</style>',
-			esc_attr( $uid ),
-			absint( $a['mobilePaddingTop'] ),
-			absint( $a['mobilePaddingBottom'] )
-		);
-		// Rebuild wrapper_attrs with updated classes
-		$wrapper_attrs = get_block_wrapper_attributes( [
-			'class' => implode( ' ', $classes ),
-			'style' => $outer_style_str,
-		] );
-	}
 
 	return sprintf(
 		'%s<div %s>%s%s%s<div class="simply-section__inner" style="%s">%s</div></div>',

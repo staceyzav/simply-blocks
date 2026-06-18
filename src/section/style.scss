@@ -78,6 +78,10 @@
 		width: 100%;
 	}
 
+	h2 {
+		margin-bottom: 30px;
+	}
+
 	// ── Section color schemes ──────────────────────────────────────
 	// Section color is set on the container and inherited by all children.
 	// No !important on p/li/span — plugin components and editor block colors
