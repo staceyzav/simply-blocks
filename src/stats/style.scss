@@ -1,0 +1,56 @@
+// =============================================================================
+// Simply Stats — frontend
+// =============================================================================
+
+.ss-stats {
+	display: grid;
+	gap: 32px;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
+
+.ss-stats--1 { grid-template-columns: repeat(1, 1fr); }
+.ss-stats--2 { grid-template-columns: repeat(2, 1fr); }
+.ss-stats--3 { grid-template-columns: repeat(3, 1fr); }
+.ss-stats--4 { grid-template-columns: repeat(4, 1fr); }
+.ss-stats--5 { grid-template-columns: repeat(5, 1fr); }
+
+.ss-stat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+}
+
+.ss-stat__number {
+	display: block;
+	font-size: clamp(2rem, 5vw, 3.5rem);
+	font-weight: 700;
+	font-family: var(--client-font-display, sans-serif);
+	color: var(--client-accent, currentColor);
+	line-height: 1;
+}
+
+.ss-stat__label {
+	display: block;
+	font-size: 0.875rem;
+	font-family: var(--client-font-primary, sans-serif);
+	color: inherit;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+	.ss-stats--3,
+	.ss-stats--4,
+	.ss-stats--5 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 360px) {
+	.ss-stats {
+		grid-template-columns: 1fr !important;
+	}
+}

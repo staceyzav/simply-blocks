@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "simply-blocks/stats",
+	"title": "Simply Stats",
+	"category": "simply-blocks",
+	"description": "Animated number stats in equal columns. Up to 5 per row.",
+	"keywords": [ "simply", "stats", "numbers", "counter", "animate" ],
+	"textdomain": "simply-blocks",
+	"supports": {
+		"html": false,
+		"color": false,
+		"spacing": false
+	},
+	"attributes": {
+		"items": { "type": "array", "default": [], "items": { "type": "object" } }
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        "file:./style-index.css",
+	"viewScript":   "file:./view.js"
+}

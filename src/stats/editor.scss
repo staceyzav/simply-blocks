@@ -1,0 +1,51 @@
+// =============================================================================
+// Simply Stats — editor only
+// =============================================================================
+
+.ss-stats-editor {
+	.ss-stat--editing {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+		padding: 12px 8px;
+		background: #f9f9f9;
+		border: 1px dashed #d0d0d0;
+		border-radius: 4px;
+
+		.components-text-control__input {
+			text-align: center;
+			border: none;
+			box-shadow: none;
+			background: transparent;
+			padding: 2px 4px;
+		}
+
+		// First input = number — larger
+		.components-base-control:first-child .components-text-control__input {
+			font-size: 1.6rem;
+			font-weight: 700;
+			height: auto;
+			line-height: 1.1;
+		}
+	}
+
+	.ss-stats-add-wrap {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 16px 8px;
+		border: 2px dashed #ddd;
+		border-radius: 4px;
+		grid-column: 1 / -1;
+	}
+}
+
+.ss-stats-empty {
+	color: #757575;
+	font-size: 13px;
+	text-align: center;
+	padding: 24px;
+	grid-column: 1 / -1;
+	margin: 0;
+}

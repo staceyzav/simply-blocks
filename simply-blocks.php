@@ -30,6 +30,7 @@ add_action( 'init', 'simply_blocks_register' );
 function simply_blocks_register() {
 	register_block_type( __DIR__ . '/build/columns' );
 	register_block_type( __DIR__ . '/build/column' );
+	register_block_type( __DIR__ . '/build/stats' );
 	register_block_type( __DIR__ . '/build/faqs', [
 		'render_callback' => 'simply_blocks_render_faqs',
 	] );
