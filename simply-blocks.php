@@ -46,6 +46,9 @@ function simply_blocks_register() {
 	register_block_type( __DIR__ . '/build/events', [
 		'render_callback' => 'simply_blocks_render_events',
 	] );
+	register_block_type( __DIR__ . '/build/reviews', [
+		'render_callback' => 'simply_blocks_render_reviews',
+	] );
 }
 
 add_filter( 'block_categories_all', 'simply_blocks_category' );
@@ -772,6 +775,31 @@ function simply_blocks_render_events( $attrs ) {
 	</div>
 	<?php
 	return ob_get_clean();
+}
+
+// ── Simply Reviews render callback ───────────────────────────────────────────
+
+function simply_blocks_render_reviews( $attrs ) {
+	if ( ! function_exists( 'sr_shortcode' ) ) {
+		return '<p style="font-style:italic;opacity:0.6">' . esc_html__( 'Simply Reviews plugin required.', 'simply-blocks' ) . '</p>';
+	}
+
+	$limit    = isset( $attrs['limit'] )    ? intval( $attrs['limit'] )    : -1;
+	$autoplay = isset( $attrs['autoplay'] ) ? intval( $attrs['autoplay'] ) : 0;
+	$min      = isset( $attrs['minStars'] ) ? intval( $attrs['minStars'] ) : 1;
+
+	$sc  = '[simply_reviews';
+	$sc .= ' limit="'      . $limit . '"';
+	$sc .= ' show_name="'  . ( ! empty( $attrs['showName'] )   ? '1' : '0' ) . '"';
+	$sc .= ' show_source="'. ( ! empty( $attrs['showSource'] ) ? '1' : '0' ) . '"';
+	$sc .= ' show_date="'  . ( ! empty( $attrs['showDate'] )   ? '1' : '0' ) . '"';
+	$sc .= ' min_stars="'  . $min . '"';
+	if ( ! empty( $attrs['source'] ) )   $sc .= ' source="'   . esc_attr( $attrs['source'] )   . '"';
+	if ( ! empty( $attrs['category'] ) ) $sc .= ' category="' . esc_attr( $attrs['category'] ) . '"';
+	if ( $autoplay > 0 )                 $sc .= ' autoplay="' . $autoplay . '"';
+	$sc .= ']';
+
+	return do_shortcode( $sc );
 }
 
 function simply_blocks_styles( $props ) {

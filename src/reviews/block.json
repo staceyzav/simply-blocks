@@ -1,0 +1,28 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "simply-blocks/reviews",
+	"title": "Simply Reviews",
+	"category": "simply-blocks",
+	"description": "Curated testimonial slider from the Simply Reviews CPT.",
+	"keywords": [ "simply", "reviews", "testimonials", "slider" ],
+	"textdomain": "simply-blocks",
+	"supports": {
+		"html": false,
+		"color": false,
+		"spacing": false
+	},
+	"attributes": {
+		"limit":      { "type": "number",  "default": -1 },
+		"showName":   { "type": "boolean", "default": true },
+		"showSource": { "type": "boolean", "default": false },
+		"showDate":   { "type": "boolean", "default": false },
+		"minStars":   { "type": "number",  "default": 1 },
+		"source":     { "type": "string",  "default": "" },
+		"category":   { "type": "string",  "default": "" },
+		"autoplay":   { "type": "number",  "default": 0 }
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle":  "file:./index.css",
+	"style":        "file:./style-index.css"
+}
