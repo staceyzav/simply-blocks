@@ -33,6 +33,10 @@
     "gridTemplate": {
       "type": "string",
       "default": ""
+    },
+    "stackBreakpoint": {
+      "type": "string",
+      "default": "640"
     }
   },
   "editorScript": "file:./index.js",

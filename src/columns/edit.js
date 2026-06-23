@@ -7,7 +7,7 @@ import { createBlock } from '@wordpress/blocks';
 import { useEffect, useRef } from '@wordpress/element';
 
 export default function Edit( { attributes, setAttributes, clientId } ) {
-	const { columns, gap, gapUnit, gridTemplate } = attributes;
+	const { columns, gap, gapUnit, gridTemplate, stackBreakpoint } = attributes;
 	const isFirstRender = useRef( true );
 
 	const { insertBlock, removeBlock } = useDispatch( 'core/block-editor' );
@@ -41,8 +41,10 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 	const style = { '--sc-gap': `${ gap }${ gapUnit }` };
 	if ( gridTemplate ) style[ '--sc-template' ] = gridTemplate;
 
+	const stackClass = stackBreakpoint !== '640' ? ` simply-columns--stack-${ stackBreakpoint }` : '';
+
 	const blockProps = useBlockProps( {
-		className: `simply-columns simply-columns--${ columns }`,
+		className: `simply-columns simply-columns--${ columns }${ stackClass }`,
 		style,
 	} );
 
@@ -87,6 +89,20 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 						placeholder={ equalPlaceholder }
 						help={ __( 'CSS grid-template-columns value, e.g. 30% 70% or 200px 1fr. Leave blank for equal columns.', 'simply-blocks' ) }
 						onChange={ ( value ) => setAttributes( { gridTemplate: value } ) }
+					/>
+					<SelectControl
+						label={ __( 'Stack below', 'simply-blocks' ) }
+						value={ stackBreakpoint }
+						options={ [
+							{ label: '480px', value: '480' },
+							{ label: '600px', value: '600' },
+							{ label: '640px (default)', value: '640' },
+							{ label: '768px', value: '768' },
+							{ label: '960px', value: '960' },
+							{ label: 'Never stack', value: 'never' },
+						] }
+						onChange={ ( value ) => setAttributes( { stackBreakpoint: value } ) }
+						help={ __( 'Viewport width below which columns stack vertically.', 'simply-blocks' ) }
 					/>
 				</PanelBody>
 			</InspectorControls>

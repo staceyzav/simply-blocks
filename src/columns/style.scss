@@ -1,9 +1,12 @@
 // Simply Columns — front-end styles
 //
-// Responsive breakpoints:
-//   < 640px   → 1 column (all layouts stack; custom template ignored)
-//   640–1023px → tablet: 3-5 col layouts compress to 2-3
-//   ≥ 1024px  → full columns as configured
+// Default stacking breakpoint: 640px (no extra class needed)
+// Custom stacking via simply-columns--stack-{bp} class:
+//   stack-480  → columns at ≥ 480px
+//   stack-600  → columns at ≥ 600px
+//   stack-768  → columns at ≥ 768px
+//   stack-960  → columns at ≥ 960px
+//   stack-never → always columns, never stack
 //
 // --sc-template: custom grid-template-columns value set inline when the
 //   "Custom column widths" field is filled in. Falls back to equal 1fr columns.
@@ -27,4 +30,64 @@
 		&--4 { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ); }
 		&--5 { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ); }
 	}
+}
+
+// Stack below 480px — show columns at ≥ 480px
+.simply-columns--stack-480 {
+	@media ( min-width: 480px ) {
+		&.simply-columns--2 { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ); }
+		&.simply-columns--3 { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ); }
+		&.simply-columns--4 { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ); }
+		&.simply-columns--5 { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ); }
+	}
+}
+
+// Stack below 600px — show columns at ≥ 600px
+.simply-columns--stack-600 {
+	@media ( min-width: 600px ) {
+		&.simply-columns--2 { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ); }
+		&.simply-columns--3 { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ); }
+		&.simply-columns--4 { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ); }
+		&.simply-columns--5 { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ); }
+	}
+}
+
+// Stack below 768px — suppress default 640px rule, show columns at ≥ 768px
+.simply-columns--stack-768 {
+	@media ( min-width: 640px ) and ( max-width: 767px ) {
+		&.simply-columns--2,
+		&.simply-columns--3,
+		&.simply-columns--4,
+		&.simply-columns--5 { grid-template-columns: 1fr; }
+	}
+	@media ( min-width: 768px ) {
+		&.simply-columns--2 { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ); }
+		&.simply-columns--3 { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ); }
+		&.simply-columns--4 { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ); }
+		&.simply-columns--5 { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ); }
+	}
+}
+
+// Stack below 960px — suppress default 640px + 1024px rules, show columns at ≥ 960px
+.simply-columns--stack-960 {
+	@media ( min-width: 640px ) and ( max-width: 959px ) {
+		&.simply-columns--2,
+		&.simply-columns--3,
+		&.simply-columns--4,
+		&.simply-columns--5 { grid-template-columns: 1fr; }
+	}
+	@media ( min-width: 960px ) {
+		&.simply-columns--2 { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ); }
+		&.simply-columns--3 { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ); }
+		&.simply-columns--4 { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ); }
+		&.simply-columns--5 { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ); }
+	}
+}
+
+// Never stack — always show columns regardless of viewport
+.simply-columns--stack-never {
+	&.simply-columns--2 { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ) !important; }
+	&.simply-columns--3 { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ) !important; }
+	&.simply-columns--4 { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ) !important; }
+	&.simply-columns--5 { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ) !important; }
 }
