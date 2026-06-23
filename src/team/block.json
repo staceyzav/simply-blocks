@@ -13,8 +13,9 @@
 		"spacing": false
 	},
 	"attributes": {
-		"limit":   { "type": "number", "default": -1 },
-		"columns": { "type": "number", "default": 3 }
+		"limit":    { "type": "number", "default": -1 },
+		"columns":  { "type": "number", "default": 3 },
+		"category": { "type": "string", "default": "" }
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle":  "file:./index.css",

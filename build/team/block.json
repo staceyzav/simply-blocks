@@ -25,6 +25,10 @@
     "columns": {
       "type": "number",
       "default": 3
+    },
+    "category": {
+      "type": "string",
+      "default": ""
     }
   },
   "editorScript": "file:./index.js",

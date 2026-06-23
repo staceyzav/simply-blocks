@@ -793,6 +793,7 @@ function simply_blocks_render_team( $attrs ) {
 	$sc  = '[simply_team';
 	$sc .= ' limit="'   . $limit   . '"';
 	$sc .= ' columns="' . $columns . '"';
+	if ( ! empty( $attrs['category'] ) ) $sc .= ' category="' . esc_attr( $attrs['category'] ) . '"';
 	$sc .= ']';
 
 	return do_shortcode( $sc );
