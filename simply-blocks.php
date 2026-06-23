@@ -434,7 +434,7 @@ function simply_blocks_news_cards( $category, $a ) {
 				<p class="sn-card__category"><?php echo $cat_label; ?></p>
 				<?php endif; ?>
 				<h3 class="sn-card__title"><?php the_title(); ?></h3>
-				<?php if ( $show_date ) : ?>
+				<?php if ( $show_date && ! get_post_meta( get_the_ID(), '_simply_hide_date', true ) ) : ?>
 				<p class="sn-card__date"><?php echo esc_html( get_the_date() ); ?></p>
 				<?php endif; ?>
 				<?php if ( $show_more ) : ?>
