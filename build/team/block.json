@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "simply-blocks/team",
+  "title": "Simply Team",
+  "category": "simply-blocks",
+  "description": "Team member grid from the Simply Team CPT.",
+  "keywords": [
+    "simply",
+    "team",
+    "staff",
+    "people"
+  ],
+  "textdomain": "simply-blocks",
+  "supports": {
+    "html": false,
+    "color": false,
+    "spacing": false
+  },
+  "attributes": {
+    "limit": {
+      "type": "number",
+      "default": -1
+    },
+    "columns": {
+      "type": "number",
+      "default": 3
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

@@ -49,6 +49,9 @@ function simply_blocks_register() {
 	register_block_type( __DIR__ . '/build/reviews', [
 		'render_callback' => 'simply_blocks_render_reviews',
 	] );
+	register_block_type( __DIR__ . '/build/team', [
+		'render_callback' => 'simply_blocks_render_team',
+	] );
 }
 
 add_filter( 'block_categories_all', 'simply_blocks_category' );
@@ -778,6 +781,22 @@ function simply_blocks_render_events( $attrs ) {
 }
 
 // ── Simply Reviews render callback ───────────────────────────────────────────
+
+function simply_blocks_render_team( $attrs ) {
+	if ( ! shortcode_exists( 'simply_team' ) ) {
+		return '<p style="font-style:italic;opacity:0.6">' . esc_html__( 'Simply Team plugin required.', 'simply-blocks' ) . '</p>';
+	}
+
+	$limit   = isset( $attrs['limit'] )   ? intval( $attrs['limit'] )   : -1;
+	$columns = isset( $attrs['columns'] ) ? intval( $attrs['columns'] ) : 3;
+
+	$sc  = '[simply_team';
+	$sc .= ' limit="'   . $limit   . '"';
+	$sc .= ' columns="' . $columns . '"';
+	$sc .= ']';
+
+	return do_shortcode( $sc );
+}
 
 function simply_blocks_render_reviews( $attrs ) {
 	if ( ! function_exists( 'sr_shortcode' ) ) {
