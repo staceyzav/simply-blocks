@@ -9,8 +9,27 @@ const EMPTY_ITEM = {
 	includes: '', description: '', finePrint: '',
 };
 
+function getUniqueCategories( items ) {
+	const seen = new Set();
+	const cats = [];
+	items.forEach( ( item ) => {
+		if ( ! item.category ) return;
+		item.category.split( ',' ).forEach( ( c ) => {
+			const label = c.trim();
+			const slug  = label.toLowerCase().replace( /\s+/g, '-' );
+			if ( slug && ! seen.has( slug ) ) {
+				seen.add( slug );
+				cats.push( { label, slug } );
+			}
+		} );
+	} );
+	return cats;
+}
+
 export default function Edit( { attributes, setAttributes } ) {
 	const { items, columns, defaultCategory } = attributes;
+	const categories = getUniqueCategories( items );
+	const hasFilters = categories.length > 1;
 
 	function addItem() {
 		setAttributes( { items: [ ...items, { ...EMPTY_ITEM } ] } );
@@ -51,6 +70,17 @@ export default function Edit( { attributes, setAttributes } ) {
 			</InspectorControls>
 
 			<div { ...blockProps }>
+				{ hasFilters && (
+					<div className="sp-pricing-filters sp-pricing-filters--preview">
+						<button className="sp-filter-btn is-active" disabled>All</button>
+						{ categories.map( ( cat ) => (
+							<button key={ cat.slug } className="sp-filter-btn" disabled>
+								{ cat.label }
+							</button>
+						) ) }
+					</div>
+				) }
+
 				{ items.length === 0 && (
 					<p className="sp-pricing-empty">
 						{ __( 'No pricing items yet — click Add Item to get started.', 'simply-blocks' ) }
