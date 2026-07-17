@@ -1,0 +1,169 @@
+// =============================================================================
+// Simply Pricing — frontend
+// =============================================================================
+
+.sp-pricing-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 28px;
+}
+
+.sp-filter-btn {
+	padding: 8px 20px;
+	border: 2px solid var(--client-accent, #555);
+	border-radius: var(--client-radius, 4px);
+	background: transparent;
+	color: var(--client-accent, #555);
+	font-family: var(--client-font-primary, sans-serif);
+	font-size: 0.875rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s ease, color 0.2s ease;
+
+	&:hover,
+	&.is-active {
+		background: var(--client-accent, #555);
+		color: #fff;
+	}
+}
+
+.sp-pricing-grid {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 24px;
+}
+
+.sp-pricing-card {
+	flex: 0 0 auto;
+	display: flex;
+	flex-direction: column;
+
+	&.is-hidden {
+		display: none;
+	}
+}
+
+// Column width calculations so flexbox centers incomplete rows
+.sp-pricing--cols-1 .sp-pricing-card { width: 100%; }
+.sp-pricing--cols-2 .sp-pricing-card { width: calc(50% - 12px); }
+.sp-pricing--cols-3 .sp-pricing-card { width: calc(33.333% - 16px); }
+.sp-pricing--cols-4 .sp-pricing-card { width: calc(25% - 18px); }
+
+.sp-pricing-card__photo {
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+	display: block;
+	border-radius: var(--client-radius, 4px) var(--client-radius, 4px) 0 0;
+}
+
+.sp-pricing-card__body {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+}
+
+.sp-pricing-card__target {
+	font-family: var(--client-font-primary, sans-serif);
+	font-size: 0.75rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: var(--client-accent, currentColor);
+	margin: 0 0 6px;
+}
+
+.sp-pricing-card__title {
+	font-family: var(--client-font-display, sans-serif);
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: var(--client-heading, currentColor);
+	margin: 0 0 16px;
+	line-height: 1.2;
+}
+
+.sp-pricing-card__prices {
+	margin-bottom: 16px;
+}
+
+.sp-pricing-card__regular {
+	font-size: 0.8rem;
+	color: var(--client-text, currentColor);
+	opacity: 0.6;
+	margin: 0 0 4px;
+}
+
+.sp-pricing-card__regular-label {
+	font-style: italic;
+}
+
+.sp-pricing-card__regular-price {
+	text-decoration: line-through;
+}
+
+.sp-pricing-card__online {
+	display: flex;
+	align-items: baseline;
+	gap: 4px;
+	margin: 0;
+}
+
+.sp-pricing-card__price {
+	font-family: var(--client-font-display, sans-serif);
+	font-size: 1.75rem;
+	font-weight: 700;
+	color: var(--client-accent, currentColor);
+	line-height: 1;
+}
+
+.sp-pricing-card__price-label {
+	font-size: 0.875rem;
+	color: var(--client-text, currentColor);
+	opacity: 0.7;
+}
+
+.sp-pricing-card__includes {
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: var(--client-text, currentColor);
+	margin: 0 0 8px;
+}
+
+.sp-pricing-card__desc {
+	font-size: 0.875rem;
+	color: var(--client-text, currentColor);
+	margin: 0 0 8px;
+	flex: 1;
+}
+
+.sp-pricing-card__fine {
+	font-size: 0.75rem;
+	color: var(--client-text, currentColor);
+	opacity: 0.55;
+	margin: auto 0 0;
+	padding-top: 12px;
+}
+
+// Mobile — single column
+@media (max-width: 640px) {
+	.sp-pricing--cols-2,
+	.sp-pricing--cols-3,
+	.sp-pricing--cols-4 {
+		.sp-pricing-card {
+			width: 100%;
+		}
+	}
+}
+
+// Tablet — max 2 columns
+@media (min-width: 641px) and (max-width: 900px) {
+	.sp-pricing--cols-3,
+	.sp-pricing--cols-4 {
+		.sp-pricing-card {
+			width: calc(50% - 12px);
+		}
+	}
+}

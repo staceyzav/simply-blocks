@@ -1,0 +1,133 @@
+// =============================================================================
+// Simply Pricing — editor only
+// =============================================================================
+
+.sp-pricing-editor {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	align-items: flex-start;
+}
+
+.sp-pricing-card--editing {
+	display: flex;
+	flex-direction: column;
+	background: #f9f9f9;
+	border: 1px dashed #d0d0d0;
+	border-radius: 4px;
+	overflow: hidden;
+	position: relative;
+
+	.sp-pricing-card__body {
+		padding: 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.components-base-control {
+		margin-bottom: 0;
+	}
+
+	.components-text-control__input,
+	.components-textarea-control__input {
+		font-size: 12px;
+		padding: 4px 8px;
+		border-color: #e0e0e0;
+	}
+
+	.sp-field-target .components-text-control__input {
+		font-size: 11px;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #888;
+	}
+
+	.sp-field-title .components-text-control__input {
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.sp-field-category .components-text-control__input {
+		font-size: 11px;
+		color: #007cba;
+	}
+
+	.sp-field-row {
+		display: flex;
+		gap: 6px;
+
+		.components-base-control {
+			flex: 1;
+		}
+	}
+
+	.sp-pricing-card__remove {
+		display: block;
+		width: 100%;
+		text-align: center;
+		padding: 6px;
+		font-size: 11px;
+		border-top: 1px solid #eee;
+	}
+}
+
+.sp-pricing-card__photo-wrap {
+	background: #e8e8e8;
+	min-height: 80px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.sp-pricing-card__photo-preview {
+	position: relative;
+	width: 100%;
+
+	img {
+		width: 100%;
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
+		display: block;
+	}
+
+	.sp-pricing-card__photo-change {
+		position: absolute;
+		top: 6px;
+		left: 6px;
+	}
+
+	button[class*="isDestructive"] {
+		position: absolute;
+		top: 6px;
+		right: 6px;
+		background: rgba(255,255,255,0.85);
+		border-radius: 2px;
+		padding: 2px 6px;
+		font-size: 11px;
+	}
+}
+
+.sp-pricing-card__photo-add {
+	margin: 12px;
+}
+
+.sp-pricing-add-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+	border: 2px dashed #ddd;
+	border-radius: 4px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.sp-pricing-empty {
+	color: #757575;
+	font-size: 13px;
+	text-align: center;
+	padding: 32px;
+	width: 100%;
+	margin: 0;
+}
