@@ -60,6 +60,20 @@ export default function Edit( { attributes, setAttributes } ) {
 					/>
 				</PanelBody>
 				<PanelBody title={ __( 'Filters', 'simply-blocks' ) }>
+					{ categories.length > 0 && (
+						<div className="sp-sidebar-categories">
+							<p className="sp-sidebar-categories__label">
+								{ __( 'Detected categories:', 'simply-blocks' ) }
+							</p>
+							<div className="sp-sidebar-categories__pills">
+								{ categories.map( ( cat ) => (
+									<span key={ cat.slug } className="sp-sidebar-cat-pill">
+										{ cat.label }
+									</span>
+								) ) }
+							</div>
+						</div>
+					) }
 					<TextControl
 						label={ __( 'Default category', 'simply-blocks' ) }
 						help={ __( 'Must match a category exactly (e.g. "Skis"). Leave blank for All.', 'simply-blocks' ) }
@@ -70,17 +84,6 @@ export default function Edit( { attributes, setAttributes } ) {
 			</InspectorControls>
 
 			<div { ...blockProps }>
-				{ hasFilters && (
-					<div className="sp-pricing-filters sp-pricing-filters--preview">
-						<button className="sp-filter-btn is-active" disabled>All</button>
-						{ categories.map( ( cat ) => (
-							<button key={ cat.slug } className="sp-filter-btn" disabled>
-								{ cat.label }
-							</button>
-						) ) }
-					</div>
-				) }
-
 				{ items.length === 0 && (
 					<p className="sp-pricing-empty">
 						{ __( 'No pricing items yet — click Add Item to get started.', 'simply-blocks' ) }
