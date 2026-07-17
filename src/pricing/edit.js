@@ -63,8 +63,11 @@ export default function Edit( { attributes, setAttributes } ) {
 							<MediaUploadCheck>
 								<MediaUpload
 									onSelect={ ( media ) => {
-										updateItem( i, 'photoUrl', media.url );
-										updateItem( i, 'photoId', media.id );
+										setAttributes( {
+											items: items.map( ( item, idx ) =>
+												idx === i ? { ...item, photoUrl: media.url, photoId: media.id } : item
+											),
+										} );
 									} }
 									allowedTypes={ [ 'image' ] }
 									value={ item.photoId }
