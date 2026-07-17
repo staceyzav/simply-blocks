@@ -13,11 +13,7 @@
 		"spacing": false
 	},
 	"attributes": {
-		"items": {
-			"type": "array",
-			"default": [],
-			"items": { "type": "object" }
-		},
+		"items":           { "type": "array", "default": [], "items": { "type": "object" } },
 		"columns":         { "type": "number", "default": 3 },
 		"defaultCategory": { "type": "string", "default": "" }
 	},

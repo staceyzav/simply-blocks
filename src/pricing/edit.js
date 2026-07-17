@@ -4,9 +4,8 @@ import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck } from 
 import { PanelBody, RangeControl, TextControl, TextareaControl, Button } from '@wordpress/components';
 
 const EMPTY_ITEM = {
-	photoUrl: '', photoId: 0, target: '', title: '', category: '',
-	regularLabel: '', regularPrice: '', onlinePrice: '', priceLabel: '',
-	includes: '', description: '', finePrint: '',
+	photoUrl: '', photoId: 0, title: '', category: '',
+	price: '', priceLabel: '', description: '', finePrint: '',
 };
 
 function getUniqueCategories( items ) {
@@ -29,7 +28,6 @@ function getUniqueCategories( items ) {
 export default function Edit( { attributes, setAttributes } ) {
 	const { items, columns, defaultCategory } = attributes;
 	const categories = getUniqueCategories( items );
-	const hasFilters = categories.length > 1;
 
 	function addItem() {
 		setAttributes( { items: [ ...items, { ...EMPTY_ITEM } ] } );
@@ -76,7 +74,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					) }
 					<TextControl
 						label={ __( 'Default category', 'simply-blocks' ) }
-						help={ __( 'Must match a category exactly (e.g. "Skis"). Leave blank for All.', 'simply-blocks' ) }
+						help={ __( 'Must match a category exactly. Leave blank for All.', 'simply-blocks' ) }
 						value={ defaultCategory }
 						onChange={ ( v ) => setAttributes( { defaultCategory: v } ) }
 					/>
@@ -97,8 +95,8 @@ export default function Edit( { attributes, setAttributes } ) {
 								<MediaUpload
 									onSelect={ ( media ) => {
 										setAttributes( {
-											items: items.map( ( item, idx ) =>
-												idx === i ? { ...item, photoUrl: media.url, photoId: media.id } : item
+											items: items.map( ( it, idx ) =>
+												idx === i ? { ...it, photoUrl: media.url, photoId: media.id } : it
 											),
 										} );
 									} }
@@ -108,32 +106,24 @@ export default function Edit( { attributes, setAttributes } ) {
 										item.photoUrl ? (
 											<div className="sp-pricing-card__photo-preview">
 												<img src={ item.photoUrl } alt="" />
-												<Button
-													variant="secondary"
-													isSmall
-													onClick={ open }
-													className="sp-pricing-card__photo-change"
-												>
+												<Button variant="secondary" isSmall onClick={ open } className="sp-pricing-card__photo-change">
 													{ __( 'Change', 'simply-blocks' ) }
 												</Button>
 												<Button
-													variant="link"
-													isDestructive
-													isSmall
+													variant="link" isDestructive isSmall
 													onClick={ () => {
-														updateItem( i, 'photoUrl', '' );
-														updateItem( i, 'photoId', 0 );
+														setAttributes( {
+															items: items.map( ( it, idx ) =>
+																idx === i ? { ...it, photoUrl: '', photoId: 0 } : it
+															),
+														} );
 													} }
 												>
 													{ __( 'Remove', 'simply-blocks' ) }
 												</Button>
 											</div>
 										) : (
-											<Button
-												variant="secondary"
-												onClick={ open }
-												className="sp-pricing-card__photo-add"
-											>
+											<Button variant="secondary" onClick={ open } className="sp-pricing-card__photo-add">
 												{ __( '+ Add Photo', 'simply-blocks' ) }
 											</Button>
 										)
@@ -143,12 +133,6 @@ export default function Edit( { attributes, setAttributes } ) {
 						</div>
 
 						<div className="sp-pricing-card__body ss-card-body">
-							<TextControl
-								placeholder={ __( 'Target Customer (eyebrow)', 'simply-blocks' ) }
-								value={ item.target }
-								onChange={ ( v ) => updateItem( i, 'target', v ) }
-								className="sp-field-target"
-							/>
 							<TextControl
 								placeholder={ __( 'Title', 'simply-blocks' ) }
 								value={ item.title }
@@ -163,33 +147,16 @@ export default function Edit( { attributes, setAttributes } ) {
 							/>
 							<div className="sp-field-row">
 								<TextControl
-									placeholder={ __( 'Regular Price (e.g. $120)', 'simply-blocks' ) }
-									value={ item.regularPrice }
-									onChange={ ( v ) => updateItem( i, 'regularPrice', v ) }
+									placeholder={ __( 'Price (e.g. $84)', 'simply-blocks' ) }
+									value={ item.price }
+									onChange={ ( v ) => updateItem( i, 'price', v ) }
 								/>
 								<TextControl
-									placeholder={ __( 'Label (e.g. In-Store)', 'simply-blocks' ) }
-									value={ item.regularLabel }
-									onChange={ ( v ) => updateItem( i, 'regularLabel', v ) }
-								/>
-							</div>
-							<div className="sp-field-row">
-								<TextControl
-									placeholder={ __( 'Online Price (e.g. $84)', 'simply-blocks' ) }
-									value={ item.onlinePrice }
-									onChange={ ( v ) => updateItem( i, 'onlinePrice', v ) }
-								/>
-								<TextControl
-									placeholder={ __( 'Price Label (e.g. / day)', 'simply-blocks' ) }
+									placeholder={ __( 'Label (e.g. / day)', 'simply-blocks' ) }
 									value={ item.priceLabel }
 									onChange={ ( v ) => updateItem( i, 'priceLabel', v ) }
 								/>
 							</div>
-							<TextControl
-								placeholder={ __( 'Includes', 'simply-blocks' ) }
-								value={ item.includes }
-								onChange={ ( v ) => updateItem( i, 'includes', v ) }
-							/>
 							<TextareaControl
 								placeholder={ __( 'Description', 'simply-blocks' ) }
 								value={ item.description }
@@ -204,8 +171,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						</div>
 
 						<Button
-							variant="link"
-							isDestructive
+							variant="link" isDestructive
 							onClick={ () => removeItem( i ) }
 							className="sp-pricing-card__remove"
 						>

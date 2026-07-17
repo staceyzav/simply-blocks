@@ -75,34 +75,16 @@ export default function Save( { attributes } ) {
 								/>
 							) }
 							<div className="sp-pricing-card__body ss-card-body">
-								{ item.target && (
-									<p className="sp-pricing-card__target">{ item.target }</p>
-								) }
 								{ item.title && (
 									<h3 className="sp-pricing-card__title">{ item.title }</h3>
 								) }
-								{ ( item.regularPrice || item.onlinePrice ) && (
-									<div className="sp-pricing-card__prices">
-										{ item.regularPrice && (
-											<p className="sp-pricing-card__regular">
-												{ item.regularLabel && (
-													<span className="sp-pricing-card__regular-label">{ item.regularLabel } </span>
-												) }
-												<span className="sp-pricing-card__regular-price">{ item.regularPrice }</span>
-											</p>
+								{ item.price && (
+									<p className="sp-pricing-card__online">
+										<span className="sp-pricing-card__price">{ item.price }</span>
+										{ item.priceLabel && (
+											<span className="sp-pricing-card__price-label"> { item.priceLabel }</span>
 										) }
-										{ item.onlinePrice && (
-											<p className="sp-pricing-card__online">
-												<span className="sp-pricing-card__price">{ item.onlinePrice }</span>
-												{ item.priceLabel && (
-													<span className="sp-pricing-card__price-label"> { item.priceLabel }</span>
-												) }
-											</p>
-										) }
-									</div>
-								) }
-								{ item.includes && (
-									<p className="sp-pricing-card__includes">{ item.includes }</p>
+									</p>
 								) }
 								{ item.description && (
 									<p className="sp-pricing-card__desc">{ item.description }</p>
