@@ -130,14 +130,14 @@ export default function Edit( { attributes, setAttributes } ) {
 							/>
 							<div className="sp-field-row">
 								<TextControl
-									placeholder={ __( 'Regular Price Label (e.g. In-Store)', 'simply-blocks' ) }
-									value={ item.regularLabel }
-									onChange={ ( v ) => updateItem( i, 'regularLabel', v ) }
-								/>
-								<TextControl
 									placeholder={ __( 'Regular Price (e.g. $120)', 'simply-blocks' ) }
 									value={ item.regularPrice }
 									onChange={ ( v ) => updateItem( i, 'regularPrice', v ) }
+								/>
+								<TextControl
+									placeholder={ __( 'Label (e.g. In-Store)', 'simply-blocks' ) }
+									value={ item.regularLabel }
+									onChange={ ( v ) => updateItem( i, 'regularLabel', v ) }
 								/>
 							</div>
 							<div className="sp-field-row">
