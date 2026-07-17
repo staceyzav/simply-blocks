@@ -4,30 +4,12 @@ import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck } from 
 import { PanelBody, RangeControl, TextControl, TextareaControl, Button } from '@wordpress/components';
 
 const EMPTY_ITEM = {
-	photoUrl: '', photoId: 0, title: '', category: '',
+	photoUrl: '', photoId: 0, title: '',
 	price: '', priceLabel: '', description: '', finePrint: '',
 };
 
-function getUniqueCategories( items ) {
-	const seen = new Set();
-	const cats = [];
-	items.forEach( ( item ) => {
-		if ( ! item.category ) return;
-		item.category.split( ',' ).forEach( ( c ) => {
-			const label = c.trim();
-			const slug  = label.toLowerCase().replace( /\s+/g, '-' );
-			if ( slug && ! seen.has( slug ) ) {
-				seen.add( slug );
-				cats.push( { label, slug } );
-			}
-		} );
-	} );
-	return cats;
-}
-
 export default function Edit( { attributes, setAttributes } ) {
-	const { items, columns, defaultCategory } = attributes;
-	const categories = getUniqueCategories( items );
+	const { items, columns } = attributes;
 
 	function addItem() {
 		setAttributes( { items: [ ...items, { ...EMPTY_ITEM } ] } );
@@ -55,28 +37,6 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ ( v ) => setAttributes( { columns: v } ) }
 						min={ 1 }
 						max={ 4 }
-					/>
-				</PanelBody>
-				<PanelBody title={ __( 'Filters', 'simply-blocks' ) }>
-					{ categories.length > 0 && (
-						<div className="sp-sidebar-categories">
-							<p className="sp-sidebar-categories__label">
-								{ __( 'Detected categories:', 'simply-blocks' ) }
-							</p>
-							<div className="sp-sidebar-categories__pills">
-								{ categories.map( ( cat ) => (
-									<span key={ cat.slug } className="sp-sidebar-cat-pill">
-										{ cat.label }
-									</span>
-								) ) }
-							</div>
-						</div>
-					) }
-					<TextControl
-						label={ __( 'Default category', 'simply-blocks' ) }
-						help={ __( 'Must match a category exactly. Leave blank for All.', 'simply-blocks' ) }
-						value={ defaultCategory }
-						onChange={ ( v ) => setAttributes( { defaultCategory: v } ) }
 					/>
 				</PanelBody>
 			</InspectorControls>
@@ -138,12 +98,6 @@ export default function Edit( { attributes, setAttributes } ) {
 								value={ item.title }
 								onChange={ ( v ) => updateItem( i, 'title', v ) }
 								className="sp-field-title"
-							/>
-							<TextControl
-								placeholder={ __( 'Category (comma-separated, e.g. Skis, Demo)', 'simply-blocks' ) }
-								value={ item.category }
-								onChange={ ( v ) => updateItem( i, 'category', v ) }
-								className="sp-field-category"
 							/>
 							<div className="sp-field-row">
 								<TextControl

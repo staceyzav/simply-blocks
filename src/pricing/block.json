@@ -4,8 +4,8 @@
 	"name": "simply-blocks/pricing",
 	"title": "Simply Pricing",
 	"category": "simply-blocks",
-	"description": "Pricing cards with category filters. Add items directly in the editor.",
-	"keywords": [ "simply", "pricing", "rental", "cards", "filter", "rate" ],
+	"description": "Pricing cards. Add items directly in the editor.",
+	"keywords": [ "simply", "pricing", "cards", "rate" ],
 	"textdomain": "simply-blocks",
 	"supports": {
 		"html": false,
@@ -13,12 +13,10 @@
 		"spacing": false
 	},
 	"attributes": {
-		"items":           { "type": "array", "default": [], "items": { "type": "object" } },
-		"columns":         { "type": "number", "default": 3 },
-		"defaultCategory": { "type": "string", "default": "" }
+		"items":   { "type": "array", "default": [], "items": { "type": "object" } },
+		"columns": { "type": "number", "default": 3 }
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle":  "file:./index.css",
-	"style":        "file:./style-index.css",
-	"viewScript":   "file:./view.js"
+	"style":        "file:./style-index.css"
 }
