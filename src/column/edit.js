@@ -2,17 +2,18 @@ import './editor.scss';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, SelectControl } from '@wordpress/components';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 
-export default function Edit( { attributes, setAttributes, clientId } ) {
+export default function Edit( { attributes, setAttributes } ) {
 	const { verticalAlign, horizontalAlign } = attributes;
 
-	// Force the column's own block list to display:block so nested simply-columns
-	// blocks stack vertically instead of inheriting a grid/flex layout from the
-	// parent columns block. Uses inline !important via style.setProperty which has
-	// the highest CSS priority and cannot be overridden by any stylesheet.
+	// Use a ref on the wrapper element so we can target the DOM directly
+	// inside the editor iframe (document.querySelector targets the parent frame,
+	// which fails when the editor is iframed on WP Engine / production hosts).
+	const ref = useRef( null );
+
 	useEffect( () => {
-		const el = document.querySelector( `[data-block="${ clientId }"]` );
+		const el = ref.current;
 		if ( ! el ) return;
 
 		function fixLayout() {
@@ -28,7 +29,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		const observer = new MutationObserver( fixLayout );
 		observer.observe( el, { subtree: true, childList: true } );
 		return () => observer.disconnect();
-	}, [ clientId ] );
+	}, [] );
 
 	const blockProps = useBlockProps( {
 		className: 'simply-column',
@@ -67,7 +68,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 				</PanelBody>
 			</InspectorControls>
 
-			<div { ...blockProps }>
+			<div { ...blockProps } ref={ ref }>
 				<InnerBlocks />
 			</div>
 		</>
