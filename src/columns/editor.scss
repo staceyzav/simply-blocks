@@ -1,8 +1,10 @@
 // Simply Columns — editor-only styles
 //
-// :has() targets ONLY the outer block list layout (the one containing
-// the simply-column blocks), leaving each column's inner layout
-// completely untouched so Gutenberg's appender and selection work normally.
+// Uses direct child combinators (>) all the way from the block wrapper to the
+// block list layout, avoiding :has() entirely. WP 7.x has a bug where
+// :has(> child) is treated as :has(descendant), which caused our grid rules
+// to incorrectly match ancestor block lists and display nested columns
+// side-by-side instead of stacking.
 //
 // --sc-template: custom grid-template-columns set inline on the outer block
 // element and inherited by the block-list layout — var() picks it up or falls
@@ -12,33 +14,25 @@
 	outline: 2px dashed rgba( 0, 0, 0, 0.12 );
 	outline-offset: -2px;
 
-	// The frontend CSS grid on .simply-columns--N makes .block-editor-inner-blocks
-	// (the only direct child) occupy just 1/N of the width. Span all columns
-	// so the inner-blocks wrapper always takes full width in the editor.
 	> .block-editor-inner-blocks {
 		grid-column: 1 / -1;
 		width: 100%;
 	}
 
-	// In apiVersion 3, .block-editor-block-list__block and .wp-block-simply-blocks-column
-	// are on the same element, so it's a direct child of the layout. Using > here
-	// prevents this rule from bleeding into ancestor column block lists when
-	// simply-columns blocks are nested inside a simply-column.
-	.block-editor-block-list__layout:has( > .wp-block-simply-blocks-column ) {
+	// Target only the immediate block list of THIS columns block,
+	// not any descendant block lists inside nested columns or column cells.
+	> .block-editor-inner-blocks > .block-editor-block-list__layout {
 		display: grid !important;
 		gap: var( --sc-gap, 24px ) !important;
 
-		// Gutenberg adds its own margins to each block wrapper on top of the
-		// CSS gap, making the editor gap look huge. Zero them out so the
-		// spacing matches the frontend.
 		> .block-editor-block-list__block {
 			margin: 0 !important;
 		}
 	}
-
-	&.simply-columns--1 .block-editor-block-list__layout:has( > .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, 1fr ) !important; }
-	&.simply-columns--2 .block-editor-block-list__layout:has( > .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ) !important; }
-	&.simply-columns--3 .block-editor-block-list__layout:has( > .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ) !important; }
-	&.simply-columns--4 .block-editor-block-list__layout:has( > .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ) !important; }
-	&.simply-columns--5 .block-editor-block-list__layout:has( > .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ) !important; }
 }
+
+.wp-block-simply-blocks-columns.simply-columns--1 > .block-editor-inner-blocks > .block-editor-block-list__layout { grid-template-columns: var( --sc-template, 1fr ) !important; }
+.wp-block-simply-blocks-columns.simply-columns--2 > .block-editor-inner-blocks > .block-editor-block-list__layout { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ) !important; }
+.wp-block-simply-blocks-columns.simply-columns--3 > .block-editor-inner-blocks > .block-editor-block-list__layout { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ) !important; }
+.wp-block-simply-blocks-columns.simply-columns--4 > .block-editor-inner-blocks > .block-editor-block-list__layout { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ) !important; }
+.wp-block-simply-blocks-columns.simply-columns--5 > .block-editor-inner-blocks > .block-editor-block-list__layout { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ) !important; }
