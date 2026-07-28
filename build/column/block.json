@@ -21,14 +21,7 @@
   },
   "supports": {
     "html": false,
-    "inserter": false,
-    "layout": {
-      "allowSwitching": false,
-      "allowInheriting": false,
-      "default": {
-        "type": "default"
-      }
-    }
+    "inserter": false
   },
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
