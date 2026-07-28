@@ -14,6 +14,7 @@
 	// which caused nested simply-columns blocks to appear side by side.
 	// The nested columns grid (display:grid !important) still overrides this.
 	.block-editor-inner-blocks > .block-editor-block-list__layout {
-		display: block;
+		display: block !important;
+		flex-direction: column !important;
 	}
 }
