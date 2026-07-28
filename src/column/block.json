@@ -14,7 +14,13 @@
 	"supports": {
 		"html": false,
 		"inserter": false,
-		"layout": true
+		"layout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"default": {
+				"type": "default"
+			}
+		}
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
