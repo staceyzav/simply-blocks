@@ -1,12 +1,23 @@
 // Simply Columns — editor-only styles
 //
-// Side-by-side display is handled by Gutenberg's flex layout system
-// declared in block.json ("layout": { "type": "flex" }).
-// No custom grid CSS here — that was leaking grid-template-columns
-// into nested column block lists in WP 7.x via the DOM tree.
-// Frontend grid is handled by style-index.css via wp_enqueue_scripts.
+// Uses flex (not grid) for the editor display to avoid grid-template-columns
+// leaking into nested column block lists in WP 7.x. Equal-width flex items
+// give a good enough preview; frontend uses CSS grid via style-index.css.
+// Column stacking is handled by JS in column/edit.js (MutationObserver).
 
 .wp-block-simply-blocks-columns {
 	outline: 2px dashed rgba( 0, 0, 0, 0.12 );
 	outline-offset: -2px;
+
+	> .block-editor-inner-blocks > .block-editor-block-list__layout {
+		display: flex !important;
+		flex-wrap: nowrap !important;
+		gap: var( --sc-gap, 24px ) !important;
+
+		> .block-editor-block-list__block {
+			flex: 1 1 0 !important;
+			min-width: 0 !important;
+			margin: 0 !important;
+		}
+	}
 }

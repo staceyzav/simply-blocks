@@ -2,9 +2,33 @@ import './editor.scss';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, SelectControl } from '@wordpress/components';
+import { useEffect } from '@wordpress/element';
 
-export default function Edit( { attributes, setAttributes } ) {
+export default function Edit( { attributes, setAttributes, clientId } ) {
 	const { verticalAlign, horizontalAlign } = attributes;
+
+	// Force the column's own block list to display:block so nested simply-columns
+	// blocks stack vertically instead of inheriting a grid/flex layout from the
+	// parent columns block. Uses inline !important via style.setProperty which has
+	// the highest CSS priority and cannot be overridden by any stylesheet.
+	useEffect( () => {
+		const el = document.querySelector( `[data-block="${ clientId }"]` );
+		if ( ! el ) return;
+
+		function fixLayout() {
+			const innerBlocks = el.querySelector( ':scope > .block-editor-inner-blocks' );
+			if ( ! innerBlocks ) return;
+			const layout = innerBlocks.querySelector( ':scope > .block-editor-block-list__layout' );
+			if ( layout ) {
+				layout.style.setProperty( 'display', 'block', 'important' );
+			}
+		}
+
+		fixLayout();
+		const observer = new MutationObserver( fixLayout );
+		observer.observe( el, { subtree: true, childList: true } );
+		return () => observer.disconnect();
+	}, [ clientId ] );
 
 	const blockProps = useBlockProps( {
 		className: 'simply-column',
@@ -44,7 +68,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			</InspectorControls>
 
 			<div { ...blockProps }>
-				<InnerBlocks layout={ { type: 'default' } } />
+				<InnerBlocks />
 			</div>
 		</>
 	);

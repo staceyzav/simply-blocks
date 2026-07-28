@@ -5,7 +5,7 @@
  * Description: Simply Design Gutenberg block library. Type "simply" in the editor to see all blocks.
  * Author:      Simply Design
  * Author URI:  https://simplydesign.com
- * Version:     1.0.43
+ * Version:     1.0.44
  * License:     GPL-2.0-or-later
  * Text Domain: simply-blocks
  */
@@ -13,7 +13,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-github-updater.php';
-new Simply_GitHub_Updater( 'plugin', plugin_basename( __FILE__ ), 'staceyzav/simply-blocks', '1.0.43' );
+new Simply_GitHub_Updater( 'plugin', plugin_basename( __FILE__ ), 'staceyzav/simply-blocks', '1.0.44' );
 
 add_action( 'enqueue_block_editor_assets', 'simply_blocks_enqueue_editor_brand' );
 function simply_blocks_enqueue_editor_brand() {
@@ -83,7 +83,7 @@ function simply_blocks_enqueue_columns_style() {
 		'simply-blocks-columns',
 		plugin_dir_url( __FILE__ ) . 'build/columns/style-index.css',
 		[],
-		'1.0.43'
+		'1.0.44'
 	);
 }
 
