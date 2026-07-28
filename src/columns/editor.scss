@@ -20,7 +20,11 @@
 		width: 100%;
 	}
 
-	.block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) {
+	// In apiVersion 3, .block-editor-block-list__block and .wp-block-simply-blocks-column
+	// are on the same element, so it's a direct child of the layout. Using > here
+	// prevents this rule from bleeding into ancestor column block lists when
+	// simply-columns blocks are nested inside a simply-column.
+	.block-editor-block-list__layout:has( > .wp-block-simply-blocks-column ) {
 		display: grid !important;
 		gap: var( --sc-gap, 24px ) !important;
 
@@ -32,9 +36,9 @@
 		}
 	}
 
-	&.simply-columns--1 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, 1fr ) !important; }
-	&.simply-columns--2 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ) !important; }
-	&.simply-columns--3 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ) !important; }
-	&.simply-columns--4 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ) !important; }
-	&.simply-columns--5 .block-editor-block-list__layout:has( .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ) !important; }
+	&.simply-columns--1 .block-editor-block-list__layout:has( > .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, 1fr ) !important; }
+	&.simply-columns--2 .block-editor-block-list__layout:has( > .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ) !important; }
+	&.simply-columns--3 .block-editor-block-list__layout:has( > .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ) !important; }
+	&.simply-columns--4 .block-editor-block-list__layout:has( > .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ) !important; }
+	&.simply-columns--5 .block-editor-block-list__layout:has( > .wp-block-simply-blocks-column ) { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ) !important; }
 }
