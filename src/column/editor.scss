@@ -9,13 +9,14 @@
 	flex-direction: column;
 	align-items: var( --sc-col-h-align, stretch );
 
-	// Reset ALL block list layouts inside a column to stacking.
-	// In WP 7.x, Gutenberg mirrors block classes (e.g. simply-columns--2)
-	// onto .block-editor-block-list__layout, causing frontend grid styles
-	// from style-index.css to bleed in and display nested blocks side-by-side.
-	// Specificity 0,2,0 — the actual columns grid rule (0,3,0 !important)
-	// still wins for simply-columns block lists.
-	.block-editor-block-list__layout {
+	// Reset block list display to stacking for everything inside a column,
+	// EXCEPT the actual simply-columns block lists (which must stay grid).
+	// :not(:is()) excludes the direct block list of nested simply-columns blocks.
+	// Specificity: 0,5,0 — beats any grid rule that may bleed in from
+	// style-index.css or Gutenberg's own layout system in WP 7.x.
+	.block-editor-block-list__layout:not(
+		:is( .wp-block-simply-blocks-columns > .block-editor-inner-blocks > .block-editor-block-list__layout )
+	) {
 		display: block !important;
 	}
 }
