@@ -11,25 +11,29 @@
 // --sc-template: custom grid-template-columns value set inline when the
 //   "Custom column widths" field is filled in. Falls back to equal 1fr columns.
 
-.simply-columns {
+// :not(.block-editor-block-list__layout) prevents these grid rules from
+// applying to .block-editor-block-list__layout elements in WP 7.x, where
+// Gutenberg mirrors block classes (e.g. simply-columns--2) onto the inner
+// block list container, causing the frontend grid to bleed into the editor.
+.simply-columns:not( .block-editor-block-list__layout ) {
 	display: grid;
 	gap: var( --sc-gap, 24px );
 	grid-template-columns: 1fr;
+}
 
-	@media ( min-width: 640px ) {
-		&--2 { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ); }
-		&--3 { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ); }
-		&--4 { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ); }
-		&--5 { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ); }
-	}
+@media ( min-width: 640px ) {
+	.simply-columns--2:not( .block-editor-block-list__layout ) { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ); }
+	.simply-columns--3:not( .block-editor-block-list__layout ) { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ); }
+	.simply-columns--4:not( .block-editor-block-list__layout ) { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ); }
+	.simply-columns--5:not( .block-editor-block-list__layout ) { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ); }
+}
 
-	@media ( min-width: 1024px ) {
-		&--1 { grid-template-columns: var( --sc-template, 1fr ); }
-		&--2 { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ); }
-		&--3 { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ); }
-		&--4 { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ); }
-		&--5 { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ); }
-	}
+@media ( min-width: 1024px ) {
+	.simply-columns--1:not( .block-editor-block-list__layout ) { grid-template-columns: var( --sc-template, 1fr ); }
+	.simply-columns--2:not( .block-editor-block-list__layout ) { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ); }
+	.simply-columns--3:not( .block-editor-block-list__layout ) { grid-template-columns: var( --sc-template, repeat( 3, 1fr ) ); }
+	.simply-columns--4:not( .block-editor-block-list__layout ) { grid-template-columns: var( --sc-template, repeat( 4, 1fr ) ); }
+	.simply-columns--5:not( .block-editor-block-list__layout ) { grid-template-columns: var( --sc-template, repeat( 5, 1fr ) ); }
 }
 
 // Stack below 480px — show columns at ≥ 480px
