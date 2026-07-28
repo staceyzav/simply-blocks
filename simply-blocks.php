@@ -655,7 +655,7 @@ function simply_blocks_render_events( $attrs ) {
 
 	$query_args = [
 		'post_type'      => 'simply_event',
-		'posts_per_page' => $limit,
+		'posts_per_page' => -1,
 		'post_status'    => 'publish',
 		'meta_key'       => '_event_start_date',
 		'orderby'        => 'meta_value',
@@ -688,7 +688,7 @@ function simply_blocks_render_events( $attrs ) {
 
 	ob_start();
 	?>
-	<div class="se-events-block">
+	<div class="se-events-block" data-limit="<?php echo esc_attr( $limit ); ?>">
 
 		<div class="se-events-header">
 
