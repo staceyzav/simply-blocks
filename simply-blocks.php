@@ -5,7 +5,7 @@
  * Description: Simply Design Gutenberg block library. Type "simply" in the editor to see all blocks.
  * Author:      Simply Design
  * Author URI:  https://simplydesign.com
- * Version:     1.0.38
+ * Version:     1.0.39
  * License:     GPL-2.0-or-later
  * Text Domain: simply-blocks
  */
@@ -13,7 +13,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-github-updater.php';
-new Simply_GitHub_Updater( 'plugin', plugin_basename( __FILE__ ), 'staceyzav/simply-blocks', '1.0.38' );
+new Simply_GitHub_Updater( 'plugin', plugin_basename( __FILE__ ), 'staceyzav/simply-blocks', '1.0.39' );
 
 add_action( 'enqueue_block_editor_assets', 'simply_blocks_enqueue_editor_brand' );
 function simply_blocks_enqueue_editor_brand() {
@@ -55,6 +55,24 @@ function simply_blocks_register() {
 	] );
 }
 
+// Inject column layout fix directly into the editor iframe via block_editor_settings_all.
+// This bypasses file loading order, CDN caching, and style aggregation issues.
+// In WP 7.x, .simply-columns grid rules bleed into the editor and cause nested
+// simply-columns blocks to appear side-by-side. This forces block stacking.
+add_filter( 'block_editor_settings_all', 'simply_blocks_editor_column_fix' );
+function simply_blocks_editor_column_fix( $settings ) {
+	$settings['styles'][] = [ 'css' => '
+		.wp-block-simply-blocks-column .block-editor-block-list__layout {
+			display: block !important;
+			grid-template-columns: unset !important;
+		}
+		.wp-block-simply-blocks-columns > .block-editor-inner-blocks > .block-editor-block-list__layout {
+			display: grid !important;
+		}
+	' ];
+	return $settings;
+}
+
 // Enqueue columns frontend style manually so it never loads in the editor.
 // Registering via block.json "style" causes WordPress to auto-load it in the
 // editor iframe too, where the .simply-columns grid rules bleed onto
@@ -65,7 +83,7 @@ function simply_blocks_enqueue_columns_style() {
 		'simply-blocks-columns',
 		plugin_dir_url( __FILE__ ) . 'build/columns/style-index.css',
 		[],
-		'1.0.38'
+		'1.0.39'
 	);
 }
 
