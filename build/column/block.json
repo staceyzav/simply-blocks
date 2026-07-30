@@ -17,6 +17,26 @@
     "horizontalAlign": {
       "type": "string",
       "default": ""
+    },
+    "paddingTop": {
+      "type": "number",
+      "default": 0
+    },
+    "paddingBottom": {
+      "type": "number",
+      "default": 0
+    },
+    "paddingLeft": {
+      "type": "number",
+      "default": 0
+    },
+    "paddingRight": {
+      "type": "number",
+      "default": 0
+    },
+    "paddingUnit": {
+      "type": "string",
+      "default": "px"
     }
   },
   "supports": {
