@@ -95,6 +95,44 @@
 	--sc-template: initial;
 }
 
+// Reverse stacking order on mobile — fires at the same breakpoint the columns stack.
+// Each variant is explicit so nested blocks (which won't have this class) are unaffected.
+
+.simply-columns--reverse-mobile:not( .simply-columns--stack-480 ):not( .simply-columns--stack-600 ):not( .simply-columns--stack-768 ):not( .simply-columns--stack-960 ):not( .simply-columns--stack-never ) {
+	@media ( max-width: 639px ) {
+		display: flex !important;
+		flex-direction: column-reverse !important;
+	}
+}
+
+.simply-columns--stack-480.simply-columns--reverse-mobile {
+	@media ( max-width: 479px ) {
+		display: flex !important;
+		flex-direction: column-reverse !important;
+	}
+}
+
+.simply-columns--stack-600.simply-columns--reverse-mobile {
+	@media ( max-width: 599px ) {
+		display: flex !important;
+		flex-direction: column-reverse !important;
+	}
+}
+
+.simply-columns--stack-768.simply-columns--reverse-mobile {
+	@media ( max-width: 767px ) {
+		display: flex !important;
+		flex-direction: column-reverse !important;
+	}
+}
+
+.simply-columns--stack-960.simply-columns--reverse-mobile {
+	@media ( max-width: 959px ) {
+		display: flex !important;
+		flex-direction: column-reverse !important;
+	}
+}
+
 // Never stack — always show columns regardless of viewport
 .simply-columns--stack-never {
 	&.simply-columns--2 { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ) !important; }

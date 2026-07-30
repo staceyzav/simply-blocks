@@ -1,13 +1,13 @@
 import './editor.scss';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, RangeControl, SelectControl, TextControl } from '@wordpress/components';
+import { PanelBody, RangeControl, SelectControl, TextControl, ToggleControl } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
 import { useEffect, useRef } from '@wordpress/element';
 
 export default function Edit( { attributes, setAttributes, clientId } ) {
-	const { columns, gap, gapUnit, gridTemplate, stackBreakpoint } = attributes;
+	const { columns, gap, gapUnit, gridTemplate, stackBreakpoint, reverseOnMobile } = attributes;
 	const isFirstRender = useRef( true );
 
 	const { insertBlock, removeBlock } = useDispatch( 'core/block-editor' );
@@ -41,10 +41,11 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 	const style = { '--sc-gap': `${ gap }${ gapUnit }` };
 	if ( gridTemplate ) style[ '--sc-template' ] = gridTemplate;
 
-	const stackClass = stackBreakpoint !== '640' ? ` simply-columns--stack-${ stackBreakpoint }` : '';
+	const stackClass   = stackBreakpoint !== '640' ? ` simply-columns--stack-${ stackBreakpoint }` : '';
+	const reverseClass = reverseOnMobile ? ' simply-columns--reverse-mobile' : '';
 
 	const blockProps = useBlockProps( {
-		className: `simply-columns simply-columns--${ columns }${ stackClass }`,
+		className: `simply-columns simply-columns--${ columns }${ stackClass }${ reverseClass }`,
 		style,
 	} );
 
@@ -103,6 +104,12 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 						] }
 						onChange={ ( value ) => setAttributes( { stackBreakpoint: value } ) }
 						help={ __( 'Viewport width below which columns stack vertically.', 'simply-blocks' ) }
+					/>
+					<ToggleControl
+						label={ __( 'Reverse column order on mobile', 'simply-blocks' ) }
+						checked={ reverseOnMobile }
+						onChange={ ( value ) => setAttributes( { reverseOnMobile: value } ) }
+						help={ __( 'When stacked, the last column appears first.', 'simply-blocks' ) }
 					/>
 				</PanelBody>
 			</InspectorControls>

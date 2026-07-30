@@ -1,11 +1,11 @@
 import './editor.scss';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, RangeControl } from '@wordpress/components';
+import { PanelBody, SelectControl, RangeControl, ToggleControl } from '@wordpress/components';
 import { useEffect, useRef } from '@wordpress/element';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { verticalAlign, horizontalAlign, paddingTop, paddingBottom, paddingLeft, paddingRight, paddingUnit } = attributes;
+	const { verticalAlign, horizontalAlign, paddingTop, paddingBottom, paddingLeft, paddingRight, paddingUnit, mobilePaddingEnabled, mobilePaddingTop, mobilePaddingBottom } = attributes;
 
 	// Use a ref on the wrapper element so we can target the DOM directly
 	// inside the editor iframe (document.querySelector targets the parent frame,
@@ -32,7 +32,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	}, [] );
 
 	const blockProps = useBlockProps( {
-		className: 'simply-column',
+		className: [ 'simply-column', mobilePaddingEnabled ? 'sc-col-mob' : '' ].filter( Boolean ).join( ' ' ),
 		style: {
 			'--sc-col-v-align': verticalAlign   || undefined,
 			'--sc-col-h-align': horizontalAlign || undefined,
@@ -40,6 +40,8 @@ export default function Edit( { attributes, setAttributes } ) {
 			paddingBottom: paddingBottom > 0 ? `${ paddingBottom }${ paddingUnit }` : undefined,
 			paddingLeft:   paddingLeft   > 0 ? `${ paddingLeft }${ paddingUnit }`   : undefined,
 			paddingRight:  paddingRight  > 0 ? `${ paddingRight }${ paddingUnit }`  : undefined,
+			'--sc-col-mpt': mobilePaddingEnabled ? `${ mobilePaddingTop }px`    : undefined,
+			'--sc-col-mpb': mobilePaddingEnabled ? `${ mobilePaddingBottom }px` : undefined,
 		},
 	} );
 
@@ -119,6 +121,27 @@ export default function Edit( { attributes, setAttributes } ) {
 						max={ paddingUnit === '%' ? 20 : 200 }
 						step={ 1 }
 					/>
+					<ToggleControl
+						label={ __( 'Override padding on mobile', 'simply-blocks' ) }
+						checked={ mobilePaddingEnabled }
+						onChange={ ( value ) => setAttributes( { mobilePaddingEnabled: value } ) }
+					/>
+					{ mobilePaddingEnabled && (
+						<>
+							<RangeControl
+								label={ __( 'Mobile padding top (px)', 'simply-blocks' ) }
+								value={ mobilePaddingTop }
+								onChange={ ( value ) => setAttributes( { mobilePaddingTop: value } ) }
+								min={ 0 } max={ 300 } step={ 4 }
+							/>
+							<RangeControl
+								label={ __( 'Mobile padding bottom (px)', 'simply-blocks' ) }
+								value={ mobilePaddingBottom }
+								onChange={ ( value ) => setAttributes( { mobilePaddingBottom: value } ) }
+								min={ 0 } max={ 300 } step={ 4 }
+							/>
+						</>
+					) }
 				</PanelBody>
 			</InspectorControls>
 

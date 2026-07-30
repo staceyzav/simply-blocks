@@ -37,6 +37,18 @@
     "paddingUnit": {
       "type": "string",
       "default": "px"
+    },
+    "mobilePaddingEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "mobilePaddingTop": {
+      "type": "number",
+      "default": 0
+    },
+    "mobilePaddingBottom": {
+      "type": "number",
+      "default": 0
     }
   },
   "supports": {

@@ -37,6 +37,10 @@
     "stackBreakpoint": {
       "type": "string",
       "default": "640"
+    },
+    "reverseOnMobile": {
+      "type": "boolean",
+      "default": false
     }
   },
   "editorScript": "file:./index.js",

@@ -14,7 +14,10 @@
 		"paddingBottom":   { "type": "number", "default": 0 },
 		"paddingLeft":     { "type": "number", "default": 0 },
 		"paddingRight":    { "type": "number", "default": 0 },
-		"paddingUnit":     { "type": "string", "default": "px" }
+		"paddingUnit":           { "type": "string",  "default": "px" },
+		"mobilePaddingEnabled": { "type": "boolean", "default": false },
+		"mobilePaddingTop":     { "type": "number",  "default": 0 },
+		"mobilePaddingBottom":  { "type": "number",  "default": 0 }
 	},
 	"supports": {
 		"html": false,
