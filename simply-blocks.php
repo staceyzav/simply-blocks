@@ -95,6 +95,9 @@ function simply_blocks_render_section( $attrs, $content ) {
 		'paddingUnit'           => 'px',
 		'marginTop'             => 0,
 		'marginBottom'          => 0,
+		'marginLeft'            => 0,
+		'marginRight'           => 0,
+		'borderRadius'          => 0,
 		'innerWidthUnit'        => 'px',
 		'minHeight'             => 0,
 		'minHeightUnit'         => 'px',
@@ -133,6 +136,20 @@ function simply_blocks_render_section( $attrs, $content ) {
 	}
 	if ( intval( $a['marginBottom'] ) !== 0 ) {
 		$outer_styles['margin-bottom'] = intval( $a['marginBottom'] ) . 'px';
+	}
+	$margin_left  = intval( $a['marginLeft'] );
+	$margin_right = intval( $a['marginRight'] );
+	if ( $margin_left !== 0 ) {
+		$outer_styles['margin-left'] = $margin_left . 'px';
+	}
+	if ( $margin_right !== 0 ) {
+		$outer_styles['margin-right'] = $margin_right . 'px';
+	}
+	if ( $margin_left !== 0 || $margin_right !== 0 ) {
+		$outer_styles['width'] = 'calc(100% - ' . $margin_left . 'px - ' . $margin_right . 'px)';
+	}
+	if ( intval( $a['borderRadius'] ) !== 0 ) {
+		$outer_styles['border-radius'] = intval( $a['borderRadius'] ) . 'px';
 	}
 
 	if ( absint( $a['minHeight'] ) > 0 ) {

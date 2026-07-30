@@ -75,7 +75,7 @@ function hexToRgba( hex, opacity ) {
 export default function Edit( { attributes, setAttributes } ) {
 	const {
 		sectionColor, innerWidth, innerWidthUnit, paddingTop, paddingBottom, paddingLeft, paddingRight, paddingUnit,
-		marginTop, marginBottom, minHeight, minHeightUnit, verticalAlign,
+		marginTop, marginBottom, marginLeft, marginRight, borderRadius, minHeight, minHeightUnit, verticalAlign,
 		bgType, bgColor, bgColorOpacity, bgImageUrl, bgImageId, bgPositionX, bgPositionY, bgImageSize, bgImageFixed,
 		bgVideoUrl, bgVideoId, bgVideoWebmUrl, bgVideoWebmId, bgVideoPosterUrl,
 		overlayColor, overlayOpacity, overlayBlendMode,
@@ -88,6 +88,10 @@ export default function Edit( { attributes, setAttributes } ) {
 		paddingBottom: `${ paddingBottom }${ paddingUnit }`,
 		...(marginTop    !== 0 && { marginTop:    `${ marginTop }px` }),
 		...(marginBottom !== 0 && { marginBottom: `${ marginBottom }px` }),
+		...(marginLeft   !== 0 && { marginLeft:   `${ marginLeft }px` }),
+		...(marginRight  !== 0 && { marginRight:  `${ marginRight }px` }),
+		...((marginLeft !== 0 || marginRight !== 0) && { width: `calc(100% - ${ marginLeft }px - ${ marginRight }px)` }),
+		...(borderRadius !== 0 && { borderRadius: `${ borderRadius }px` }),
 		...(minHeight > 0 && { minHeight: `${ minHeight }${ minHeightUnit }` }),
 		...(minHeight > 0 && { display: 'flex', flexDirection: 'column', justifyContent: verticalAlign }),
 		...(bgType === 'color' && { backgroundColor: hexToRgba( bgColor, bgColorOpacity ) }),
@@ -230,6 +234,24 @@ export default function Edit( { attributes, setAttributes } ) {
 						value={ marginBottom }
 						onChange={ ( value ) => setAttributes( { marginBottom: value } ) }
 						min={ 0 } max={ 200 } step={ 4 }
+					/>
+					<RangeControl
+						label={ __( 'Margin left (px)', 'simply-blocks' ) }
+						value={ marginLeft }
+						onChange={ ( value ) => setAttributes( { marginLeft: value } ) }
+						min={ 0 } max={ 200 } step={ 4 }
+					/>
+					<RangeControl
+						label={ __( 'Margin right (px)', 'simply-blocks' ) }
+						value={ marginRight }
+						onChange={ ( value ) => setAttributes( { marginRight: value } ) }
+						min={ 0 } max={ 200 } step={ 4 }
+					/>
+					<RangeControl
+						label={ __( 'Border radius (px)', 'simply-blocks' ) }
+						value={ borderRadius }
+						onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+						min={ 0 } max={ 100 } step={ 2 }
 					/>
 					<ToggleControl
 						label={ __( 'Override padding on mobile', 'simply-blocks' ) }

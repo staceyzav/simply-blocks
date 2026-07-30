@@ -88,6 +88,13 @@
 	}
 }
 
+// Reset inherited --sc-template on nested simply-columns so they don't
+// inherit the parent's custom column widths via CSS variable inheritance.
+// If the nested block has its own --sc-template inline style, that wins.
+.simply-column .simply-columns {
+	--sc-template: initial;
+}
+
 // Never stack — always show columns regardless of viewport
 .simply-columns--stack-never {
 	&.simply-columns--2 { grid-template-columns: var( --sc-template, repeat( 2, 1fr ) ) !important; }
