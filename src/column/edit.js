@@ -2,34 +2,9 @@ import './editor.scss';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, SelectControl, RangeControl, ToggleControl } from '@wordpress/components';
-import { useEffect, useRef } from '@wordpress/element';
 
 export default function Edit( { attributes, setAttributes } ) {
 	const { verticalAlign, horizontalAlign, paddingTop, paddingBottom, paddingLeft, paddingRight, paddingUnit, mobilePaddingEnabled, mobilePaddingTop, mobilePaddingBottom } = attributes;
-
-	// Use a ref on the wrapper element so we can target the DOM directly
-	// inside the editor iframe (document.querySelector targets the parent frame,
-	// which fails when the editor is iframed on WP Engine / production hosts).
-	const ref = useRef( null );
-
-	useEffect( () => {
-		const el = ref.current;
-		if ( ! el ) return;
-
-		function fixLayout() {
-			const innerBlocks = el.querySelector( ':scope > .block-editor-inner-blocks' );
-			if ( ! innerBlocks ) return;
-			const layout = innerBlocks.querySelector( ':scope > .block-editor-block-list__layout' );
-			if ( layout ) {
-				layout.style.setProperty( 'display', 'block', 'important' );
-			}
-		}
-
-		fixLayout();
-		const observer = new MutationObserver( fixLayout );
-		observer.observe( el, { subtree: true, childList: true } );
-		return () => observer.disconnect();
-	}, [] );
 
 	const blockProps = useBlockProps( {
 		className: [ 'simply-column', mobilePaddingEnabled ? 'sc-col-mob' : '' ].filter( Boolean ).join( ' ' ),
@@ -145,7 +120,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 			</InspectorControls>
 
-			<div { ...blockProps } ref={ ref }>
+			<div { ...blockProps }>
 				<InnerBlocks renderAppender={ InnerBlocks.ButtonBlockAppender } />
 			</div>
 		</>
