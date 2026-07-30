@@ -1,5 +1,6 @@
 node_modules/
 .DS_Store
 _notes/
+~/
 src/**/*.css
 src/**/*.scss.css
