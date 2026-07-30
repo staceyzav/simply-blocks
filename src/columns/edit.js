@@ -7,7 +7,7 @@ import { createBlock } from '@wordpress/blocks';
 import { useEffect, useRef } from '@wordpress/element';
 
 export default function Edit( { attributes, setAttributes, clientId } ) {
-	const { columns, gap, gapUnit, gridTemplate, stackBreakpoint, reverseOnMobile } = attributes;
+	const { columns, gap, gapUnit, gridTemplate, stackBreakpoint, reverseOnMobile, minHeight, minHeightUnit, maxWidth, maxWidthUnit } = attributes;
 	const isFirstRender = useRef( true );
 
 	const { insertBlock, removeBlock } = useDispatch( 'core/block-editor' );
@@ -40,6 +40,8 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 
 	const style = { '--sc-gap': `${ gap }${ gapUnit }` };
 	if ( gridTemplate ) style[ '--sc-template' ] = gridTemplate;
+	if ( minHeight > 0 ) style.minHeight = `${ minHeight }${ minHeightUnit }`;
+	if ( maxWidth  > 0 ) style.maxWidth  = `${ maxWidth }${ maxWidthUnit }`;
 
 	const stackClass   = stackBreakpoint !== '640' ? ` simply-columns--stack-${ stackBreakpoint }` : '';
 	const reverseClass = reverseOnMobile ? ' simply-columns--reverse-mobile' : '';
@@ -56,6 +58,46 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 		<>
 			<InspectorControls>
 				<PanelBody title={ __( 'Layout', 'simply-blocks' ) }>
+					<SelectControl
+						label={ __( 'Max width unit', 'simply-blocks' ) }
+						value={ maxWidthUnit }
+						options={ [
+							{ label: 'px', value: 'px' },
+							{ label: '%',  value: '%'  },
+						] }
+						onChange={ ( unit ) => setAttributes( {
+							maxWidthUnit: unit,
+							maxWidth: unit === '%' ? ( maxWidth > 100 ? 100 : maxWidth ) : maxWidth,
+						} ) }
+					/>
+					<RangeControl
+						label={ __( `Max width (${ maxWidthUnit }) — 0 = full width`, 'simply-blocks' ) }
+						value={ maxWidth }
+						onChange={ ( value ) => setAttributes( { maxWidth: value } ) }
+						min={ 0 }
+						max={ maxWidthUnit === '%' ? 100 : 2400 }
+						step={ maxWidthUnit === '%' ? 5 : 10 }
+					/>
+					<SelectControl
+						label={ __( 'Min height unit', 'simply-blocks' ) }
+						value={ minHeightUnit }
+						options={ [
+							{ label: 'px', value: 'px' },
+							{ label: 'vh', value: 'vh' },
+						] }
+						onChange={ ( unit ) => setAttributes( {
+							minHeightUnit: unit,
+							minHeight: unit === 'vh' ? Math.min( minHeight, 200 ) : minHeight,
+						} ) }
+					/>
+					<RangeControl
+						label={ __( `Min height (${ minHeightUnit }) — 0 = auto`, 'simply-blocks' ) }
+						value={ minHeight }
+						onChange={ ( value ) => setAttributes( { minHeight: value } ) }
+						min={ 0 }
+						max={ minHeightUnit === 'vh' ? 200 : 1200 }
+						step={ minHeightUnit === 'vh' ? 5 : 10 }
+					/>
 					<RangeControl
 						label={ __( 'Columns', 'simply-blocks' ) }
 						value={ columns }

@@ -36,7 +36,11 @@
 		"reverseOnMobile": {
 			"type": "boolean",
 			"default": false
-		}
+		},
+		"minHeight":     { "type": "number",  "default": 0    },
+		"minHeightUnit": { "type": "string",  "default": "px" },
+		"maxWidth":      { "type": "number",  "default": 0    },
+		"maxWidthUnit":  { "type": "string",  "default": "px" }
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css"
