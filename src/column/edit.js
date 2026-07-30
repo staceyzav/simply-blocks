@@ -146,7 +146,7 @@ export default function Edit( { attributes, setAttributes } ) {
 			</InspectorControls>
 
 			<div { ...blockProps } ref={ ref }>
-				<InnerBlocks />
+				<InnerBlocks renderAppender={ InnerBlocks.ButtonBlockAppender } />
 			</div>
 		</>
 	);
