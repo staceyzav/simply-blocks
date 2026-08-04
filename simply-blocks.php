@@ -28,29 +28,29 @@ function simply_blocks_enqueue_editor_brand() {
 
 add_action( 'init', 'simply_blocks_register' );
 function simply_blocks_register() {
-	register_block_type( __DIR__ . '/build/columns' );
-	register_block_type( __DIR__ . '/build/column' );
-	register_block_type( __DIR__ . '/build/stats' );
-	register_block_type( __DIR__ . '/build/pricing' );
-	register_block_type( __DIR__ . '/build/faqs', [
+	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/columns' );
+	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/column' );
+	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/stats' );
+	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/pricing' );
+	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/faqs', [
 		'render_callback' => 'simply_blocks_render_faqs',
 	] );
-	register_block_type( __DIR__ . '/build/news', [
+	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/news', [
 		'render_callback' => 'simply_blocks_render_news',
 	] );
-	register_block_type( __DIR__ . '/build/logo-slider', [
+	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/logo-slider', [
 		'render_callback' => 'simply_blocks_render_logo_slider',
 	] );
-	register_block_type( __DIR__ . '/build/section', [
+	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/section', [
 		'render_callback' => 'simply_blocks_render_section',
 	] );
-	register_block_type( __DIR__ . '/build/events', [
+	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/events', [
 		'render_callback' => 'simply_blocks_render_events',
 	] );
-	register_block_type( __DIR__ . '/build/reviews', [
+	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/reviews', [
 		'render_callback' => 'simply_blocks_render_reviews',
 	] );
-	register_block_type( __DIR__ . '/build/team', [
+	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/team', [
 		'render_callback' => 'simply_blocks_render_team',
 	] );
 }
