@@ -68,6 +68,30 @@
       "type": "number",
       "default": 0
     },
+    "borderTopWidth": {
+      "type": "number",
+      "default": 0
+    },
+    "borderRightWidth": {
+      "type": "number",
+      "default": 0
+    },
+    "borderBottomWidth": {
+      "type": "number",
+      "default": 0
+    },
+    "borderLeftWidth": {
+      "type": "number",
+      "default": 0
+    },
+    "borderColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "borderStyle": {
+      "type": "string",
+      "default": "solid"
+    },
     "innerWidthUnit": {
       "type": "string",
       "default": "px"

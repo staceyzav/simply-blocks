@@ -98,6 +98,12 @@ function simply_blocks_render_section( $attrs, $content ) {
 		'marginLeft'            => 0,
 		'marginRight'           => 0,
 		'borderRadius'          => 0,
+		'borderTopWidth'        => 0,
+		'borderRightWidth'      => 0,
+		'borderBottomWidth'     => 0,
+		'borderLeftWidth'       => 0,
+		'borderColor'           => '#000000',
+		'borderStyle'           => 'solid',
 		'innerWidthUnit'        => 'px',
 		'minHeight'             => 0,
 		'minHeightUnit'         => 'px',
@@ -151,6 +157,13 @@ function simply_blocks_render_section( $attrs, $content ) {
 	if ( intval( $a['borderRadius'] ) !== 0 ) {
 		$outer_styles['border-radius'] = intval( $a['borderRadius'] ) . 'px';
 	}
+
+	$border_color = sanitize_hex_color( $a['borderColor'] ) ?: '#000000';
+	$border_style = in_array( $a['borderStyle'], [ 'solid', 'dashed', 'dotted' ], true ) ? $a['borderStyle'] : 'solid';
+	if ( intval( $a['borderTopWidth'] )    > 0 ) $outer_styles['border-top']    = intval( $a['borderTopWidth'] )    . 'px ' . $border_style . ' ' . $border_color;
+	if ( intval( $a['borderRightWidth'] )  > 0 ) $outer_styles['border-right']  = intval( $a['borderRightWidth'] )  . 'px ' . $border_style . ' ' . $border_color;
+	if ( intval( $a['borderBottomWidth'] ) > 0 ) $outer_styles['border-bottom'] = intval( $a['borderBottomWidth'] ) . 'px ' . $border_style . ' ' . $border_color;
+	if ( intval( $a['borderLeftWidth'] )   > 0 ) $outer_styles['border-left']   = intval( $a['borderLeftWidth'] )   . 'px ' . $border_style . ' ' . $border_color;
 
 	if ( absint( $a['minHeight'] ) > 0 ) {
 		$min_height_unit                 = in_array( $a['minHeightUnit'], [ 'px', 'vh' ], true ) ? $a['minHeightUnit'] : 'px';

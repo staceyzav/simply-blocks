@@ -80,6 +80,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		bgVideoUrl, bgVideoId, bgVideoWebmUrl, bgVideoWebmId, bgVideoPosterUrl,
 		overlayColor, overlayOpacity, overlayBlendMode,
 		mobilePaddingEnabled, mobilePaddingTop, mobilePaddingBottom,
+		borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, borderColor, borderStyle,
 	} = attributes;
 
 	// Outer section styles
@@ -91,7 +92,11 @@ export default function Edit( { attributes, setAttributes } ) {
 		...(marginLeft   !== 0 && { marginLeft:   `${ marginLeft }px` }),
 		...(marginRight  !== 0 && { marginRight:  `${ marginRight }px` }),
 		...((marginLeft !== 0 || marginRight !== 0) && { width: `calc(100% - ${ marginLeft }px - ${ marginRight }px)` }),
-		...(borderRadius !== 0 && { borderRadius: `${ borderRadius }px` }),
+		...(borderRadius      !== 0 && { borderRadius:  `${ borderRadius }px` }),
+		...(borderTopWidth    > 0   && { borderTop:    `${ borderTopWidth }px ${ borderStyle } ${ borderColor }` }),
+		...(borderRightWidth  > 0   && { borderRight:  `${ borderRightWidth }px ${ borderStyle } ${ borderColor }` }),
+		...(borderBottomWidth > 0   && { borderBottom: `${ borderBottomWidth }px ${ borderStyle } ${ borderColor }` }),
+		...(borderLeftWidth   > 0   && { borderLeft:   `${ borderLeftWidth }px ${ borderStyle } ${ borderColor }` }),
 		...(minHeight > 0 && { minHeight: `${ minHeight }${ minHeightUnit }` }),
 		...(minHeight > 0 && { display: 'flex', flexDirection: 'column', justifyContent: verticalAlign }),
 		...(bgType === 'color' && { backgroundColor: hexToRgba( bgColor, bgColorOpacity ) }),
@@ -471,6 +476,51 @@ export default function Edit( { attributes, setAttributes } ) {
 						) }
 					</PanelBody>
 				) }
+
+				{ /* ── BORDER ── */ }
+				<PanelBody title={ __( 'Border', 'simply-blocks' ) } initialOpen={ false }>
+					<BaseControl label={ __( 'Border color', 'simply-blocks' ) }>
+						<ColorPicker
+							color={ borderColor }
+							onChange={ ( value ) => setAttributes( { borderColor: value } ) }
+							enableAlpha={ false }
+						/>
+					</BaseControl>
+					<SelectControl
+						label={ __( 'Border style', 'simply-blocks' ) }
+						value={ borderStyle }
+						options={ [
+							{ label: 'Solid',  value: 'solid'  },
+							{ label: 'Dashed', value: 'dashed' },
+							{ label: 'Dotted', value: 'dotted' },
+						] }
+						onChange={ ( value ) => setAttributes( { borderStyle: value } ) }
+					/>
+					<RangeControl
+						label={ __( 'Top (px)', 'simply-blocks' ) }
+						value={ borderTopWidth }
+						onChange={ ( value ) => setAttributes( { borderTopWidth: value } ) }
+						min={ 0 } max={ 20 } step={ 1 }
+					/>
+					<RangeControl
+						label={ __( 'Right (px)', 'simply-blocks' ) }
+						value={ borderRightWidth }
+						onChange={ ( value ) => setAttributes( { borderRightWidth: value } ) }
+						min={ 0 } max={ 20 } step={ 1 }
+					/>
+					<RangeControl
+						label={ __( 'Bottom (px)', 'simply-blocks' ) }
+						value={ borderBottomWidth }
+						onChange={ ( value ) => setAttributes( { borderBottomWidth: value } ) }
+						min={ 0 } max={ 20 } step={ 1 }
+					/>
+					<RangeControl
+						label={ __( 'Left (px)', 'simply-blocks' ) }
+						value={ borderLeftWidth }
+						onChange={ ( value ) => setAttributes( { borderLeftWidth: value } ) }
+						min={ 0 } max={ 20 } step={ 1 }
+					/>
+				</PanelBody>
 
 			</InspectorControls>
 
