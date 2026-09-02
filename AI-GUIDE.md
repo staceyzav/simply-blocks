@@ -97,6 +97,25 @@ Simply Blocks inherits all `--client-*` tokens from the active theme and brandin
 
 Section color blocks output `is-dark`, `is-light`, `is-brand-1`, `is-brand-2` classes on the outer wrapper. All child plugin blocks and cards inherit section colors via CSS cascade.
 
+### Card self-containment rule
+
+If a block component has its **own explicit background color** (not transparent — e.g. a white card, an accent-colored icon circle, a dark card), it must **lock its own text colors** and not rely on the section cascade. Reason: a white card on a dark section inherits the section's white text → invisible text. An accent-colored icon circle should always show white text regardless of the section color.
+
+**Rule:** any component with a defined background sets its own foreground colors explicitly.
+**Transparent backgrounds** (steps, rows, wrappers with no bg) may use `color: inherit` — the section cascade handles them correctly.
+**Opaque backgrounds** (cards, circles, badges, price blocks) must explicitly set `color` to contrast with their own background.
+
+Example — correct:
+```css
+.ss-hiw__icon-wrap { background: var(--client-accent, #555); }
+.ss-hiw__fa        { color: #fff; } /* locked — not inherit */
+```
+
+Example — wrong (card with its own white bg inheriting dark section text):
+```css
+.my-card { background: #fff; color: inherit; } /* breaks on dark sections */
+```
+
 ---
 
 ## What You Can Customize Without Modifying the Plugin

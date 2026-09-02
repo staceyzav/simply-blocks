@@ -32,6 +32,7 @@ function simply_blocks_register() {
 	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/column' );
 	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/stats' );
 	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/pricing' );
+	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/how-it-works' );
 	register_block_type( WP_PLUGIN_DIR . '/simply-blocks/build/faqs', [
 		'render_callback' => 'simply_blocks_render_faqs',
 	] );

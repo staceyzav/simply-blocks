@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "simply-blocks/how-it-works",
+  "title": "Simply How It Works",
+  "category": "simply-blocks",
+  "description": "Numbered step-by-step process with icons or photos, connected by dots.",
+  "keywords": [
+    "simply",
+    "how it works",
+    "steps",
+    "process",
+    "numbered"
+  ],
+  "textdomain": "simply-blocks",
+  "supports": {
+    "html": false,
+    "color": false,
+    "spacing": false
+  },
+  "attributes": {
+    "items": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

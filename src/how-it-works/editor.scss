@@ -1,0 +1,123 @@
+// =============================================================================
+// Simply How It Works — editor only
+// =============================================================================
+
+.ss-hiw-editor {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	align-items: flex-start;
+}
+
+.ss-hiw-editor__step {
+	display: flex;
+	flex-direction: column;
+	background: #f9f9f9;
+	border: 1px dashed #d0d0d0;
+	border-radius: 4px;
+	padding: 12px;
+	gap: 6px;
+	flex: 1 1 220px;
+	min-width: 0;
+
+	.components-base-control {
+		margin-bottom: 0;
+	}
+
+	.components-text-control__input,
+	.components-textarea-control__input {
+		font-size: 12px;
+		padding: 4px 8px;
+		border-color: #e0e0e0;
+	}
+}
+
+.ss-hiw-editor__num {
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: #007cba;
+	line-height: 1;
+	margin-bottom: 4px;
+}
+
+// ── Icon section ──────────────────────────────────────────────────────────────
+
+.ss-hiw-editor__icon-section {
+	background: #e8e8e8;
+	border-radius: 3px;
+	min-height: 56px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 8px;
+}
+
+.ss-hiw-editor__icon-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.ss-hiw-editor__or {
+	font-size: 11px;
+	color: #757575;
+	white-space: nowrap;
+}
+
+.ss-hiw-editor__fa-input {
+	flex: 1;
+	min-width: 100px;
+
+	.components-text-control__input {
+		font-size: 11px;
+		font-family: monospace;
+	}
+}
+
+.ss-hiw-editor__photo-preview {
+	position: relative;
+	width: 100%;
+	text-align: center;
+
+	img {
+		width: 60px;
+		height: 60px;
+		object-fit: cover;
+		border-radius: 50%;
+		display: inline-block;
+	}
+
+	.components-button {
+		display: inline-block;
+		margin: 4px 2px 0;
+		font-size: 11px;
+	}
+}
+
+.ss-hiw-editor__title-field .components-text-control__input {
+	font-size: 13px;
+	font-weight: 600;
+}
+
+// ── Add / empty states ────────────────────────────────────────────────────────
+
+.ss-hiw-add-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+	border: 2px dashed #ddd;
+	border-radius: 4px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.ss-hiw-empty {
+	color: #757575;
+	font-size: 13px;
+	text-align: center;
+	padding: 32px;
+	width: 100%;
+	margin: 0;
+}

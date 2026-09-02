@@ -1,0 +1,145 @@
+// =============================================================================
+// Simply How It Works — frontend
+// =============================================================================
+
+// Connector positioning: based on step number height (~38px) + half icon (40px)
+$hiw-icon-size: 80px;
+$hiw-gap:       32px;
+
+.ss-hiw {
+	--hiw-icon-size: #{$hiw-icon-size};
+	--hiw-gap:       #{$hiw-gap};
+	--hiw-connector-top: 78px; // overridable in Client Branded: num height + half icon
+
+	display: grid;
+	gap: var(--hiw-gap);
+	align-items: start;
+}
+
+// Grid columns by step count
+.ss-hiw--1 { grid-template-columns: repeat(1, 1fr); }
+.ss-hiw--2 { grid-template-columns: repeat(2, 1fr); }
+.ss-hiw--3 { grid-template-columns: repeat(3, 1fr); }
+.ss-hiw--4 { grid-template-columns: repeat(4, 1fr); }
+.ss-hiw--5 { grid-template-columns: repeat(5, 1fr); }
+.ss-hiw--6 { grid-template-columns: repeat(6, 1fr); }
+
+// ── Step ──────────────────────────────────────────────────────────────────────
+
+.ss-hiw__step {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	padding-inline: 20px;
+}
+
+// Dotted connector: right half of this step → left half of next step
+.ss-hiw__step:not(:last-child)::after {
+	content: '';
+	position: absolute;
+	top: var(--hiw-connector-top);
+	// Start just outside the icon circle's right edge
+	left: calc(50% + var(--hiw-icon-size) / 2 + 4px);
+	// Span across the gap to just inside the next icon circle's left edge
+	width: calc(100% + var(--hiw-gap) - var(--hiw-icon-size) - 8px);
+	border-top: 2px dotted currentColor;
+	opacity: 0.25;
+}
+
+// ── Step number ───────────────────────────────────────────────────────────────
+
+.ss-hiw__num {
+	font-family: var(--client-font-display, sans-serif);
+	font-size: 1.75rem;
+	font-weight: 700;
+	line-height: 1;
+	color: var(--client-accent, currentColor);
+	margin-bottom: 10px;
+}
+
+// ── Icon circle ───────────────────────────────────────────────────────────────
+
+.ss-hiw__icon-wrap {
+	position: relative;
+	z-index: 1; // above connector line
+	width: var(--hiw-icon-size);
+	height: var(--hiw-icon-size);
+	border-radius: 50%;
+	background: var(--client-accent, #555);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	margin-bottom: 20px;
+	flex-shrink: 0;
+}
+
+.ss-hiw__photo {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.ss-hiw__fa {
+	font-size: 2rem;
+	color: #fff;
+}
+
+// ── Text ──────────────────────────────────────────────────────────────────────
+
+.ss-hiw__title {
+	font-family: var(--client-font-display, sans-serif);
+	font-size: 1.1rem;
+	font-weight: 700;
+	color: inherit;
+	margin: 0 0 8px;
+	line-height: 1.3;
+}
+
+.ss-hiw__desc {
+	font-family: var(--client-font-primary, sans-serif);
+	font-size: 0.875rem;
+	color: inherit;
+	opacity: 0.85;
+	margin: 0;
+	line-height: 1.5;
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+// Tablet: max 3 cols, hide connectors (layout shift would break them)
+@media (max-width: 900px) {
+	.ss-hiw--4,
+	.ss-hiw--5,
+	.ss-hiw--6 {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.ss-hiw__step::after {
+		display: none;
+	}
+}
+
+// Mobile: max 2 cols
+@media (max-width: 640px) {
+	.ss-hiw--3,
+	.ss-hiw--4,
+	.ss-hiw--5,
+	.ss-hiw--6 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.ss-hiw__step::after {
+		display: none;
+	}
+}
+
+// Small mobile: single column
+@media (max-width: 380px) {
+	.ss-hiw {
+		grid-template-columns: 1fr !important;
+	}
+}
