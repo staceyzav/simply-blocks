@@ -17,9 +17,16 @@
   "supports": {
     "html": false,
     "color": false,
-    "spacing": false
+    "spacing": false,
+    "align": [
+      "full"
+    ]
   },
   "attributes": {
+    "align": {
+      "type": "string",
+      "default": "full"
+    },
     "sectionColor": {
       "type": "string",
       "default": ""
@@ -38,11 +45,11 @@
     },
     "paddingLeft": {
       "type": "number",
-      "default": 5
+      "default": 25
     },
     "paddingRight": {
       "type": "number",
-      "default": 5
+      "default": 25
     },
     "paddingUnit": {
       "type": "string",

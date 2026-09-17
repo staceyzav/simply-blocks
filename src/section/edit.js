@@ -192,8 +192,8 @@ export default function Edit( { attributes, setAttributes } ) {
 							paddingUnit:   unit,
 							paddingTop:    unit === '%' ? 5 : 80,
 							paddingBottom: unit === '%' ? 5 : 80,
-							paddingLeft:   unit === '%' ? 5 : 5,
-							paddingRight:  unit === '%' ? 5 : 5,
+							paddingLeft:   unit === '%' ? 5 : 25,
+							paddingRight:  unit === '%' ? 5 : 25,
 						} ) }
 					/>
 					<RangeControl

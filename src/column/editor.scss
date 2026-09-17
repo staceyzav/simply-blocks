@@ -1,4 +1,9 @@
 // Simply Column — editor-only styles
+// Blue tint outline when a column link is set.
+
+.wp-block-simply-blocks-column.has-column-link {
+	outline: 1px dashed rgba( 0, 100, 200, 0.5 );
+}
 
 .wp-block-simply-blocks-column {
 	outline: 1px dashed rgba( 0, 0, 0, 0.15 );

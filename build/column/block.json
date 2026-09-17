@@ -49,6 +49,14 @@
     "mobilePaddingBottom": {
       "type": "number",
       "default": 0
+    },
+    "columnUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "columnNewTab": {
+      "type": "boolean",
+      "default": false
     }
   },
   "supports": {

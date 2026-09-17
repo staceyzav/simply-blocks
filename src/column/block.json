@@ -17,7 +17,9 @@
 		"paddingUnit":           { "type": "string",  "default": "px" },
 		"mobilePaddingEnabled": { "type": "boolean", "default": false },
 		"mobilePaddingTop":     { "type": "number",  "default": 0 },
-		"mobilePaddingBottom":  { "type": "number",  "default": 0 }
+		"mobilePaddingBottom":  { "type": "number",  "default": 0 },
+		"columnUrl":            { "type": "string",  "default": "" },
+		"columnNewTab":         { "type": "boolean", "default": false }
 	},
 	"supports": {
 		"html": false,

@@ -5,6 +5,16 @@
 	width: 100%;
 	overflow: hidden;
 
+	// Break out of FSE constrained layout padding — only when inside a constrained
+	// container (interior pages). Home page sections are already full-width so this
+	// must not apply there. Falls back to 0px in Genesis (no-op).
+	.is-layout-constrained > &.alignfull {
+		max-width: none;
+		width: calc( 100% + var( --wp--style--root--padding-left, 0px ) + var( --wp--style--root--padding-right, 0px ) );
+		margin-left:  calc( var( --wp--style--root--padding-left,  0px ) * -1 );
+		margin-right: calc( var( --wp--style--root--padding-right, 0px ) * -1 );
+	}
+
 	// Background image layer
 	&__bg-image {
 		position: absolute;

@@ -1,13 +1,13 @@
 import './editor.scss';
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, RangeControl, ToggleControl } from '@wordpress/components';
+import { PanelBody, SelectControl, RangeControl, ToggleControl, TextControl } from '@wordpress/components';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { verticalAlign, horizontalAlign, paddingTop, paddingBottom, paddingLeft, paddingRight, paddingUnit, mobilePaddingEnabled, mobilePaddingTop, mobilePaddingBottom } = attributes;
+	const { verticalAlign, horizontalAlign, paddingTop, paddingBottom, paddingLeft, paddingRight, paddingUnit, mobilePaddingEnabled, mobilePaddingTop, mobilePaddingBottom, columnUrl, columnNewTab } = attributes;
 
 	const blockProps = useBlockProps( {
-		className: [ 'simply-column', mobilePaddingEnabled ? 'sc-col-mob' : '' ].filter( Boolean ).join( ' ' ),
+		className: [ 'simply-column', mobilePaddingEnabled ? 'sc-col-mob' : '', columnUrl ? 'has-column-link' : '' ].filter( Boolean ).join( ' ' ),
 		style: {
 			'--sc-col-v-align': verticalAlign   || undefined,
 			'--sc-col-h-align': horizontalAlign || undefined,
@@ -46,6 +46,23 @@ export default function Edit( { attributes, setAttributes } ) {
 						] }
 						onChange={ ( v ) => setAttributes( { horizontalAlign: v } ) }
 					/>
+				</PanelBody>
+
+				<PanelBody title={ __( 'Link', 'simply-blocks' ) } initialOpen={ false }>
+					<TextControl
+						label={ __( 'URL', 'simply-blocks' ) }
+						value={ columnUrl }
+						onChange={ ( v ) => setAttributes( { columnUrl: v } ) }
+						placeholder="https://"
+						type="url"
+					/>
+					{ columnUrl && (
+						<ToggleControl
+							label={ __( 'Open in new tab', 'simply-blocks' ) }
+							checked={ columnNewTab }
+							onChange={ ( v ) => setAttributes( { columnNewTab: v } ) }
+						/>
+					) }
 				</PanelBody>
 
 				<PanelBody title={ __( 'Padding', 'simply-blocks' ) } initialOpen={ false }>

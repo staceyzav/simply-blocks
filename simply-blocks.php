@@ -86,13 +86,19 @@ function simply_blocks_category( $categories ) {
  * @param string $content Inner blocks HTML.
  */
 function simply_blocks_render_section( $attrs, $content ) {
+	// Read wideSize from theme settings so innerWidth default matches the theme.
+	$global_settings  = wp_get_global_settings();
+	$theme_wide_size  = isset( $global_settings['layout']['wideSize'] )
+		? (int) $global_settings['layout']['wideSize']
+		: 1200;
+
 	$a = wp_parse_args( $attrs, [
 		'sectionColor'          => '',
-		'innerWidth'            => 1200,
+		'innerWidth'            => $theme_wide_size,
 		'paddingTop'            => 80,
 		'paddingBottom'         => 80,
-		'paddingLeft'           => 5,
-		'paddingRight'          => 5,
+		'paddingLeft'           => 25,
+		'paddingRight'          => 25,
 		'paddingUnit'           => 'px',
 		'marginTop'             => 0,
 		'marginBottom'          => 0,

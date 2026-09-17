@@ -10,6 +10,25 @@
 	align-items: var( --sc-col-h-align, stretch );
 }
 
+// Stretched link — covers entire column, sits below inner interactive elements.
+.simply-column.has-column-link {
+	position: relative;
+	cursor: pointer;
+
+	.sc-col-link {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+
+	// Lift inner links and buttons above the overlay so they remain clickable.
+	a:not( .sc-col-link ),
+	button {
+		position: relative;
+		z-index: 1;
+	}
+}
+
 @media ( max-width: 767px ) {
 	.simply-column.sc-col-mob {
 		padding-top:    var( --sc-col-mpt, 0 ) !important;

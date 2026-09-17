@@ -6,6 +6,45 @@ import Edit from './edit';
 import save from './save';
 
 const deprecated = [
+	// v3 — had mobile padding but no column link
+	{
+		attributes: {
+			verticalAlign:        { type: 'string',  default: '' },
+			horizontalAlign:      { type: 'string',  default: '' },
+			paddingTop:           { type: 'number',  default: 0 },
+			paddingBottom:        { type: 'number',  default: 0 },
+			paddingLeft:          { type: 'number',  default: 0 },
+			paddingRight:         { type: 'number',  default: 0 },
+			paddingUnit:          { type: 'string',  default: 'px' },
+			mobilePaddingEnabled: { type: 'boolean', default: false },
+			mobilePaddingTop:     { type: 'number',  default: 0 },
+			mobilePaddingBottom:  { type: 'number',  default: 0 },
+		},
+		save( { attributes } ) {
+			const { verticalAlign, horizontalAlign, paddingTop, paddingBottom, paddingLeft, paddingRight, paddingUnit, mobilePaddingEnabled, mobilePaddingTop, mobilePaddingBottom } = attributes;
+			const blockProps = useBlockProps.save( {
+				className: [ 'simply-column', mobilePaddingEnabled ? 'sc-col-mob' : '' ].filter( Boolean ).join( ' ' ),
+				style: {
+					'--sc-col-v-align': verticalAlign   || undefined,
+					'--sc-col-h-align': horizontalAlign || undefined,
+					paddingTop:    paddingTop    > 0 ? `${ paddingTop }${ paddingUnit }`    : undefined,
+					paddingBottom: paddingBottom > 0 ? `${ paddingBottom }${ paddingUnit }` : undefined,
+					paddingLeft:   paddingLeft   > 0 ? `${ paddingLeft }${ paddingUnit }`   : undefined,
+					paddingRight:  paddingRight  > 0 ? `${ paddingRight }${ paddingUnit }`  : undefined,
+					'--sc-col-mpt': mobilePaddingEnabled ? `${ mobilePaddingTop }px`    : undefined,
+					'--sc-col-mpb': mobilePaddingEnabled ? `${ mobilePaddingBottom }px` : undefined,
+				},
+			} );
+			return (
+				<div { ...blockProps }>
+					<InnerBlocks.Content />
+				</div>
+			);
+		},
+		migrate( attributes ) {
+			return { ...attributes, columnUrl: '', columnNewTab: false };
+		},
+	},
 	// v2 — had padding controls but no mobile padding override
 	{
 		attributes: {
