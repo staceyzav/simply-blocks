@@ -10,7 +10,7 @@
 	align-items: var( --sc-col-h-align, stretch );
 }
 
-// Stretched link — covers entire column, sits below inner interactive elements.
+// Stretched link — covers entire column, clicks fall through to the overlay.
 .simply-column.has-column-link {
 	position: relative;
 	cursor: pointer;
@@ -18,14 +18,22 @@
 	.sc-col-link {
 		position: absolute;
 		inset: 0;
-		z-index: 0;
+		z-index: 1;
+		pointer-events: auto;
 	}
 
-	// Lift inner links and buttons above the overlay so they remain clickable.
+	// Disable pointer events on all content so clicks reach the overlay,
+	// regardless of whether WP adds position:relative to child elements.
+	> * {
+		pointer-events: none;
+	}
+
+	// Re-enable on actual interactive elements so they stay clickable.
 	a:not( .sc-col-link ),
 	button {
+		pointer-events: auto;
 		position: relative;
-		z-index: 1;
+		z-index: 2;
 	}
 }
 

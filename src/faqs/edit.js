@@ -129,6 +129,11 @@ export default function Edit( { attributes, setAttributes } ) {
 											onChange={ ( v ) => updateItem( i, 'answer', v ) }
 											rows={ 3 }
 										/>
+										<TextControl
+											placeholder={ __( 'Subcategory — comma-separate for multiple', 'simply-blocks' ) }
+											value={ item.category || '' }
+											onChange={ ( v ) => updateItem( i, 'category', v ) }
+										/>
 										<Button
 											variant="link"
 											isDestructive

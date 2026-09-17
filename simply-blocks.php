@@ -615,16 +615,46 @@ function simply_blocks_render_faqs( $attrs ) {
 		$items = $attrs['items'] ?? [];
 		if ( empty( $items ) ) return '';
 
+		// Collect unique subcategories in order of first appearance.
+		$seen_cats = [];
+		foreach ( $items as $item ) {
+			foreach ( explode( ',', $item['category'] ?? '' ) as $raw ) {
+				$label = trim( $raw );
+				if ( $label ) {
+					$slug = sanitize_title( $label );
+					if ( ! isset( $seen_cats[ $slug ] ) ) {
+						$seen_cats[ $slug ] = $label;
+					}
+				}
+			}
+		}
+		$show_filters = count( $seen_cats ) > 1;
+
 		ob_start();
 		?>
 		<div class="sf-faqs-block">
+
+			<?php if ( $show_filters ) : ?>
+			<div class="sf-filters" role="group" aria-label="<?php esc_attr_e( 'Filter FAQs by category', 'simply-blocks' ); ?>">
+				<button class="sf-filter-btn is-active" data-category=""><?php esc_html_e( 'Show All', 'simply-blocks' ); ?></button>
+				<?php foreach ( $seen_cats as $slug => $label ) : ?>
+					<button class="sf-filter-btn" data-category="<?php echo esc_attr( $slug ); ?>"><?php echo esc_html( $label ); ?></button>
+				<?php endforeach; ?>
+			</div>
+			<?php endif; ?>
+
 			<div class="sf-faqs">
 				<?php foreach ( $items as $item ) :
-					$question = wp_kses_post( $item['question'] ?? '' );
-					$answer   = wp_kses_post( $item['answer']   ?? '' );
+					$question  = wp_kses_post( $item['question'] ?? '' );
+					$answer    = wp_kses_post( $item['answer']   ?? '' );
+					$cat_slugs = [];
+					foreach ( explode( ',', $item['category'] ?? '' ) as $raw ) {
+						$label = trim( $raw );
+						if ( $label ) $cat_slugs[] = sanitize_title( $label );
+					}
 					if ( ! $question ) continue;
 				?>
-				<div class="sf-faq" data-category="">
+				<div class="sf-faq" data-categories="<?php echo esc_attr( implode( ' ', $cat_slugs ) ); ?>">
 					<button class="sf-faq__question" aria-expanded="false">
 						<span class="sf-faq__question-text"><?php echo $question; ?></span>
 						<span class="sf-faq__icon" aria-hidden="true"></span>
@@ -637,6 +667,7 @@ function simply_blocks_render_faqs( $attrs ) {
 				</div>
 				<?php endforeach; ?>
 			</div>
+
 		</div>
 		<?php
 		return ob_get_clean();
