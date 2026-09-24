@@ -4,3 +4,24 @@
   display: flex;
   flex-direction: column;
   align-items: var(--sc-col-h-align, stretch); }
+
+.simply-column.has-column-link {
+  position: relative;
+  cursor: pointer; }
+  .simply-column.has-column-link .sc-col-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: auto; }
+  .simply-column.has-column-link > * {
+    pointer-events: none; }
+  .simply-column.has-column-link a:not(.sc-col-link),
+  .simply-column.has-column-link button {
+    pointer-events: auto;
+    position: relative;
+    z-index: 2; }
+
+@media (max-width: 767px) {
+  .simply-column.sc-col-mob {
+    padding-top: var(--sc-col-mpt, 0) !important;
+    padding-bottom: var(--sc-col-mpb, 0) !important; } }

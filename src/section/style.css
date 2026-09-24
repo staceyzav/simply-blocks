@@ -2,6 +2,11 @@
   position: relative;
   width: 100%;
   overflow: hidden; }
+  .is-layout-constrained > .simply-section.alignfull {
+    max-width: none;
+    width: calc( 100% + var( --wp--style--root--padding-left, 0px ) + var( --wp--style--root--padding-right, 0px ) );
+    margin-left: calc( var( --wp--style--root--padding-left,  0px ) * -1 );
+    margin-right: calc( var( --wp--style--root--padding-right, 0px ) * -1 ); }
   .simply-section__bg-image {
     position: absolute;
     inset: 0;
@@ -50,23 +55,59 @@
     margin-right: auto;
     box-sizing: border-box;
     width: 100%; }
+  .simply-section h2 {
+    margin-bottom: 10px; }
   .simply-section.is-dark {
     background-color: var(--client-section-dark-bg, #1a1a1a);
     color: var(--client-section-dark-text, #f5f5f5); }
     .simply-section.is-dark h1, .simply-section.is-dark h2, .simply-section.is-dark h3, .simply-section.is-dark h4, .simply-section.is-dark h5, .simply-section.is-dark h6 {
       color: var(--client-section-dark-heading, #ffffff); }
+    .simply-section.is-dark a {
+      color: var(--client-section-dark-text, #f5f5f5); }
   .simply-section.is-light {
     background-color: var(--client-section-light-bg, #f2f2f2);
     color: var(--client-section-light-text, #1a1a1a); }
     .simply-section.is-light h1, .simply-section.is-light h2, .simply-section.is-light h3, .simply-section.is-light h4, .simply-section.is-light h5, .simply-section.is-light h6 {
       color: var(--client-section-light-heading, #333333); }
+    .simply-section.is-light a {
+      color: var(--client-section-light-text, #1a1a1a); }
   .simply-section.is-brand-1 {
     background-color: var(--client-section-brand1-bg, #cc2229);
     color: var(--client-section-brand1-text, #ffffff); }
     .simply-section.is-brand-1 h1, .simply-section.is-brand-1 h2, .simply-section.is-brand-1 h3, .simply-section.is-brand-1 h4, .simply-section.is-brand-1 h5, .simply-section.is-brand-1 h6 {
       color: var(--client-section-brand1-heading, #ffffff); }
+    .simply-section.is-brand-1 a {
+      color: var(--client-section-brand1-text, #ffffff); }
   .simply-section.is-brand-2 {
     background-color: var(--client-section-brand2-bg, #162d55);
     color: var(--client-section-brand2-text, #ffffff); }
     .simply-section.is-brand-2 h1, .simply-section.is-brand-2 h2, .simply-section.is-brand-2 h3, .simply-section.is-brand-2 h4, .simply-section.is-brand-2 h5, .simply-section.is-brand-2 h6 {
       color: var(--client-section-brand2-heading, #ffffff); }
+    .simply-section.is-brand-2 a {
+      color: var(--client-section-brand2-text, #ffffff); }
+  .simply-section.hero {
+    background-color: var(--client-section-light-bg, #f2f2f2);
+    color: var(--client-section-light-text, #1a1a1a); }
+    .simply-section.hero h1, .simply-section.hero h2, .simply-section.hero h3, .simply-section.hero h4, .simply-section.hero h5, .simply-section.hero h6 {
+      color: var(--client-section-light-heading, #333333); }
+    .simply-section.hero h1 {
+      font-size: var(--ss-hero-h1, calc( clamp( 2.25rem, 5vw,    3.5rem ) + 0.2rem )); }
+    .simply-section.hero h2 {
+      font-size: var(--ss-hero-h2, calc( clamp( 1.75rem, 3.5vw,  2.6rem ) + 0.2rem )); }
+    .simply-section.hero h3 {
+      font-size: var(--ss-hero-h3, calc( clamp( 1.4rem,  2.75vw, 2rem   ) + 0.2rem )); }
+    .simply-section.hero h4 {
+      font-size: var(--ss-hero-h4, 1.8rem); }
+    .simply-section.hero h5 {
+      font-size: var(--ss-hero-h5, 1.4rem); }
+    .simply-section.hero h6 {
+      font-size: var(--ss-hero-h6, 1.2rem); }
+    .simply-section.hero p, .simply-section.hero li {
+      font-size: var(--ss-hero-font-size, 1.125em); }
+  .simply-section.hero .wp-block-buttons:has(.wp-block-button + .wp-block-button) .wp-block-button:first-child .wp-block-button__link {
+    background: transparent !important;
+    box-shadow: inset 0 0 0 2px var(--client-section-dark-bg, #1a1a1a) !important;
+    color: var(--client-section-dark-bg, #1a1a1a) !important;
+    border: none !important; }
+  .simply-section.is-dark .ss-card h1, .simply-section.is-dark .ss-card h2, .simply-section.is-dark .ss-card h3, .simply-section.is-dark .ss-card h4, .simply-section.is-dark .ss-card h5, .simply-section.is-dark .ss-card h6, .simply-section.is-light .ss-card h1, .simply-section.is-light .ss-card h2, .simply-section.is-light .ss-card h3, .simply-section.is-light .ss-card h4, .simply-section.is-light .ss-card h5, .simply-section.is-light .ss-card h6, .simply-section.is-brand-1 .ss-card h1, .simply-section.is-brand-1 .ss-card h2, .simply-section.is-brand-1 .ss-card h3, .simply-section.is-brand-1 .ss-card h4, .simply-section.is-brand-1 .ss-card h5, .simply-section.is-brand-1 .ss-card h6, .simply-section.is-brand-2 .ss-card h1, .simply-section.is-brand-2 .ss-card h2, .simply-section.is-brand-2 .ss-card h3, .simply-section.is-brand-2 .ss-card h4, .simply-section.is-brand-2 .ss-card h5, .simply-section.is-brand-2 .ss-card h6, .simply-section.hero .ss-card h1, .simply-section.hero .ss-card h2, .simply-section.hero .ss-card h3, .simply-section.hero .ss-card h4, .simply-section.hero .ss-card h5, .simply-section.hero .ss-card h6 {
+    color: var(--client-dark-neutral, #1a1a1a); }
