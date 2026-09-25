@@ -15,7 +15,7 @@
 	},
 	"attributes": {
 		"align":             { "type": "string",  "default": "full" },
-		"sectionColor":      { "type": "string",  "default": "" },
+		"sectionColor":      { "type": "string",  "default": "is-white" },
 		"innerWidth":        { "type": "number",  "default": 1200 },
 		"paddingTop":        { "type": "number",  "default": 80 },
 		"paddingBottom":     { "type": "number",  "default": 80 },
@@ -51,12 +51,15 @@
 		"bgVideoWebmUrl":    { "type": "string",  "default": "" },
 		"bgVideoWebmId":     { "type": "number",  "default": 0 },
 		"bgVideoPosterUrl":  { "type": "string",  "default": "" },
+		"bgGradient":        { "type": "string",  "default": "" },
 		"overlayColor":           { "type": "string",  "default": "#000000" },
 		"overlayOpacity":         { "type": "number",  "default": 0 },
 		"overlayBlendMode":       { "type": "string",  "default": "normal" },
+		"bgMediaOpacity":         { "type": "number",  "default": 100 },
 		"mobilePaddingEnabled":   { "type": "boolean", "default": false },
 		"mobilePaddingTop":       { "type": "number",  "default": 40 },
-		"mobilePaddingBottom":    { "type": "number",  "default": 40 }
+		"mobilePaddingBottom":    { "type": "number",  "default": 40 },
+		"useGlobalLayout":        { "type": "boolean", "default": true }
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle":  "file:./index.css",

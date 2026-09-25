@@ -88,6 +88,18 @@
 		width: 100%;
 	}
 
+	// Global layout mode — all spacing follows Site Editor → Styles → Layout
+	&.is-global-layout {
+		padding-top: var( --wp--style--root--padding-top );
+		padding-bottom: var( --wp--style--root--padding-bottom );
+	}
+
+	&.is-global-layout &__inner {
+		max-width: var( --wp--style--global--wide-size );
+		padding-left: var( --wp--style--root--padding-left );
+		padding-right: var( --wp--style--root--padding-right );
+	}
+
 	h2 {
 		margin-bottom: 10px;
 	}
@@ -96,6 +108,15 @@
 	// Section color is set on the container and inherited by all children.
 	// No !important on p/li/span — plugin components and editor block colors
 	// set their own explicit colors and override inherited values naturally.
+
+	&.is-white {
+		background-color: var( --client-bg, #ffffff );
+		color: var( --client-text, #333333 );
+
+		h1, h2, h3, h4, h5, h6 {
+			color: var( --client-heading, #333333 );
+		}
+	}
 
 	&.is-dark {
 		background-color: var( --client-section-dark-bg, #1a1a1a );

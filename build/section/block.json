@@ -29,7 +29,7 @@
     },
     "sectionColor": {
       "type": "string",
-      "default": ""
+      "default": "is-white"
     },
     "innerWidth": {
       "type": "number",
@@ -171,6 +171,10 @@
       "type": "string",
       "default": ""
     },
+    "bgGradient": {
+      "type": "string",
+      "default": ""
+    },
     "overlayColor": {
       "type": "string",
       "default": "#000000"
@@ -183,6 +187,10 @@
       "type": "string",
       "default": "normal"
     },
+    "bgMediaOpacity": {
+      "type": "number",
+      "default": 100
+    },
     "mobilePaddingEnabled": {
       "type": "boolean",
       "default": false
@@ -194,6 +202,10 @@
     "mobilePaddingBottom": {
       "type": "number",
       "default": 40
+    },
+    "useGlobalLayout": {
+      "type": "boolean",
+      "default": true
     }
   },
   "editorScript": "file:./index.js",
