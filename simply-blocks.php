@@ -209,6 +209,7 @@ function simply_blocks_render_section( $attrs, $content ) {
 	}
 	if ( $use_global ) {
 		$classes[] = 'is-global-layout';
+		$classes[] = 'alignfull';
 	}
 
 	// ── Mobile padding (scoped <style>, UID added before wrapper build) ─
