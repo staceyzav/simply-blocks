@@ -133,13 +133,16 @@ function simply_blocks_render_section( $attrs, $content ) {
 		'mobilePaddingEnabled'  => false,
 		'mobilePaddingTop'      => 40,
 		'mobilePaddingBottom'   => 40,
+		'useGlobalLayout'       => true,
 	] );
 
 	// ── Outer section styles ────────────────────────────────────────
 	$padding_unit     = in_array( $a['paddingUnit'], [ 'px', '%' ], true ) ? $a['paddingUnit'] : 'px';
 	$inner_width_unit = in_array( $a['innerWidthUnit'], [ 'px', '%' ], true ) ? $a['innerWidthUnit'] : 'px';
+	$use_global       = ! empty( $a['useGlobalLayout'] ) && wp_is_block_theme();
 
-	$outer_styles = [
+	// In global layout mode top/bottom padding comes from Site Editor → Styles → Layout — skip inline values.
+	$outer_styles = $use_global ? [] : [
 		'padding-top'    => absint( $a['paddingTop'] ) . $padding_unit,
 		'padding-bottom' => absint( $a['paddingBottom'] ) . $padding_unit,
 	];
@@ -203,6 +206,9 @@ function simply_blocks_render_section( $attrs, $content ) {
 	$classes    = array_filter( [ 'simply-section', sanitize_html_class( $a['sectionColor'] ) ] );
 	if ( in_array( $a['sectionColor'], $hero_types, true ) ) {
 		$classes[] = 'hero';
+	}
+	if ( $use_global ) {
+		$classes[] = 'is-global-layout';
 	}
 
 	// ── Mobile padding (scoped <style>, UID added before wrapper build) ─
@@ -302,20 +308,23 @@ function simply_blocks_render_section( $attrs, $content ) {
 	}
 
 	// ── Inner container ─────────────────────────────────────────────
-	$inner_styles = simply_blocks_styles( [
+	// In global layout mode max-width and padding come from CSS — don't emit inline values.
+	$inner_styles = $use_global ? '' : simply_blocks_styles( [
 		'max-width'     => absint( $a['innerWidth'] ) . $inner_width_unit,
 		'padding-left'  => absint( $a['paddingLeft'] ) . $padding_unit,
 		'padding-right' => absint( $a['paddingRight'] ) . $padding_unit,
 	] );
 
+	$inner_style_attr = $inner_styles ? ' style="' . esc_attr( $inner_styles ) . '"' : '';
+
 	return sprintf(
-		'%s<div %s>%s%s%s<div class="simply-section__inner" style="%s">%s</div></div>',
+		'%s<div %s>%s%s%s<div class="simply-section__inner"%s>%s</div></div>',
 		$mobile_style_html,
 		$wrapper_attrs,
 		$bg_image_html,
 		$bg_video_html,
 		$overlay_html,
-		esc_attr( $inner_styles ),
+		$inner_style_attr,
 		$content
 	);
 }
