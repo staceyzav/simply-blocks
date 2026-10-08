@@ -19,7 +19,7 @@ add_action( 'enqueue_block_editor_assets', 'simply_blocks_enqueue_editor_brand' 
 function simply_blocks_enqueue_editor_brand() {
 	wp_enqueue_script(
 		'simply-blocks-brand',
-		WP_PLUGIN_URL . '/simply-blocks/src/editor-brand.js',
+		plugins_url( 'simply-blocks/src/editor-brand.js' ),
 		array( 'wp-hooks', 'wp-blocks' ),
 		'1.0.0',
 		true
@@ -64,7 +64,7 @@ add_action( 'wp_enqueue_scripts', 'simply_blocks_enqueue_columns_style' );
 function simply_blocks_enqueue_columns_style() {
 	wp_enqueue_style(
 		'simply-blocks-columns',
-		WP_PLUGIN_URL . '/simply-blocks/build/columns/style-index.css',
+		plugins_url( 'simply-blocks/build/columns/style-index.css' ),
 		[],
 		'1.0.47'
 	);
