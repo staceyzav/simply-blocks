@@ -264,7 +264,7 @@ function simply_blocks_render_section( $attrs, $content ) {
 				'modestbranding' => 1,
 				'iv_load_policy' => 3,
 				'disablekb'      => 1,
-			], 'https://www.youtube.com/embed/' . $youtube_id );
+			], 'https://www.youtube-nocookie.com/embed/' . $youtube_id );
 
 			// Mobile fallback: show thumbnail as bg image when video wrap is hidden
 			$thumb_url   = 'https://img.youtube.com/vi/' . $youtube_id . '/maxresdefault.jpg';
