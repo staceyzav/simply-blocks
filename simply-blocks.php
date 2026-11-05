@@ -270,10 +270,20 @@ function simply_blocks_render_section( $attrs, $content ) {
 			$thumb_url   = 'https://img.youtube.com/vi/' . $youtube_id . '/maxresdefault.jpg';
 			$mobile_style = 'background-image:url(' . esc_url( $thumb_url ) . ');background-size:cover;background-position:center center;';
 
+			// data-src delays player init until JS fires — prevents YouTube
+			// controls from flashing on load before controls=0 takes effect.
 			$bg_video_html = sprintf(
 				'<div class="simply-section__bg-video-wrap simply-section__bg-video-wrap--youtube" style="%s">
-					<iframe src="%s" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-				</div>',
+					<iframe data-src="%s" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+				</div>
+				<script>
+				(function(){
+					var iframe = document.currentScript.previousElementSibling.querySelector("iframe");
+					setTimeout(function(){
+						iframe.src = iframe.dataset.src;
+					}, 500);
+				})();
+				</script>',
 				esc_attr( $mobile_style ),
 				esc_url( $embed_url )
 			);
