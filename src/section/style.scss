@@ -25,9 +25,12 @@
 	}
 
 	// Video background wrapper (both YouTube iframe and self-hosted video)
+	// bottom: -60px extends wrapper below section so YouTube control bar
+	// (fixed ~40px height) falls outside .simply-section { overflow: hidden }
 	&__bg-video-wrap {
 		position: absolute;
 		inset: 0;
+		bottom: -60px;
 		overflow: hidden;
 		pointer-events: none;
 
@@ -59,7 +62,6 @@
 	}
 
 	// YouTube iframe — oversized and centered to fill without black bars (16:9)
-	// scale(1.1) pushes the bottom control bar outside overflow:hidden boundary
 	&__bg-video-wrap--youtube iframe {
 		position: absolute;
 		top: 50%;
@@ -68,7 +70,7 @@
 		height: 56.25vw;    // 16:9 ratio
 		min-height: 100%;
 		min-width: 177.78vh; // 16:9 inverse ratio
-		transform: translate( -50%, -50% ) scale( 1.1 );
+		transform: translate( -50%, -50% );
 		border: 0;
 		pointer-events: none;
 	}
