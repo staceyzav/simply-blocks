@@ -270,69 +270,12 @@ function simply_blocks_render_section( $attrs, $content ) {
 			$thumb_url   = 'https://img.youtube.com/vi/' . $youtube_id . '/maxresdefault.jpg';
 			$mobile_style = 'background-image:url(' . esc_url( $thumb_url ) . ');background-size:cover;background-position:center center;';
 
-			// Thumbnail cover hides YouTube UI flash on load AND on every loop restart.
-			// Uses YouTube IFrame API to detect restarts and re-show the cover each time.
-			$cover_id    = 'sb-yt-cover-' . $youtube_id . '-' . wp_unique_id();
-			$iframe_id   = 'sb-yt-iframe-' . $youtube_id . '-' . wp_unique_id();
-			$cover_style = 'position:absolute;inset:0;z-index:10;pointer-events:none;'
-				. 'background-image:url(' . esc_url( $thumb_url ) . ');'
-				. 'background-size:cover;background-position:center;'
-				. 'transition:opacity 0.8s ease;';
-
-			// Add enablejsapi so IFrame API can control the player
-			$embed_url = add_query_arg( 'enablejsapi', 1, $embed_url );
-
 			$bg_video_html = sprintf(
-				'<div class="simply-section__bg-video-wrap simply-section__bg-video-wrap--youtube">
-					<iframe id="%s" src="%s" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-					<div id="%s" style="%s"></div>
+				'<div class="simply-section__bg-video-wrap simply-section__bg-video-wrap--youtube" style="%s">
+					<iframe src="%s" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 				</div>',
-				esc_attr( $iframe_id ),
-				esc_url( $embed_url ),
-				esc_attr( $cover_id ),
-				esc_attr( $cover_style )
-			);
-
-			$bg_video_html .= sprintf( '
-				<script>
-				(function(){
-					var cover   = document.getElementById(%s);
-					var iframeId = %s;
-					var played  = false;
-					function showCover() {
-						cover.style.opacity = "1";
-						setTimeout(function(){ cover.style.opacity = "0"; }, 2000);
-					}
-					function initPlayer() {
-						if (typeof YT === "undefined" || !YT.Player) {
-							setTimeout(initPlayer, 200);
-							return;
-						}
-						new YT.Player(iframeId, {
-							events: {
-								onStateChange: function(e) {
-									if (e.data === 1) {
-										if (played) { showCover(); }
-										played = true;
-									}
-								}
-							}
-						});
-					}
-					// Initial cover fade
-					showCover();
-					// Load IFrame API if not already loaded
-					if (!window.YT) {
-						var tag = document.createElement("script");
-						tag.src = "https://www.youtube.com/iframe_api";
-						document.head.appendChild(tag);
-					}
-					window.onYouTubeIframeAPIReady = function(){ initPlayer(); };
-					initPlayer();
-				})();
-				</script>',
-				wp_json_encode( $cover_id ),
-				wp_json_encode( $iframe_id )
+				esc_attr( $mobile_style ),
+				esc_url( $embed_url )
 			);
 		} else {
 			// Self-hosted / direct file — WebM first (smaller), MP4 as fallback

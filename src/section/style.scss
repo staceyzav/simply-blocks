@@ -25,12 +25,9 @@
 	}
 
 	// Video background wrapper (both YouTube iframe and self-hosted video)
-	// bottom: -60px extends wrapper below section so YouTube control bar
-	// (fixed ~40px height) falls outside .simply-section { overflow: hidden }
 	&__bg-video-wrap {
 		position: absolute;
 		inset: 0;
-		bottom: -60px;
 		overflow: hidden;
 		pointer-events: none;
 
@@ -77,21 +74,6 @@
 		pointer-events: none;
 		opacity: 0;
 		animation: sb-yt-fadein 0.8s ease 2.5s forwards;
-	}
-
-	// YouTube thumbnail cover — fades out after 2.5s hiding the controls flash
-	&__yt-cover {
-		position: absolute;
-		inset: 0;
-		background-size: cover;
-		background-position: center;
-		pointer-events: none;
-		z-index: 1;
-		animation: sb-yt-cover 0.8s ease 2.5s forwards;
-	}
-
-	@keyframes sb-yt-cover {
-		to { opacity: 0; }
 	}
 
 	// Overlay layer
