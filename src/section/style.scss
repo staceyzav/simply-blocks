@@ -59,6 +59,7 @@
 	}
 
 	// YouTube iframe — oversized and centered to fill without black bars (16:9)
+	// scale(1.1) pushes the bottom control bar outside overflow:hidden boundary
 	&__bg-video-wrap--youtube iframe {
 		position: absolute;
 		top: 50%;
@@ -67,7 +68,7 @@
 		height: 56.25vw;    // 16:9 ratio
 		min-height: 100%;
 		min-width: 177.78vh; // 16:9 inverse ratio
-		transform: translate( -50%, -50% );
+		transform: translate( -50%, -50% ) scale( 1.1 );
 		border: 0;
 		pointer-events: none;
 	}
