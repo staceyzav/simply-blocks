@@ -62,6 +62,8 @@
 	}
 
 	// YouTube iframe — oversized and centered to fill without black bars (16:9)
+	// Delayed fade-in hides the brief YouTube UI flash on load.
+	// Wrapper bg-image (thumbnail) shows during the delay so section looks fine.
 	&__bg-video-wrap--youtube iframe {
 		position: absolute;
 		top: 50%;
@@ -73,9 +75,15 @@
 		transform: translate( -50%, -50% );
 		border: 0;
 		pointer-events: none;
+		opacity: 0;
+		animation: sb-yt-fadein 0.8s ease 2.5s forwards;
 	}
 
 	// Overlay layer
+	@keyframes sb-yt-fadein {
+		to { opacity: 1; }
+	}
+
 	&__overlay {
 		position: absolute;
 		inset: 0;
