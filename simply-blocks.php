@@ -705,27 +705,29 @@ function simply_blocks_render_events( $attrs ) {
 	}
 
 	$a = wp_parse_args( $attrs, [
-		'limit'       => 5,
-		'category'    => '',
-		'showFuture'  => true,
-		'showPast'    => false,
-		'order'       => 'ASC',
-		'view'        => 'grid',
-		'title'       => __( 'Upcoming Events', 'simply-blocks' ),
-		'showFilter'  => true,
-		'ctaText'     => '',
-		'ctaUrl'      => '',
+		'limit'        => 5,
+		'category'     => '',
+		'showFuture'   => true,
+		'showPast'     => false,
+		'order'        => 'ASC',
+		'view'         => 'grid',
+		'title'        => __( 'Upcoming Events', 'simply-blocks' ),
+		'showFilter'   => true,
+		'ctaText'      => '',
+		'ctaUrl'       => '',
+		'showCalendar' => false,
 	] );
 
-	$limit       = absint( $a['limit'] );
-	$show_filter = (bool) $a['showFilter'] && empty( $a['category'] );
-	$show_future = (bool) $a['showFuture'];
-	$show_past   = (bool) $a['showPast'];
-	$order       = strtoupper( $a['order'] ) === 'DESC' ? 'DESC' : 'ASC';
-	$view        = $a['view'] === 'list' ? 'list' : 'grid';
-	$title       = esc_html( $a['title'] );
-	$cta_text    = esc_html( $a['ctaText'] );
-	$cta_url     = esc_url( $a['ctaUrl'] );
+	$limit         = absint( $a['limit'] );
+	$show_filter   = (bool) $a['showFilter'] && empty( $a['category'] );
+	$show_future   = (bool) $a['showFuture'];
+	$show_past     = (bool) $a['showPast'];
+	$show_calendar = (bool) $a['showCalendar'];
+	$order         = strtoupper( $a['order'] ) === 'DESC' ? 'DESC' : 'ASC';
+	$view          = $a['view'] === 'list' ? 'list' : 'grid';
+	$title         = esc_html( $a['title'] );
+	$cta_text      = esc_html( $a['ctaText'] );
+	$cta_url       = esc_url( $a['ctaUrl'] );
 
 	$meta_query = [];
 	if ( $show_future && ! $show_past ) {
@@ -779,6 +781,10 @@ function simply_blocks_render_events( $attrs ) {
 	] );
 
 	ob_start();
+
+	if ( $show_calendar && function_exists( 'se_calendar_html' ) ) {
+		echo se_calendar_html( $events->posts ); // phpcs:ignore
+	}
 	?>
 	<div class="se-events-block" data-limit="<?php echo esc_attr( $limit ); ?>">
 

@@ -58,6 +58,10 @@
     "ctaUrl": {
       "type": "string",
       "default": ""
+    },
+    "showCalendar": {
+      "type": "boolean",
+      "default": false
     }
   },
   "editorScript": "file:./index.js",

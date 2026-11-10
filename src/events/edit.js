@@ -6,7 +6,7 @@ import { useSelect } from '@wordpress/data';
 import ServerSideRender from '@wordpress/server-side-render';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { limit, category, showFuture, showPast, order, view, title, showFilter, ctaText, ctaUrl } = attributes;
+	const { limit, category, showFuture, showPast, order, view, title, showFilter, ctaText, ctaUrl, showCalendar } = attributes;
 
 	// Pull event categories from the simply_event_cat taxonomy
 	const categories = useSelect( ( select ) => {
@@ -77,6 +77,15 @@ export default function Edit( { attributes, setAttributes } ) {
 							{ __( 'Clear all', 'simply-blocks' ) }
 						</button>
 					) }
+				</PanelBody>
+
+				<PanelBody title={ __( 'Calendar', 'simply-blocks' ) }>
+					<ToggleControl
+						label={ __( 'Show week calendar strip', 'simply-blocks' ) }
+						help={ __( 'Displays an 8-day scrollable week strip above events with event pills on days that have events.', 'simply-blocks' ) }
+						checked={ showCalendar }
+						onChange={ ( v ) => setAttributes( { showCalendar: v } ) }
+					/>
 				</PanelBody>
 
 				<PanelBody title={ __( 'Content', 'simply-blocks' ) }>

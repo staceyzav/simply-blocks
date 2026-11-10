@@ -21,8 +21,9 @@
 		"view":        { "type": "string",  "default": "grid" },
 		"title":       { "type": "string",  "default": "Upcoming Events" },
 		"showFilter":  { "type": "boolean", "default": true },
-		"ctaText":     { "type": "string",  "default": "" },
-		"ctaUrl":      { "type": "string",  "default": "" }
+		"ctaText":      { "type": "string",  "default": "" },
+		"ctaUrl":       { "type": "string",  "default": "" },
+		"showCalendar": { "type": "boolean", "default": false }
 	},
 	"editorScript": "file:./index.js",
 	"editorStyle":  "file:./index.css",
