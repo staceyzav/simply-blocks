@@ -171,6 +171,10 @@
       "type": "string",
       "default": ""
     },
+    "bgVideoShowMobile": {
+      "type": "boolean",
+      "default": false
+    },
     "bgGradient": {
       "type": "string",
       "default": ""

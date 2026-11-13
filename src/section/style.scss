@@ -59,6 +59,15 @@
 		pointer-events: none;
 	}
 
+	// Fade-in animation for video iframes (opacity 0 → 1)
+}
+
+@keyframes sb-yt-fadein {
+	to { opacity: 1; }
+}
+
+.simply-section {
+
 	// YouTube iframe — oversized and centered to fill without black bars (16:9)
 	// Delayed fade-in hides the brief YouTube UI flash on load.
 	// Wrapper bg-image (thumbnail) shows during the delay so section looks fine.
