@@ -260,7 +260,7 @@ export default function Edit( { attributes, setAttributes } ) {
 		sectionColor, innerWidth, innerWidthUnit, paddingTop, paddingBottom, paddingLeft, paddingRight, paddingUnit,
 		marginTop, marginBottom, marginLeft, marginRight, borderRadius, minHeight, minHeightUnit, verticalAlign,
 		bgType, bgColor, bgColorOpacity, bgImageUrl, bgImageId, bgPositionX, bgPositionY, bgImageSize, bgImageFixed,
-		bgVideoUrl, bgVideoId, bgVideoWebmUrl, bgVideoWebmId, bgVideoPosterUrl, bgGradient, bgMediaOpacity,
+		bgVideoUrl, bgVideoId, bgVideoWebmUrl, bgVideoWebmId, bgVideoPosterUrl, bgVideoShowMobile, bgGradient, bgMediaOpacity,
 		overlayColor, overlayOpacity, overlayBlendMode,
 		mobilePaddingEnabled, mobilePaddingTop, mobilePaddingBottom,
 		borderTopWidth, borderRightWidth, borderBottomWidth, borderLeftWidth, borderColor, borderStyle,
@@ -558,7 +558,7 @@ export default function Edit( { attributes, setAttributes } ) {
 							</BaseControl>
 
 							<TextControl
-								label={ __( 'Or enter video URL (YouTube, MP4, etc.)', 'simply-blocks' ) }
+								label={ __( 'Or enter video URL (YouTube, Vimeo, MP4, etc.)', 'simply-blocks' ) }
 								value={ bgVideoUrl }
 								onChange={ ( value ) => setAttributes( { bgVideoUrl: value, bgVideoId: 0 } ) }
 								placeholder="https://..."
@@ -590,6 +590,15 @@ export default function Edit( { attributes, setAttributes } ) {
 							) }
 						</>
 					) }
+					<ToggleControl
+						label={ __( 'Show video on mobile', 'simply-blocks' ) }
+						help={ bgVideoShowMobile
+							? __( 'Video plays on mobile. High bandwidth — use only on fast connections.', 'simply-blocks' )
+							: __( 'Poster image shown on mobile (default).', 'simply-blocks' )
+						}
+						checked={ !! bgVideoShowMobile }
+						onChange={ ( value ) => setAttributes( { bgVideoShowMobile: value } ) }
+					/>
 				</PanelBody>
 				{ /* ── LAYOUT ── */ }
 				<PanelBody title={ __( 'Layout', 'simply-blocks' ) } initialOpen={ false }>

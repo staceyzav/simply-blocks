@@ -5,7 +5,7 @@
  * Description: Simply Design Gutenberg block library. Type "simply" in the editor to see all blocks.
  * Author:      Simply Design
  * Author URI:  https://simplydesign.com
- * Version:     1.0.50
+ * Version:     1.0.51
  * License:     GPL-2.0-or-later
  * Text Domain: simply-blocks
  */
@@ -127,6 +127,7 @@ function simply_blocks_render_section( $attrs, $content ) {
 		'bgVideoUrl'            => '',
 		'bgVideoWebmUrl'        => '',
 		'bgVideoPosterUrl'      => '',
+		'bgVideoShowMobile'     => false,
 		'overlayColor'          => '#000000',
 		'overlayOpacity'        => 0,
 		'overlayBlendMode'      => 'normal',
@@ -270,10 +271,12 @@ function simply_blocks_render_section( $attrs, $content ) {
 			$thumb_url   = 'https://img.youtube.com/vi/' . $youtube_id . '/maxresdefault.jpg';
 			$mobile_style = 'background-image:url(' . esc_url( $thumb_url ) . ');background-size:cover;background-position:center center;';
 
+			$show_mobile   = ! empty( $a['bgVideoShowMobile'] ) ? ' simply-section__bg-video-wrap--show-mobile' : '';
 			$bg_video_html = sprintf(
-				'<div class="simply-section__bg-video-wrap simply-section__bg-video-wrap--youtube" style="%s">
+				'<div class="simply-section__bg-video-wrap simply-section__bg-video-wrap--youtube%s" style="%s">
 					<iframe src="%s" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 				</div>',
+				$show_mobile,
 				esc_attr( $mobile_style ),
 				esc_url( $embed_url )
 			);
@@ -296,10 +299,12 @@ function simply_blocks_render_section( $attrs, $content ) {
 				? 'background-image:url(' . esc_url( $poster_url ) . ');background-size:cover;background-position:center center;'
 				: '';
 
+			$show_mobile   = ! empty( $a['bgVideoShowMobile'] ) ? ' simply-section__bg-video-wrap--show-mobile' : '';
 			$bg_video_html = sprintf(
-				'<div class="simply-section__bg-video-wrap simply-section__bg-video-wrap--vimeo" style="%s">
+				'<div class="simply-section__bg-video-wrap simply-section__bg-video-wrap--vimeo%s" style="%s">
 					<iframe src="%s" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 				</div>',
+				$show_mobile,
 				esc_attr( $mobile_style ),
 				esc_url( $embed_url )
 			);
@@ -310,12 +315,14 @@ function simply_blocks_render_section( $attrs, $content ) {
 				? '<source src="' . esc_url( $a['bgVideoWebmUrl'] ) . '" type="video/webm">' . "\n\t\t\t\t\t"
 				: '';
 
+			$show_mobile   = ! empty( $a['bgVideoShowMobile'] ) ? ' simply-section__bg-video-wrap--show-mobile' : '';
 			$bg_video_html = sprintf(
-				'<div class="simply-section__bg-video-wrap">
+				'<div class="simply-section__bg-video-wrap%s">
 					<video class="simply-section__bg-video" autoplay muted loop playsinline%s>
 						%s<source src="%s" type="video/mp4">
 					</video>
 				</div>',
+				$show_mobile,
 				$poster,
 				$webm_source,
 				esc_url( $a['bgVideoUrl'] )

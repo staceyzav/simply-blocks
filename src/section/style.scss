@@ -37,9 +37,9 @@
 				display: none;
 			}
 
-			// YouTube/Vimeo wrap: hide the iframe, show the thumbnail bg
-			&--youtube iframe,
-			&--vimeo iframe {
+			// YouTube/Vimeo wrap: hide the iframe, show the thumbnail bg — unless show-mobile is set
+			&--youtube:not( .simply-section__bg-video-wrap--show-mobile ) iframe,
+			&--vimeo:not( .simply-section__bg-video-wrap--show-mobile ) iframe {
 				display: none;
 			}
 		}
