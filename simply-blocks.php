@@ -5,7 +5,7 @@
  * Description: Simply Design Gutenberg block library. Type "simply" in the editor to see all blocks.
  * Author:      Simply Design
  * Author URI:  https://simplydesign.com
- * Version:     1.0.49
+ * Version:     1.0.50
  * License:     GPL-2.0-or-later
  * Text Domain: simply-blocks
  */
@@ -273,6 +273,32 @@ function simply_blocks_render_section( $attrs, $content ) {
 			$bg_video_html = sprintf(
 				'<div class="simply-section__bg-video-wrap simply-section__bg-video-wrap--youtube" style="%s">
 					<iframe src="%s" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+				</div>',
+				esc_attr( $mobile_style ),
+				esc_url( $embed_url )
+			);
+		} elseif ( $vimeo_id = simply_blocks_get_vimeo_id( $a['bgVideoUrl'] ) ) {
+			// Vimeo iframe embed — background=1 suppresses all UI including title
+			$embed_url = add_query_arg( [
+				'background'  => 1,
+				'autoplay'    => 1,
+				'loop'        => 1,
+				'muted'       => 1,
+				'autopause'   => 0,
+				'title'       => 0,
+				'byline'      => 0,
+				'portrait'    => 0,
+			], 'https://player.vimeo.com/video/' . $vimeo_id );
+
+			// Mobile fallback poster if set, otherwise empty
+			$poster_url   = ! empty( $a['bgVideoPosterUrl'] ) ? $a['bgVideoPosterUrl'] : '';
+			$mobile_style = $poster_url
+				? 'background-image:url(' . esc_url( $poster_url ) . ');background-size:cover;background-position:center center;'
+				: '';
+
+			$bg_video_html = sprintf(
+				'<div class="simply-section__bg-video-wrap simply-section__bg-video-wrap--vimeo" style="%s">
+					<iframe src="%s" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 				</div>',
 				esc_attr( $mobile_style ),
 				esc_url( $embed_url )
@@ -607,6 +633,18 @@ function simply_blocks_render_logo_slider( $attrs ) {
  */
 function simply_blocks_get_youtube_id( $url ) {
 	$pattern = '/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/';
+	if ( preg_match( $pattern, $url, $matches ) ) {
+		return $matches[1];
+	}
+	return false;
+}
+
+/**
+ * Extract Vimeo video ID from any Vimeo URL format.
+ * Handles: vimeo.com/ID, player.vimeo.com/video/ID, vimeo.com/channels/x/ID, vimeo.com/groups/x/videos/ID
+ */
+function simply_blocks_get_vimeo_id( $url ) {
+	$pattern = '/vimeo\.com\/(?:video\/|channels\/[^\/]+\/|groups\/[^\/]+\/videos\/)?(\d+)/';
 	if ( preg_match( $pattern, $url, $matches ) ) {
 		return $matches[1];
 	}

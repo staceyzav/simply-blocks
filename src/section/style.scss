@@ -33,12 +33,13 @@
 
 		// On mobile: hide the video, show the bg-image fallback instead
 		@media ( max-width: 768px ) {
-			&:not( .simply-section__bg-video-wrap--youtube ) {
+			&:not( .simply-section__bg-video-wrap--youtube ):not( .simply-section__bg-video-wrap--vimeo ) {
 				display: none;
 			}
 
-			// YouTube wrap: hide the iframe, show the thumbnail bg
-			&--youtube iframe {
+			// YouTube/Vimeo wrap: hide the iframe, show the thumbnail bg
+			&--youtube iframe,
+			&--vimeo iframe {
 				display: none;
 			}
 		}
@@ -74,6 +75,22 @@
 		pointer-events: none;
 		opacity: 0;
 		animation: sb-yt-fadein 0.8s ease 2.5s forwards;
+	}
+
+	// Vimeo iframe — same sizing as YouTube; background=1 suppresses title so shorter fade delay
+	&__bg-video-wrap--vimeo iframe {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 100vw;
+		height: 56.25vw;    // 16:9 ratio
+		min-height: 100%;
+		min-width: 177.78vh; // 16:9 inverse ratio
+		transform: translate( -50%, -50% );
+		border: 0;
+		pointer-events: none;
+		opacity: 0;
+		animation: sb-yt-fadein 0.8s ease 0.5s forwards;
 	}
 
 	// Overlay layer
